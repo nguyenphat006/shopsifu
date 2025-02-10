@@ -5,7 +5,7 @@ publish/
 TestResults/
 .DS_Store
 
-# User-specific files
+# User-specific files (Visual Studio)
 .vscode/
 .idea/
 *.user
@@ -13,15 +13,22 @@ TestResults/
 *.ntvs*
 *.njsproj
 *.pssproj
+.vs/
 
-# Environment variables
+# JetBrains Rider
+*.sln.iml
+
+# Environment variables & Config Secrets
 appsettings.json
-appsettings.Development.json
+appsettings.*.json
 secrets.json
 
-# Logs
+# Logs & Debugging files
 logs/
 *.log
+*.tlog
+*.pyc
+*.pdb
 
 # Dependencies
 packages/
@@ -31,3 +38,8 @@ node_modules/
 *.db
 *.lock.json
 project.lock.json
+
+# NuGet
+.nuget/
+*.nupkg
+project.assets.json
