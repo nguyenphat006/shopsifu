@@ -1,0 +1,33 @@
+# Build output
+bin/
+obj/
+publish/
+TestResults/
+.DS_Store
+
+# User-specific files
+.vscode/
+.idea/
+*.user
+*.suo
+*.ntvs*
+*.njsproj
+*.pssproj
+
+# Environment variables
+appsettings.json
+appsettings.Development.json
+secrets.json
+
+# Logs
+logs/
+*.log
+
+# Dependencies
+packages/
+node_modules/
+
+# Runtime files
+*.db
+*.lock.json
+project.lock.json
