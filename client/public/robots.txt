@@ -1,0 +1,28 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /user/
+Disallow: /cart
+Disallow: /checkout/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /sign-in
+Disallow: /sign-up
+Disallow: /verify-*
+Disallow: /oauth-*
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /user/
+Disallow: /cart
+Disallow: /checkout/
+Disallow: /api/
+
+# Host
+Host: https://shopsifu.live
+
+# Sitemaps
+Sitemap: https://shopsifu.live/sitemap.xml

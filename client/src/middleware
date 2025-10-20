@@ -1,0 +1,116 @@
+// import { NextResponse } from 'next/server';
+// import type { NextRequest } from 'next/server';
+// import jwt from 'jsonwebtoken';
+
+// // Interface cho payload của JWT
+// interface AccessTokenPayload {
+//   userId: number;
+//   deviceId: number;
+//   roleId: number;
+//   roleName: string;
+//   uuid: string;
+//   iat: number;
+//   exp: number;
+// }
+
+// export function middleware(request: NextRequest) {
+//   const { pathname } = request.nextUrl;
+
+//   // Danh sách các route cần kiểm tra auth để redirect
+//   const protectedAuthRoutes = [
+//     '/forgot-password',
+//     '/reset-password',
+//     '/sign-in',
+//     '/sign-up',
+//     '/verify-2fa',
+//     '/verify-code',
+//     '/verify-email',
+//   ];
+
+//   // Kiểm tra nếu pathname khớp với các route auth
+//   if (protectedAuthRoutes.includes(pathname)) {
+//     // Lấy accessToken từ cookie (sử dụng request.cookies thay vì js-cookie)
+//     const accessToken = request.cookies.get('access_token')?.value;
+    
+//     if (accessToken) {
+//       try {
+//         // Decode JWT để lấy thông tin (không verify vì không có secret)
+//         const decoded = jwt.decode(accessToken) as AccessTokenPayload | null;
+
+//         if (decoded && decoded.roleName) {
+//           const roleName = decoded.roleName.toUpperCase(); // Normalize về uppercase
+          
+//           // Redirect dựa trên roleName cho các route auth
+//           if (roleName === 'ADMIN' || roleName === 'SELLER') {
+//             return NextResponse.redirect(new URL('/admin', request.url));
+//           } else if (roleName === 'CUSTOMER' || roleName === 'USER') {
+//             return NextResponse.redirect(new URL('/', request.url));
+//           }
+//         }
+//       } catch (error) {
+//         console.error('Error decoding accessToken in auth routes:', error);
+//         // Nếu token không hợp lệ, xóa cookie và cho phép tiếp tục
+//         const response = NextResponse.next();
+//         response.cookies.delete('access_token');
+//         return response;
+//       }
+//     }
+//   }
+
+//   // Kiểm tra quyền cho các route admin
+//   if (pathname.startsWith('/admin')) {
+//     const accessToken = request.cookies.get('access_token')?.value;
+
+//     if (!accessToken) {
+//       // Không có token -> redirect về sign-in
+//       return NextResponse.redirect(new URL('/sign-in', request.url));
+//     }
+
+//     try {
+//       const decoded = jwt.decode(accessToken) as AccessTokenPayload | null;
+
+//       if (!decoded) {
+//         // Token không decode được -> redirect về sign-in
+//         const response = NextResponse.redirect(new URL('/sign-in', request.url));
+//         response.cookies.delete('access_token');
+//         return response;
+//       }
+
+//       if (decoded.roleName) {
+//         const roleName = decoded.roleName.toUpperCase(); // Normalize
+        
+//         // Chỉ cho phép ADMIN và SELLER truy cập admin routes
+//         if (roleName === 'ADMIN' || roleName === 'SELLER') {
+//           // Có quyền -> cho phép tiếp tục
+//           return NextResponse.next();
+//         } else {
+//           // Không có quyền -> redirect về home thay vì not-found
+//           return NextResponse.redirect(new URL('/', request.url));
+//         }
+//       }
+//     } catch (error) {
+//       console.error('Error decoding accessToken in admin routes:', error);
+//       // Token lỗi -> xóa và redirect về sign-in
+//       const response = NextResponse.redirect(new URL('/sign-in', request.url));
+//       response.cookies.delete('access_token');
+//       return response;
+//     }
+//   }
+
+//   // Cho phép request tiếp tục nếu không cần xử lý đặc biệt
+//   return NextResponse.next();
+// }
+
+// // Cấu hình matcher
+// export const config = {
+//   matcher: [
+//     '/forgot-password',
+//     '/reset-password', 
+//     '/sign-in',
+//     '/sign-up',
+//     '/verify-2fa',
+//     '/verify-code',
+//     '/verify-email',
+//     '/admin/:path*',
+//   ],
+// };

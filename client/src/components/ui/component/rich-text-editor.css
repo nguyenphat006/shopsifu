@@ -1,0 +1,171 @@
+/* TipTap Editor Styles */
+
+/* Basic styling for editor content */
+.ProseMirror {
+  min-height: 150px;
+  outline: none;
+}
+
+/* Editor container for better handling */
+.editor-container {
+  position: relative;
+  min-height: 150px;
+}
+
+/* Placeholder styling using the empty editor state */
+.editor-container:has(.ProseMirror-empty):before {
+  content: attr(data-placeholder);
+  color: #adb5bd;
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Alternative placeholder approach for browsers that don't support :has */
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Image styling */
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem 0;
+  border-radius: 0.25rem;
+}
+
+/* Heading styles */
+.ProseMirror h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.ProseMirror h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+/* Paragraph spacing */
+.ProseMirror p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* List styling */
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ProseMirror ul li {
+  list-style-type: disc;
+}
+
+.ProseMirror ol li {
+  list-style-type: decimal;
+}
+
+/* Link styling */
+.ProseMirror a {
+  color: #3b82f6;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Text alignment */
+.ProseMirror .text-left {
+  text-align: left;
+}
+
+.ProseMirror .text-center {
+  text-align: center;
+}
+
+.ProseMirror .text-right {
+  text-align: right;
+}
+
+/* Focus styling */
+.ProseMirror:focus {
+  outline: none;
+}
+
+/* Add styles for selected text */
+.ProseMirror-selectednode {
+  outline: 2px solid #3b82f6;
+  border-radius: 0.25rem;
+}
+
+/* Code block styling */
+.ProseMirror pre {
+  background-color: #f1f5f9;
+  border-radius: 0.375rem;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #1e293b;
+}
+
+/* Blockquote styling */
+.ProseMirror blockquote {
+  border-left: 4px solid #e2e8f0;
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  color: #64748b;
+}
+
+/* Better table styling */
+.ProseMirror table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.ProseMirror th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.ProseMirror td {
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+/* Hover states for interactive elements */
+.ProseMirror a:hover {
+  text-decoration: none;
+  color: #1d4ed8;
+}

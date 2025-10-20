@@ -1,0 +1,171 @@
+
+/* Enhance dropdown menu appearance */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50 !important;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Category hover improvements */
+.category-hover-container {
+  position: relative;
+}
+
+.category-hover-area {
+  position: absolute;
+  background-color: transparent;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+/* Search dropdown improvements */
+.search-dropdown {
+  width: 100%;
+  min-width: 650px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Improve dropdown animation */
+.category-dropdown-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.category-dropdown-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.category-dropdown-exit {
+  opacity: 1;
+}
+.category-dropdown-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.items-hover {
+  color: #fee2e2; /* text-red-100 */
+  transition: all 0.3s ease;
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Search dropdown enhancements */
+.search-dropdown {
+  width: 750px;
+  min-width: 600px;
+  max-width: 800px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+}
+
+.search-dropdown-arrow {
+  left: 50%;
+  margin-left: -6px;
+  top: -7px;
+}
+
+.items-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(239, 68, 68, 0.4); /* bg-red-500/40 */
+  transition: all 0.4s ease;
+  z-index: -1;
+}
+
+.items-hover:hover {
+  color: white;
+  border-color: rgba(248, 113, 113, 0.6); /* border-red-400/60 */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+}
+
+.items-hover:hover::before {
+  left: 0;
+}
+
+.dropdown-placeholder {
+  width: 950px;
+}
+
+.dropdown-container {
+  height: calc(90vh - 120px);
+  contain: content;
+  will-change: transform, opacity;
+}
+
+.modal-input:hover{
+    background-color: rgba(240, 240, 240, 0.8);
+}
+
+/* Lock scroll when header is hovered */
+.scroll-locked {
+  overflow: auto;
+}
+/* Backdrop blur effect for category dropdown */
+.category-backdrop, .search-backdrop {
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  position: fixed;
+  pointer-events: auto;
+}
+
+
+/* Body overlay styles */
+.body-overlay {
+  /* display: none; */ /* Replaced by opacity and pointer-events logic */
+  position: fixed;
+  top: 75px; /* Same as header height */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+  z-index: 40;
+  pointer-events: none; /* Initially not interactive and invisible */
+  transition: all 0.3s ease;
+  opacity: 0;
+  will-change: opacity;
+}
+
+/* Show overlay when a dropdown is active */
+.body-overlay.overlay-active {
+  opacity: 1;
+  pointer-events: all; /* Becomes interactive when visible */
+}
+
+/* Mobile header styles */
+@media (max-width: 768px) {
+  .search-dropdown {
+    width: 100%;
+    min-width: unset;
+    max-width: 100%;
+  }
+  
+  /* Mobile search styling */
+  .mobile-search-container {
+    position: relative;
+    z-index: 60;
+  }
+  
+  .mobile-search-overlay {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    z-index: 55;
+  }
+}

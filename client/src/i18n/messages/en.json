@@ -1,0 +1,1531 @@
+{
+  "schema": {
+    "validation": {
+      "password": {
+        "minLength": "Password must be at least 6 characters long",
+        "maxLength": "Password must not exceed 20 characters",
+        "uppercase": "Password must contain at least one uppercase letter",
+        "lowercase": "Password must contain at least one lowercase letter",
+        "number": "Password must contain at least one number",
+        "specialCharacter": "Password must contain at least one special character",
+        "match": "Passwords do not match",
+        "currentRequired": "Current password is required"
+      },
+      "email": {
+        "invalid": "Invalid email format"
+      },
+      "profile": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "usernameMinLength": "Username must be at least 3 characters long",
+        "phoneMinLength": "Phone number must be at least 10 digits long"
+      },
+      "user": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "usernameMinLength": "Username must be at least 3 characters long",
+        "emailInvalid": "Invalid email format",
+        "phoneMinLength": "Phone number must be at least 10 digits long",
+        "roleRequired": "Role is required"
+      }
+    }
+  },
+  "common": {
+    "title": "Shopping is easy",
+    "subtitle": "Nationwide delivery, flexible payment\nand a money back guarantee if not satisfied.",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "errorPage": {
+    "title": "Page not found",
+    "subtitle": "The page you are looking for does not exist or has been moved.",
+    "backToHome": "Back to Home"
+  },
+  "language": {
+    "en": "English",
+    "vi": "Vietnamese",
+    "fr": "French",
+    "es": "Spanish",
+    "de": "German",
+    "zh": "Chinese"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "phone": "Please enter a valid phone number",
+    "minLengthPhone": "Phone number must be at least 10 characters long",
+    "fullName": "Please enter your full name",
+    "invalid email": "Invalid email format",
+    "invalid phone": "Invalid phone number format",
+    "password": {
+      "minLength": "Password must be at least 6 characters long",
+      "maxLength": "Password must not exceed 20 characters",
+      "uppercase": "Password must contain at least one uppercase letter",
+      "lowercase": "Password must contain at least one lowercase letter",
+      "number": "Password must contain at least one number",
+      "specialCharacter": "Password must contain at least one special character",
+      "match": "Passwords do not match"
+    },
+    "otp": {
+      "length": "OTP must be 6 digits long",
+      "numeric": "OTP must contain only numbers"
+    },
+    "recovery": {
+      "codeLength": "Recovery code must be 6 digits long and a (-) must be included",
+      "codeFormat": "The recovery code must be 5 characters (uppercase letters or numbers) - 5 characters (uppercase letters or numbers)"
+    }
+  },
+  "auth": {
+    "common": {
+      "fullname": "Full name",
+      "email": "Email",
+      "phonenumber": "Phone number",
+      "password": "Password",
+      "confirm password": "Confirm password",
+      "logout": "Logout",
+      "or": "Or continue with",
+      "signinWithGoogle": "Sign in with Google",
+      "signupWithGoogle": "Sign up with Google",
+      "cancel": "Cancel",
+      "delete": "Delete?",
+      "firstname": "First name",
+      "lastname": "Last name",
+      "username": "User name"
+    },
+    "register": {
+      "title": "Register an account",
+      "subtitle": "Enter your information to complete registration",
+      "register": "Register",
+      "registering": "Registering...",
+      "password": "Password",
+      "confirm password": "Confirm password",
+      "haveaccount": "Have an account?",
+      "login": "Login",
+      "start": "Enter your email to begin registration",
+      "success": "The verification code has been sent to your email",
+      "continue": "Continue"
+    },
+    "login": {
+      "title": "Welcome back to the application",
+      "subtitle": "Please enter your email and password to continue",
+      "login": "Login",
+      "logging in": "Logging in...",
+      "forgot password": "Forgot password?",
+      "no account": "Don't have an account?",
+      "register": "Register",
+      "remember me": "Remember me",
+      "emailOrUsername": "Email or UserName",
+      "placeholder": "Enter your email or username"
+    },
+    "forgotPassword": {
+      "title": "Forgot password",
+      "subtitle": "Enter your email below and we'll send you a link to reset your password.",
+      "Remember password": "Remember password?",
+      "login": "Login",
+      "confirm": "Confirm",
+      "Sending": "Sent...",
+      "continue": "Continue"
+    },
+    "resetPassword": {
+      "title": "Reset password",
+      "subtitle": "Enter your new password below.",
+      "currentPassword": "Current password",
+      "currentPasswordPlaceholder": "Enter your current password",
+      "newPasswordPlaceholder": "Enter your new password",
+      "confirmPasswordPlaceholder": "Re-enter your new password",
+      "new password": "New password",
+      "confirmnewPassword": "Confirm new password",
+      "Remember password": "Remember password?",
+      "changePassword": "Change password",
+      "login": "Login",
+      "Processing": "Processing...",
+      "success": "The password reset link has been sent to your email",
+      "send": "Send link"
+    },
+    "verifyOtp": {
+      "title": "Enter the verification code",
+      "subtitle": "We have sent the 6-digit OTP code to your email. Please enter the code below.",
+      "No code": "Didn't receive the code?",
+      "resend": "Resend",
+      "verify": "Verify OTP",
+      "verifying": "Verifying"
+    },
+    "verifyEmail": {
+      "title": "Email authentication",
+      "subtitle": "Enter your email to verify",
+      "success": "The verification code has been sent to your email",
+      "No code": "Didn't receive the code?",
+      "confirm": "Confirm",
+      "resend": "Resend",
+      "verify": "Verify",
+      "verifying": "Verifying",
+      "back": "Back",
+      "login": "Login",
+      "Processing": "Processing..."
+    },
+    "trustDevices": {
+      "title": "Trust this device?",
+      "subtitle": "Do you want to trust this device?\nIf you trust, you won't need 2FA authentication for the next 30 days.",
+      "trust": "Trust",
+      "trusting": "Trusting...",
+      "cancel": "Cancel",
+      "success": "This device has been trusted successfully",
+      "no": "No",
+      "processing": "Processing...",
+      "trustDevices": "Trust this device"
+    },
+    "2faVerify": {
+      "enterOTPCode": "Enter OTP verification code",
+      "enterRecoveryCode": "Enter recovery code",
+      "enterVerrifyCodeAuthen": "Enter the verification code from your Authenticator app",
+      "sent6DigitCodeEmail": "We've sent a 6-digit OTP code to your email. Please enter the code below.",
+      "plsEnterRecoveryCode": "Please enter your recovery code (e.g., 45UXR-RU50C)",
+      "sent6DigitCodeAuthenticator": "Please enter the 6-digit code from your Authenticator app",
+      "enterVerrifyCode": "Enter verification code",
+      "useRecoveryCode": "Use recovery code",
+      "useAuthenticator": "Use Authenticator",
+      "didnotReceiveCode": "Didn't receive a code?",
+      "resendOtp": "Resend OTP"
+    }
+  },
+  "system": {
+    "toasts": {
+      "createSuccess": "Successfully added!",
+      "editSuccess": "Successfully updated",
+      "deleteSuccess": "Successfully deleted"
+    }
+  },
+  "admin": {
+    "pages": {
+      "category": {
+        "title": "Category Management",
+        "subtitle": "Manage all your product categories",
+        "addCategory": "Add Category",
+        "editCategory": "Edit Category",
+        "deleteCategory": "Delete Category",
+        "name": "Category Name",
+        "namePlaceholder": "Enter category name",
+        "slug": "Slug",
+        "slugPlaceholder": "Enter slug",
+        "description": "Description",
+        "descriptionPlaceholder": "Enter category description (optional)",
+        "parent": "Parent Category",
+        "active": "Active",
+        "inactive": "Inactive",
+        "status": "Status",
+        "statusActive": "Active",
+        "statusInactive": "Inactive",
+        "action": "Actions",
+        "noData": "No data available",
+        "searchPlaceholder": "Search by category name",
+        "addTitle": "Add New Category",
+        "save": "Save",
+        "editTitle": "Edit Category",
+        "addDescription": "Create a new product category. Drag and drop to sort or set hierarchy.",
+        "editDescription": "Edit category information. You can drag and drop to change position or hierarchy.",
+        "treeTitle": "Category Tree",
+        "treeDescription": "Drag and drop to sort or set category hierarchy. Only one parent-child level is supported.",
+        "deleteConfirmTitle": "Confirm Delete Category",
+        "deleteConfirmDescription": "Are you sure you want to delete this category? This action cannot be undone.",
+        "column": {
+          "name": "Category Name",
+          "status": "Status",
+          "createdAt": "Created At",
+          "actions": "Actions"
+        },
+        "actions": {
+          "view": "View Details",
+          "edit": "Edit",
+          "delete": "Delete"
+        }
+      }
+    },
+    "ModuleCategory": {
+      "title": "Category Management",
+      "subtitle": "Manage all your product categories",
+      "Table": {
+        "searchPlaceholder": "Search by category name",
+        "addCategory": "Add Category",
+        "name": "Category Name",
+        "parentCategory": "Linked Category ID",
+        "logo": "Logo",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete Category",
+        "deleteTitle": "Delete Category",
+        "deleteSubTitle": "Are you sure you want to delete this category?",
+        "noParent": "None",
+        "noLogo": "No image",
+        "deleteConfirmTitle": "Confirm Category Deletion",
+        "notFound": "No categories found",
+        "cancel": "Cancel",
+        "backToRoot": "Back",
+        "currentCategory": "Current Category",
+        "deleteConfirmMessage": "Are you sure you want to delete the category"
+      },
+      "ModalCreate": {
+        "noParent": "No parent category",
+        "logoSelect": "Select Logo",
+        "addCategory": "Add Category",
+        "editCategory": "Edit Category",
+        "name": "Category Name",
+        "namePlaceholder": "Enter category name...",
+        "parentCategory": "Parent Category",
+        "parentPlaceholder": "Select parent category",
+        "logo": "Logo",
+        "logoPlaceholder": "Enter logo...",
+        "logoHelp": "",
+        "common": {
+          "cancel": "Cancel",
+          "create": "Create Category",
+          "save": "Save Information"
+        }
+      }
+    },
+    "ModuleVouchers": {
+      "breadcrumb": {
+        "title": "Voucher Management",
+        "subtitle": "Manage all vouchers here",
+        "vouchers": "Voucher list",
+        "newPage": "Create voucher"
+      },
+      "title_shop": "Shop-wide voucher",
+      "title_product": "Product voucher",
+      "title_private": "Private voucher",
+      "title": "Voucher Management",
+      "subtitle": "Manage all vouchers here",
+      "createVoucher": "Create Voucher",
+      "createVoucherDesc": "Create a shop-wide or product voucher now to attract buyers.",
+      "shopVoucher": "Shop-wide voucher",
+      "productVoucher": "Product voucher",
+      "privateVoucher": "Private voucher",
+      "shopVoucherDesc": "Vouchers applicable to all of your shops",
+      "productVoucherDesc": "Vouchers applicable to certain products selected by the shop",
+      "privateVoucherDesc": "Vouchers applicable to private users",
+      "platformVoucher": "Platform-wide voucher",
+      "platformVoucherDesc": "Applicable to all products across the entire e-commerce platform.",
+      "categoriesVoucher": "Category voucher",
+      "categoriesVoucherDesc": "Only applicable to products within specific categories.",
+      "brandVoucher": "Brand voucher",
+      "brandVoucherDesc": "Only applicable to products of a specific brand.",
+      "shopAdminVoucher": "Store voucher",
+      "shopAdminVoucherDesc": "Vouchers managed and issued by the store administrator.",
+      "productAdminVoucher": "Product voucher",
+      "productAdminVoucherDesc": "Only applicable to products specified by the administrator.",
+      "privateAdminVoucher": "Private voucher (Admin)",
+      "privateAdminVoucherDesc": "Platform-level private vouchers - only users with the code can use them.",
+      "create": "Create",
+      "Table": {
+        "voucherInfo": "Voucher info",
+        "discountType": "Discount type",
+        "voucherType": "Voucher type",
+        "displayType": "Display type",
+        "discountValue": "Discount value",
+        "validFrom": "Valid from",
+        "createdAt": "Created at",
+        "updatedAt": "Updated at",
+        "validTo": "Valid to",
+        "name": "Voucher name",
+        "code": "Voucher code",
+        "discount": "Discount",
+        "type": "Voucher type",
+        "status": "Status",
+        "actions": {
+          "edit": "Edit",
+          "delete": "Delete"
+        },
+        "searchPlaceholder": "Search by voucher name",
+        "notFound": "No voucher found",
+        "deleteConfirm": {
+          "title": "Confirm voucher deletion",
+          "description": "Are you sure you want to delete this voucher? This action cannot be undone.",
+          "deleteAction": "Delete now",
+          "cancel": "Cancel"
+        }
+      }
+    },
+    "ModuleUsers": {
+      "Table": {
+        "role": "Role",
+        "name": "User name",
+        "Email": "Email",
+        "status": "Status",
+        "createdAt": "Created at",
+        "updatedAt": "Updated at",
+        "notFound": "No user found",
+        "addAction": "Add user",
+        "searchPlaceholder": "Search by role name or description...",
+        "deleteConfirm": {
+          "title": "Confirm user deletion",
+          "description": "Are you sure you want to delete this user? This action cannot be undone.",
+          "deleteAction": "Delete now",
+          "cancel": "Cancel"
+        },
+        "actions": {
+          "edit": "Edit user",
+          "delete": "Delete user"
+        }
+      }
+    },
+    "ModuleProduct": {
+      "title": "Product Management",
+      "subtitle": "Manage all products here",
+      "DataTable": {
+        "name": "Product name",
+        "price": "Selling price",
+        "virtualPrice": "Original price",
+        "category": "Category",
+        "stock": "Stock",
+        "status": "Status",
+        "action": "Action",
+        "image": "Image",
+        "description": "Description",
+        "slug": "Slug",
+        "createdAt": "Created at",
+        "updatedAt": "Updated at",
+        "edit": "Edit information",
+        "delete": "Delete product",
+        "view": "View product",
+        "notFound": "No products found"
+      },
+      "Status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "archived": "Archived"
+      },
+      "searchPlaceholder": "Search by product name",
+      "DeleteModal": {
+        "title": "Confirm deletion",
+        "description": "Are you sure you want to delete this product?",
+        "confirmText": "Delete",
+        "cancelText": "Cancel"
+      },
+      "ExportData": {
+        "title": "Export data",
+        "description": "Export product data",
+        "confirmText": "Export",
+        "cancelText": "Cancel",
+        "pickDate": "Select date",
+        "selectFormat": "Select format",
+        "fileFormat": "File format",
+        "dateRange": "Date range"
+      },
+      "Filter": {
+        "category": "Category",
+        "price": "Price",
+        "stock": "Stock",
+        "status": "Status",
+        "action": "Action",
+        "image": "Image",
+        "description": "Description",
+        "slug": "Slug",
+        "createdAt": "Created at",
+        "updatedAt": "Updated at",
+        "edit": "Edit information",
+        "delete": "Delete product",
+        "notFound": "No products found",
+        "priceRange": "Price range",
+        "clear": "Clear filter",
+        "applyFilter": "Apply filter",
+        "apply": "Apply",
+        "clearFilter": "Clear filter",
+        "activeFilter": "Active filters",
+        "searchCategory": "Search category",
+        "noResults": "No results",
+        "loading": "Loading data...",
+        "clearFilters": "Clear all filters"
+      },
+      "AddNew": {
+        "page": {
+          "breadcrumb": {
+            "products": "Products",
+            "newPage": "Add new product"
+          },
+          "title": "Add product",
+          "formPlaceholder": ""
+        }
+      },
+      "mainDetails": {
+        "title": "Product details",
+        "productTitle": "Product name",
+        "productTitlePlaceholder": "Enter product name",
+        "content": "Content",
+        "contentPlaceholder": "Enter content"
+      }
+    },
+    "ModuleBrands": {
+      "Table": {
+        "id": "ID",
+        "logo": "Logo",
+        "name": "Brand name",
+        "createdAt": "Created at",
+        "updatedAt": "Updated at",
+        "addAction": "Add brand",
+        "notFound": "No brand found",
+        "deleteConfirm": {
+          "title": "Confirm brand deletion",
+          "description": "Are you sure you want to delete the brand {name}?",
+          "deleteAction": "Delete now",
+          "cancel": "Cancel"
+        },
+        "actions": {
+          "edit": "Edit brand",
+          "delete": "Delete brand"
+        },
+        "searchPlaceholder": "Search by brand name..."
+      },
+      "modal": {
+        "addTitle": "Add new brand",
+        "editTitle": "Edit brand",
+        "addDescription": "Enter brand information below",
+        "editDescription": "Update brand information",
+        "name": "Brand name",
+        "namePlaceholder": "Enter brand name",
+        "logo": "Logo",
+        "logoPlaceholder": "Enter Logo",
+        "cancel": "Cancel",
+        "adding": "Adding...",
+        "saving": "Saving...",
+        "add": "Add new",
+        "save": "Save changes",
+        "uploadImage": "Upload image",
+        "uploading": "Uploading...",
+        "selectImage": "Select image to upload"
+      }
+    },
+    "orders": {
+      "products": "Products",
+      "title": "List Orders",
+      "subtitle": "Manage all orders",
+      "searchPlaceholder": "Search orders",
+      "orderCode": "Code",
+      "orderDate": "Date",
+      "customerName": "Customer",
+      "shopName": "Shop Name",
+      "status": "Status",
+      "paymentMethod": "Payment",
+      "totalAmount": "Total",
+      "notFound": "No orders found",
+      "statuses": {
+        "pendingPayment": "Pending Payment",
+        "pendingPickup": "Pending Pickup",
+        "pendingDelivery": "Pending Delivery",
+        "delivered": "Delivered",
+        "returned": "Returned",
+        "cancelled": "Cancelled"
+      }
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "voucher": {
+        "voucher": "Discount code",
+        "listVoucher": "List of discount codes",
+        "newVoucher": "Add new"
+      },
+      "orders": {
+        "orders": "Orders",
+        "allOrders": "All orders",
+        "newOrders": "New orders",
+        "processedOrders": "Processed orders",
+        "listOrders": "Order list"
+      },
+      "permission": {
+        "permissionManager": "Permission management"
+      },
+      "role": {
+        "roleManager": "Role management"
+      },
+      "user": {
+        "userManager": "User management"
+      },
+      "device": {
+        "deviceManager": "Device management"
+      },
+      "brand": {
+        "brandManager": "Brand management"
+      },
+      "audit-logs": {
+        "auditLogManager": "Audit log management"
+      },
+      "category": {
+        "category": "Category"
+      },
+      "products": {
+        "products": "Products",
+        "productsList": "Product list",
+        "addProducts": "Add products",
+        "title": "Product Management",
+        "subtitle": "Manage all products here",
+        "form": {
+          "name": "Product name",
+          "slug": "Slug",
+          "category": "Category",
+          "price": "Price",
+          "stock": "Stock",
+          "status": "Status",
+          "image": "Image",
+          "description": "Description",
+          "submit": "Save",
+          "cancel": "Cancel"
+        }
+      },
+      "categories": {
+        "categories": "Categories"
+      },
+      "system": {
+        "system": "System",
+        "permissionManager": "Permission management",
+        "roleManager": "Role management",
+        "userManager": "User management",
+        "systemLog": "System log",
+        "deviceManager": "Device management"
+      },
+      "language": {
+        "languageManager": "Language management"
+      },
+      "settings": {
+        "settings": "Settings",
+        "systemSettings": "System settings",
+        "accountSettings": "Account settings",
+        "profile": "Profile",
+        "passwordAndSecurity": "Password & Security"
+      }
+    },
+    "profileDropdown": {
+      "shopProfile": "Shop Profile",
+      "shopSettings": "Shop Settings",
+      "logout": "Log out",
+      "logging out": "Logging out",
+      "profileManage": "Profile management",
+      "language": "Language: ",
+      "lang": {
+        "vi": "Vietnamese",
+        "en": "English"
+      },
+      "home": "Home"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "first": "First",
+      "last": "Last",
+      "page": "Page",
+      "of": "of",
+      "results": "Items per page",
+      "total": "Total"
+    },
+    "dataTable": {
+      "noData": "No data",
+      "image": "Image",
+      "productName": "Product name",
+      "category": "Category",
+      "price": "Price",
+      "stock": "Stock",
+      "status": "Status",
+      "view": "View",
+      "toggle_columns": "Toggle columns",
+      "edit": "Edit content",
+      "delete": "Delete content",
+      "Active": "Active",
+      "Inactive": "Inactive"
+    },
+    "dataTableExport": {
+      "export": "Export file",
+      "export CSV": "Export CSV",
+      "export Excel": "Export Excel"
+    },
+    "dataTablePagination": {
+      "showing": "Showing",
+      "line is selected": "line is selected",
+      "in": "in",
+      "Number of lines per page": "Number of lines per page",
+      "page": "Page"
+    },
+    "dataTableSearch": {
+      "search": "Search",
+      "search by name": "Search by name",
+      "search by email": "Search by email",
+      "search by phone number": "Search by phone number",
+      "search by address": "Search by address",
+      "placeholder": "Enter keyword to search"
+    },
+    "dataTableToolbar": {
+      "categories": "Categories",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "delete selected": "Delete selected",
+      "delete all": "Delete all",
+      "delete all selected": "Delete all selected",
+      "delete all data": "Delete all data",
+      "delete all data confirm": "Are you sure you want to delete all data?",
+      "delete selected confirm": "Are you sure you want to delete the selected items?",
+      "delete confirm": "Are you sure you want to delete this item?"
+    },
+    "dataTableViewOptions": {
+      "display": "Display",
+      "selectColumns": "Select columns"
+    },
+    "common": {
+      "pickday": "Pick a day"
+    },
+    "dashboard": {
+      "title": "Overview",
+      "subtitle": "Welcome back! Here is an overview of your store.",
+      "recentActivity": {
+        "title": "Recent Activity",
+        "empty": "No recent activity"
+      },
+      "page": {
+        "totalEarn": "Total revenue",
+        "newOrders": "New Orders",
+        "bestSeller": "Best selling product",
+        "newCustomer": "New customers"
+      },
+      "salesStats": {
+        "title": "Sales Statistics",
+        "empty": "No statistical data"
+      },
+      "searchPlaceholder": "Search...",
+      "searchMenu": "Search menu"
+    },
+    "showToast": {
+      "language": {
+        "createSuccessful": "Language created successfully.",
+        "updateSuccessful": "Language updated successfully.",
+        "deleteSuccessful": "Language deleted successfully",
+        "errorFetching": "Error fetching language",
+        "errorFetchings": "Error fetching languages"
+      },
+      "role": {
+        "createSuccessful": "Role created successfully.",
+        "updateSuccessful": "Role updated successfully.",
+        "deleteSuccessful": "Role deleted successfully"
+      },
+      "auth": {
+        "registerSuccessful": "Account registered successfully.",
+        "loginSuccessful": "Login successful!",
+        "sessionExpired": "Your session has expired.",
+        "changePasswordSuccessful": "Your password has been changed successfully!",
+        "2faVerify": "2FA verification successful.",
+        "authSuccessful": "Authentication successful.",
+        "sentOtp": "OTP code has been sent to your email.",
+        "sentNewOtp": "A new OTP code has been resent.",
+        "sentCode": "Verification code has been sent to your email.",
+        "emailNotFound": "Email not found. Please try again.",
+        "sessionExpireds": "Authentication session has expired. Please try again.",
+        "loginSessionNotFound": "Login session not found. Please try again.",
+        "invalidToken": "Invalid token."
+      }
+    },
+    "error": {
+      "title": "An error has occurred",
+      "subtitle": "An error occurred while loading the page. Please try again or return to the home page.",
+      "tryAgain": "Try again",
+      "backToHome": "Back to Home"
+    },
+    "profileSettings": {
+      "changePassword": {
+        "title": "Change Password",
+        "subtitle": "Enter your new password below.",
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password",
+        "rememberPassword": "Remember Password?",
+        "login": "Login",
+        "processing": "Processing...",
+        "success": "The reset password link has been sent to your email.",
+        "send": "Send",
+        "saving": "Saving...",
+        "saveChanges": "Save Changes",
+        "revokeOtherSessions": "Revoke other sessions",
+        "passwordPolicy": "Password must contain at least 6 characters, including uppercase, lowercase, numbers, and special characters"
+      },
+      "password": {
+        "validation": {
+          "currentPasswordRequired": "Current password is required",
+          "newPasswordMinLength": "Password must be at least 8 characters",
+          "newPasswordDigit": "Password must contain at least one number",
+          "newPasswordLetter": "Password must contain at least one letter",
+          "newPasswordSpecialChar": "Password must contain at least one special character (!$@%)",
+          "confirmPasswordRequired": "Confirm password is required",
+          "passwordsDoNotMatch": "Passwords do not match"
+        }
+      },
+      "regenerateCodesTitle": "Regenerate Recovery Codes",
+      "regenerateCodesDescription": "Enter the 6-digit code from your authenticator app to regenerate recovery codes.",
+      "confirm": "Confirm",
+      "2fa": {
+        "enable2FAFirst": "Please enable 2FA first before regenerating recovery codes.",
+        "copyAllRecoveryCodes": "Recovery codes copied to clipboard.",
+        "downloadRecoveryCodes": "Recovery codes downloaded.",
+        "2faSetupSuccess": "2FA setup successful!",
+        "2faDisabledSuccess": "2FA disabled successfully!",
+        "2faError": "Error occurred during 2FA setup.",
+        "2faCodeManually": "2FA Code (Manually)",
+        "recoveryCode": "Recovery Code",
+        "recoveryCodes": "Store these codes in a safe place. You will need them if you lose access to your authenticator device.",
+        "scanQRCode": "Scan QR Code"
+      },
+      "QrCode": {
+        "title": "Your Recovery Codes",
+        "description": "Store these codes in a safe place. You will need them if you lose access to your authenticator device.",
+        "nofound": "No recovery codes found",
+        "email": "The recovery codes have also been sent to your email address.",
+        "copy": "Copy All",
+        "download": "Download",
+        "done": "Done",
+        "title2fa": "Two-Factor Authentication",
+        "description2fa": "Set up two-factor authentication to enhance the security of your account",
+        "downloadAuth": "Download Authenticator App",
+        "downloadSetup": "Download and Install",
+        "or": "or",
+        "or2": "on your device",
+        "qr": "Scan QR Code",
+        "openQr": "Open your authenticator app and scan this QR code",
+        "secret": "Enter Secret Key Manually",
+        "confirm": "Confirm Setup",
+        "6code": "Enter the 6-digit code from your authenticator app",
+        "authen": "Authenticating...",
+        "2fa": "Enable 2FA"
+      },
+      "title": "Profile Settings",
+      "description": "Manage your personal information and account security",
+      "personalInfo": "Personal Information",
+      "contactInfo": "Contact Information",
+      "security": "Security",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email address",
+      "phone": "Phone Number",
+      "phonePlaceholder": "Enter your phone number",
+      "address": "Address",
+      "addressPlaceholder": "Enter your address",
+      "twoFactorAuth": "Two-Factor Authentication",
+      "twoFactorAuthDescription": "Protect your account with mobile app authentication",
+      "save": "Save Changes",
+      "cancel": "Cancel",
+      "enable2FATitle": "Enable Two-Factor Authentication",
+      "enable2FADescription": "Are you sure you want to enable two-factor authentication? You will need to scan a QR code with your authenticator app.",
+      "disable2FATitle": "Disable Two-Factor Authentication",
+      "disable2FADescription": "Are you sure you want to disable two-factor authentication? Your account will be less secure.",
+      "enable": "Enable",
+      "disable": "Disable",
+      "processing": "Processing...",
+      "scanQRCode": "Scan QR Code",
+      "scanQRDescription": "Scan this QR code with your authenticator app",
+      "qrInstructions": "After scanning, enter the 6-digit code from your authenticator app to complete setup.",
+      "2faSetupSuccess": "Two-factor authentication setup successful!",
+      "2faDisabledSuccess": "Two-factor authentication disabled!",
+      "2faError": "An error occurred while processing two-factor authentication",
+      "2faCodeManually": "2FA Code (Enter Manually)",
+      "recoveryCode": "Eecovery Codes",
+      "recoveryCodes": "Save these codes to restore your account if you lose 2FA access.",
+      "scanQRFirst": "Please scan the QR code with your authenticator app first",
+      "enterTOTP": "Enter TOTP",
+      "totpPlaceholder": "Enter 6-digit code from authenticator app",
+      "verifying": "Verifying...",
+      "activate2FA": "Activate 2FA",
+      "enableAuthen": "Enable authentication app",
+      "increaseSecurityin3steps": "Increase account security in 3 simple steps:",
+      "dowloadAuthenApp": "Download the authentication app",
+      "openApp": "Open the authenticator app and scan the image from right to left using your phone's camera.",
+      "loginWithCode": "Login With Your Code",
+      "enterVerrifyCode": "Enter the generated 6-digit verification code.",
+      "dowloadAndInstall": "Download and install",
+      "or": "or",
+      "googleAuth": "Google Authenticator",
+      "device": "for phone or tablet.",
+      "name": "Name",
+      "lang": "Language",
+      "accountInfo": "Account information",
+      "manageAccount": "Manage your account information",
+      "edit": "Edit",
+      "2faVerify": "Two-factor authentication"
+    },
+    "profileUpdate": {
+      "title": "Edit account information",
+      "subtitle": "Update the information fields below and click save to complete.",
+      "name": "Name",
+      "lang": "Language",
+      "confirm": "Save changes",
+      "cancel": "Cancel"
+    },
+    "auditLogs": {
+      "title": "Audit Logs",
+      "subtitle": "Manage all your audit logs",
+      "search": "Search",
+      "searchPlaceholder": "Search by Log",
+      "totalLogs": "Total Logs",
+      "totalSuccessLogs": "Total Success Logs",
+      "totalFailureLogs": "Total Failure Logs",
+      "totalEntities": "Total Entities",
+      "stats": {
+        "total": "Total Logs",
+        "success": "Total Success Logs",
+        "failure": "Total Failure Logs",
+        "entities": "Total Entities"
+      },
+      "modal": {
+        "detailTitle": "Detail Log - ID: {{id}}",
+        "detailDesc": "View detailed system log information",
+        "userEmail": "User Email",
+        "timestamp": "Timestamp",
+        "action": "Action",
+        "entity": "Entity",
+        "ipAddress": "IP Address",
+        "status": "Status",
+        "statusCode": "Status Code",
+        "elapsedTime": "Elapsed Time",
+        "userAgent": "User Agent",
+        "requestHeaders": "Request Headers",
+        "notes": "Notes",
+        "more": "More",
+        "close": "Close"
+      },
+      "column": {
+        "userEmail": "User Email",
+        "timestamp": "Timestamp",
+        "action": "Action",
+        "entity": "Entity",
+        "entityId": "Entity ID",
+        "ipAddress": "IP Address",
+        "userAgent": "User Agent",
+        "statusCode": "Status Code",
+        "status": "Status",
+        "elapsedTime": "Elapsed Time",
+        "notes": "Notes"
+      }
+    },
+    "roles": {
+      "title": "Roles",
+      "subtitle": "Manage all your roles",
+      "add": "Add new role",
+      "edit": "Edit role",
+      "delete": "Delete role",
+      "confirmDeleteTitle": "Confirm role deletion",
+      "confirmDeleteDesc": "Are you sure you want to delete the role {{name}}? This action cannot be undone.",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "search": "Search",
+      "searchPlaceholder": "Search by role name or description",
+      "name": "Role name",
+      "createdAt": "Created at",
+      "updatedAt": "Updated at",
+      "actions": "Actions",
+      "noData": "No data.",
+      "addTitle": "Add role",
+      "editTitle": "Edit role",
+      "form": {
+        "id": "ID",
+        "name": "Role name",
+        "subtitle": "Manage all your roles",
+        "description": "Role description",
+        "path": "Role path",
+        "method": "Role method",
+        "namePlaceholder": "Enter role name",
+        "module": "Module",
+        "createdAt": "Created at",
+        "updatedAt": "Updated at"
+      },
+      "toast": {
+        "addSuccess": "Role added successfully",
+        "editSuccess": "Role updated successfully",
+        "deleteSuccess": "Role deleted successfully"
+      },
+      "editAction": "Edit information",
+      "deleteAction": "Delete role",
+      "addAction": "Add role",
+      "modal": {
+        "title": "Add new role",
+        "subtitle": "Enter role information to add to the system",
+        "description": "Role description",
+        "name": "Role name",
+        "path": "Role path",
+        "method": "Role method",
+        "namePlaceholder": "Enter role name",
+        "searchPlaceholder": "Search by code or name...",
+        "descriptionPlaceholder": "Enter role description",
+        "pathPlaceholder": "Enter role path",
+        "methodPlaceholder": "Enter role method",
+        "save": "Save information",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "processing": "Processing...",
+        "success": "Role added successfully",
+        "error": "An error occurred",
+        "isActive": "Is active?",
+        "permissions": "Permissions"
+      },
+      "modalEdit": {
+        "title": "Edit role",
+        "subtitle": "Enter role information to edit",
+        "save": "Save information",
+        "cancel": "Cancel",
+        "processing": "Processing...",
+        "success": "Role updated successfully",
+        "error": "An error occurred",
+        "edit": "Edit role"
+      }
+    },
+    "permissions": {
+      "notFound": "No permissions found",
+      "title": "Permissions",
+      "subtitle": "Manage all your permissions",
+      "add": "Add new permission",
+      "edit": "Edit permission",
+      "delete": "Delete permission",
+      "confirmDeleteTitle": "Confirm permission deletion",
+      "confirmDeleteDesc": "Are you sure you want to delete the permission {{name}}? This action cannot be undone.",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "search": "Search",
+      "searchPlaceholder": "Search by user, action, or date",
+      "name": "Permission name",
+      "createdAt": "Created at",
+      "updatedAt": "Updated at",
+      "actions": "Actions",
+      "noData": "No data.",
+      "addTitle": "Add permission",
+      "editTitle": "Edit permission",
+      "form": {
+        "name": "Permission path",
+        "subtitle": "Manage all your permissions",
+        "description": "Permission description",
+        "path": "Permission path",
+        "method": "Permission method",
+        "namePlaceholder": "Enter permission name",
+        "module": "Module",
+        "createdAt": "Created at",
+        "updatedAt": "Updated at",
+        "ID": "ID",
+        "editAction": "Edit permission",
+        "deleteAction": "Delete permission",
+        "Name": "Permission name"
+      },
+      "deleteModal": {
+        "deleteTitle": "Confirm delete permission",
+        "deleteDescription": "Are you sure you want to delete this permission?"
+      },
+      "toast": {
+        "addSuccess": "Permission added successfully",
+        "editSuccess": "Permission updated successfully",
+        "deleteSuccess": "Permission deleted successfully"
+      },
+      "editAction": "Edit information",
+      "deleteAction": "Delete permission",
+      "addAction": "Add permission",
+      "modal": {
+        "addTitle": "Add new permission",
+        "addSubtitle": "Enter permission information to add to the system",
+        "editTitle": "Edit permission",
+        "editSubtitle": "Enter permission information to edit the system",
+        "description": "Permission description",
+        "name": "Permission name",
+        "path": "Permission path",
+        "method": "Permission method",
+        "namePlaceholder": "Enter permission name",
+        "searchPlaceholder": "Search by code or name...",
+        "descriptionPlaceholder": "Enter permission description",
+        "pathPlaceholder": "Enter permission path",
+        "methodPlaceholder": "Enter permission method",
+        "save": "Save information",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "processing": "Processing...",
+        "success": "Permission added successfully",
+        "error": "An error occurred",
+        "module": "Module",
+        "modulePlaceholder": "Enter feature module..."
+      },
+      "modalEdit": {
+        "title": "Edit permission",
+        "subtitle": "Enter permission information to edit",
+        "save": "Save information",
+        "cancel": "Cancel",
+        "processing": "Processing...",
+        "success": "Permission updated successfully",
+        "error": "An error occurred",
+        "edit": "Edit permission"
+      },
+      "methods": {
+        "GET": "GET",
+        "POST": "POST",
+        "PUT": "PUT",
+        "DELETE": "DELETE",
+        "PATCH": "PATCH"
+      }
+    },
+    "users": {
+      "title": "User Management",
+      "subtitle": "Manage all users here",
+      "search": "Search",
+      "searchPlaceholder": "Search by name, action, or date",
+      "add": "Add new user",
+      "table": {
+        "name": "User name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "createdAt": "Created at",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "pending": "Pending"
+      },
+      "role": {
+        "user": "User",
+        "admin": "Admin",
+        "editor": "Editor"
+      },
+      "actions": {
+        "view": "View details",
+        "edit": "Edit information",
+        "assignPermissions": "Assign permissions",
+        "delete": "Delete user"
+      },
+      "modal": {
+        "addTitle": "Add new user",
+        "addDescription": "Enter user information to add to the system.",
+        "editTitle": "Edit user",
+        "editDescription": "Update user information.",
+        "name": "User name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "cancel": "Cancel",
+        "confirmAdd": "Add new",
+        "confirmEdit": "Update",
+        "loadingAdd": "Adding...",
+        "loadingEdit": "Updating...",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "username": "Username",
+        "phoneNumber": "Phone number",
+        "bio": "Bio",
+        "countryCode": "Country code",
+        "roleId": "Role",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "avatar": "Avatar",
+        "passwordStepDescription": "Password must contain at least 6 characters, including uppercase, lowercase, numbers, and special characters",
+        "confirmPasswordStepDescription": "Confirm password must match the password",
+        "statusActive": "Active",
+        "statusInactive": "Inactive",
+        "avatarUrl": "Your avatar URL...",
+        "add": "Add new",
+        "uploadImage": "Upload image",
+        "selectImage": "Select image to upload"
+      },
+      "deleteConfirm": {
+        "title": "Confirm user deletion",
+        "description": "Are you sure you want to delete the user {{name}}? This action cannot be undone.",
+        "confirmText": "Delete",
+        "cancelText": "Cancel"
+      },
+      "loading": "Loading data..."
+    },
+    "passwordAndSecurity": {
+      "title": "Security & Passwords",
+      "subtitle": "Manage account security and password-related settings.",
+      "changePassword": "Change password",
+      "whereYouLogIn": "Where you log in"
+    },
+    "languages": {
+      "notFound": "No languages found",
+      "title": "Language Management",
+      "subtitle": "Manage all languages here",
+      "add": "Add new language",
+      "edit": "Edit language",
+      "delete": "Delete language",
+      "confirmDeleteTitle": "Confirm language deletion",
+      "confirmDeleteDesc": "Are you sure you want to delete the language {{name}}? This action cannot be undone.",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "search": "Search",
+      "searchPlaceholder": "Search languages...",
+      "code": "Language code",
+      "name": "Language name",
+      "createdAt": "Created at",
+      "updatedAt": "Updated at",
+      "actions": "Actions",
+      "noData": "No data.",
+      "addTitle": "Add language",
+      "editTitle": "Edit language",
+      "form": {
+        "code": "Language code",
+        "name": "Language name",
+        "codePlaceholder": "Enter language code",
+        "namePlaceholder": "Enter language name"
+      },
+      "toast": {
+        "addSuccess": "Language added successfully",
+        "editSuccess": "Language updated successfully",
+        "deleteSuccess": "Language deleted successfully"
+      },
+      "editAction": "Edit information",
+      "deleteAction": "Delete language",
+      "addAction": "Add language",
+      "modal": {
+        "title": "Add new language",
+        "subtitle": "Enter language information to add to the system",
+        "code": "Language code",
+        "name": "Language name",
+        "codePlaceholder": "Enter language code",
+        "namePlaceholder": "Enter language name",
+        "searchPlaceholder": "Search by code or name...",
+        "save": "Save information",
+        "cancel": "Cancel",
+        "processing": "Processing...",
+        "success": "Language added successfully",
+        "error": "An error occurred"
+      },
+      "modalEdit": {
+        "title": "Edit language",
+        "subtitle": "Enter language information to edit",
+        "save": "Save information",
+        "cancel": "Cancel",
+        "processing": "Processing...",
+        "success": "Language updated successfully",
+        "error": "An error occurred",
+        "edit": "Edit language"
+      },
+      "modalDelete": {
+        "deleteConfirmTitle": "Delete language",
+        "deleteConfirmMessage": "Are you sure you want to delete the language",
+        "cancelAction": "Cancel"
+      }
+    },
+    "settings": {
+      "profile": {
+        "title": "Profile settings",
+        "subtitle": "Manage your personal information and account security"
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "emptyTitle": "No notifications",
+      "emptyDesc": "You don't have any notifications at the moment, but they will show up here when you do.",
+      "esc": "esc",
+      "close": "Close"
+    },
+    "brand": {
+      "title": "Brand Management",
+      "subtitle": "Manage the list of brands in the system.",
+      "searchPlaceholder": "Search for brands...",
+      "addAction": "Add brand",
+      "editAction": "Edit brand",
+      "deleteAction": "Delete brand",
+      "code": "Brand code",
+      "name": "Brand name",
+      "actions": "Actions",
+      "confirmDelete": "Are you sure you want to delete the brand",
+      "addSuccess": "Brand added successfully",
+      "editSuccess": "Brand updated successfully",
+      "deleteSuccess": "Brand deleted successfully",
+      "modal": {
+        "addTitle": "Add new brand",
+        "editTitle": "Edit brand",
+        "codePlaceholder": "e.g., APPLE",
+        "namePlaceholder": "e.g., Apple Inc.",
+        "descriptionPlaceholder": "Enter a detailed description of the brand...",
+        "websitePlaceholder": "https://example.com",
+        "countryPlaceholder": "e.g., Vietnam",
+        "uploadLabel": "Select or drag and drop logo here",
+        "uploadDescription": "PNG, JPG, GIF up to 5MB",
+        "statusPlaceholder": "Select active status",
+        "statusActive": "Active",
+        "statusInactive": "Inactive",
+        "website": "Website",
+        "cancel": "Cancel",
+        "add": "Add new",
+        "update": "Update",
+        "validation": {
+          "codeRequired": "Code cannot be empty",
+          "nameRequired": "Name cannot be empty",
+          "websiteInvalid": "Invalid website URL"
+        }
+      }
+    },
+    "category": {
+      "title": "Category Management",
+      "subtitle": "Manage all your product categories",
+      "searchPlaceholder": "Search by name, slug or description",
+      "notFound": "No categories found.",
+      "stats": {
+        "total": "Total Categories",
+        "active": "Active Categories",
+        "inactive": "Inactive Categories",
+        "root": "Root Categories"
+      },
+      "column": {
+        "name": "Category Name",
+        "slug": "Slug",
+        "parent": "Parent Category",
+        "status": "Status",
+        "sortOrder": "Sort Order",
+        "productsCount": "Products Count",
+        "createdAt": "Created At",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "actions": {
+        "view": "View Details",
+        "edit": "Edit",
+        "delete": "Delete",
+        "create": "Create New Category"
+      },
+      "modal": {
+        "detailTitle": "Category Details - {{name}}",
+        "detailDesc": "View detailed category information",
+        "name": "Category Name",
+        "slug": "Slug",
+        "status": "Status",
+        "parent": "Parent Category",
+        "sortOrder": "Sort Order",
+        "productsCount": "Products Count",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "description": "Description",
+        "metaTitle": "Meta Title",
+        "metaDescription": "Meta Description",
+        "image": "Image",
+        "more": "Show More",
+        "close": "Close"
+      }
+    }
+  },
+  "user": {
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Your account is protected",
+      "description": "Shopsifu protects your personal information and keeps it private, safe and secure.",
+
+      "items": {
+        "Account security": "Account Security",
+        "Privacy": "Privacy",
+        "Permissions": "Permissions",
+        "Safety center": "Safety Center"
+      },
+
+      "section": {
+        "paymentmethods": "Your payment methods",
+        "country": "Country & region",
+        "language": "Language",
+        "currency": "Currency",
+        "notifications": "Notifications",
+        "about": "About this app",
+        "legalTermPolicies": "Legal Terms & Policies",
+        "switchAccount": "Switch Account"
+      },
+
+      "signout": "Sign out"
+    },
+
+    "home": "Home",
+    "manageAccount": "Manage your account information",
+
+    "notifications": {
+      "notifications": "Notifications"
+    },
+
+    "showToast": {
+      "review": {
+        "createSuccessful": "Review created successfully.",
+        "updateSuccessful": "Review updated successfully.",
+        "deleteSuccessful": "Review deleted successfully"
+      }
+    },
+
+    "account": {
+      "profile": {
+        "protected": "Your account is protected",
+        "protectionDescription": "Your Shopsifu account is protected by advanced security. Keeping this information up-to-date safeguards your account even more.",
+
+        "profile": "Profile",
+        "policy": "Policies",
+        "manageProfile": "Manage Your Profile",
+        "title": "My profile",
+        "subtitle": "Manage profile information for account security",
+        "currentPasswordRequired": "",
+        "newPasswordInvalid": "",
+        "confirmPasswordRequired": "",
+        "passwordsMismatch": "",
+        "emailPhone": "Information",
+        "noPhone": "",
+        "password": "Password",
+        "twoFactor": "Two-Factor",
+        "twoFactorDescription": "Protect your account by adding an extra layer of security.",
+        "thirdPartyAccounts": "Third-party accounts",
+        "turnOn": "Turn On",
+        "edit": "Edit",
+
+        "editEmailPhone": "Email&Phone",
+        "email": "Email",
+        "phoneNumber": "Phone Number",
+        "cancel": "Cancel",
+        "save": "Save Changes",
+
+        "editPassword": "Edit Password",
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+
+        "enable2FA": "Enable Two-Factor Authentication",
+        "enable2FADescription": "Are you sure you want to enable two-factor authentication? You will need to scan a QR code with your authenticator app.",
+        "enable": "Enable",
+
+        "deleteAccount": "Delete Account",
+        "confirmDelete": "Delete",
+        "accountTermination": "Account Terminate",
+
+        "name": "Name",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "username": "User name",
+        "phone": "Phone Number",
+        "updateProfile": "Uses Information",
+        "clickToChange": "Change profile picture",
+
+        "on": "On",
+        "off": "Off",
+        "turnOff": "Turn Off",
+
+        "dashboard": "Dashboard"
+      },
+
+      "password": {
+        "title": "Change Password",
+        "subtitle": "Your password must have a minimum of 6 characters and include numbers, letters and special characters",
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+        "forgotPassword": "Forgot Password?",
+
+        "currentPasswordPlaceholder": "Enter Your Current Password",
+        "newPasswordPlaceholder": "Enter Your New Password",
+        "confirmPasswordPlaceholder": "Re-enter the new password",
+
+        "changePassword": "Change Password",
+        "processing": "Processing...",
+        "passwordChanged": "Your password has been changed successfully!",
+
+        "minLength": "Password must be at least 6 characters long",
+        "revokeOtherSessions": "Revoke other sessions"
+      },
+
+      "address": {
+        "address": "Address",
+        "myAddresses": "My Addresses",
+        "addNewAddress": "Add New Address",
+        "noAddress": "You don’t have any addresses yet.",
+        "processing": "Processing...",
+        "changePassword": "Change password",
+        "encryptedNote": "All data you added will be encrypted"
+      },
+
+      "payment": {
+        "payment": "Payment",
+        "creditDebitCard": "Credit / Debit Card",
+        "noCardLinked": "You don't have cards yet.",
+        "bankAccount": "My Bank Account",
+        "addBankLink": "Add New Bank Account",
+        "noBankLinked": "You don’t have bank accounts yet.",
+        "title": "Your payment methods",
+        "encrypted": "All data is encrypted",
+        "fastCheckout": "Save cards for a faster checkout",
+        "secure": "Secure payment",
+        "convenient": "Convenient payment",
+        "addNewCard": "Add a credit or debit card",
+        "cardSecurityTitle": "Shopsifu protects your card information",
+        "compliesPCI": "Shopsifu follows the Payment Card Industry Data Security Standard (PCI DSS) when handling card data",
+        "secureInfo": "Card information is secure and uncompromised",
+        "encryptedAgain": "All data is encrypted",
+        "noSellInfo": "Shopsifu never sells your card information",
+        "secureTrustedTitle": "Secure & trusted",
+        "secureTrustedDesc": "Your security is our top priority. To keep you safe, we use a market-leading risk and fraud protection system for every transaction.",
+        "needHelp": "Need help with a security issue?",
+        "contactUs": "Contact us",
+        "supportTitle": "Customer support",
+        "supportDesc": "The customer support has answers to payment questions you may have.",
+        "doubt": "Have doubts about your transactions?",
+        "faq": "Payment FAQs"
+      },
+
+      "security": {
+        "security": "Security",
+        "title": "Active devices",
+        "subtitle": "For your account's security, do not share your password with anyone else",
+        "loggedInDevices": "Logged-in devices",
+        "totalSessionsSummary": "Total of {{totalSessions}} active sessions on {{deviceCount}} devices",
+        "total": "Total of",
+        "active": "active sessions on",
+        "device": "device",
+        "deviceSessionCount": "{{count}} active sessions",
+        "terminateSession": "Terminate this session",
+        "deleteSession": "Delete this session",
+        "loginSession": "Login session"
+      },
+
+      "myPurchase": {
+        "myPurchase": "Purchase history"
+      }
+    },
+
+    "cart": {
+      "title": "Shopping Cart",
+      "edit": "Edit",
+      "done": "Done",
+      "emptyCart": "Your cart is empty",
+      "continueShopping": "Continue Shopping",
+      "checkout": "Checkout",
+      "itemsInCart": "{{count}} items in your cart",
+      "totalPrice": "Total Price",
+      "removeItem": "Remove Item",
+      "updateQuantity": "Update Quantity",
+      "quantity": "Quantity",
+      "subtotal": "Subtotal",
+      "taxesAndFees": "Taxes & Fees",
+      "shippingCost": "Shipping Cost",
+      "totalAmount": "Total Amount",
+      "proceedToCheckout": "Proceed to Checkout",
+
+      "topbar": {
+        "notifications": "Notifications",
+        "help": "Help",
+        "language": "Languages",
+        "saleRegister": "Sale Register"
+      },
+
+      "productTitle": {
+        "product": "Product",
+        "unitPrice": "Unit Price",
+        "quantity": "Quantity",
+        "totalPrice": "Total Price",
+        "actions": "Actions"
+      },
+
+      "footer": {
+        "platformVoucher": "Platform Voucher",
+        "selectOrEnterCode": "Select or enter code",
+        "noItemSelected": "No item selected",
+        "selectAll": "Select All",
+        "delete": "Delete",
+        "removeInactive": "Remove inactive products",
+        "moveToLikes": "Move to My Likes",
+        "total": "Total",
+        "items": "items",
+        "youSaved": "You saved ₫{{amount}}",
+        "checkout": "Check Out"
+      }
+    }
+  }
+}

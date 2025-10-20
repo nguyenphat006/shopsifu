@@ -1,0 +1,1537 @@
+{
+  "schema": {
+    "validation": {
+      "password": {
+        "minLength": "Mật khẩu phải có ít nhất 6 ký tự",
+        "maxLength": "Mật khẩu không được vượt quá 20 ký tự",
+        "uppercase": "Mật khẩu phải chứa ít nhất một chữ in hoa",
+        "lowercase": "Mật khẩu phải chứa ít nhất một chữ thường",
+        "number": "Mật khẩu phải chứa ít nhất một số",
+        "specialCharacter": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt",
+        "match": "Mật khẩu không khớp",
+        "currentRequired": "Mật khẩu hiện tại là bắt buộc"
+      },
+      "email": {
+        "invalid": "Địa chỉ email không hợp lệ"
+      },
+      "profile": {
+        "firstNameRequired": "Tên là bắt buộc",
+        "lastNameRequired": "Họ là bắt buộc",
+        "usernameMinLength": "Tên người dùng phải có ít nhất 3 ký tự",
+        "phoneMinLength": "Số điện thoại phải có ít nhất 10 chữ số"
+      },
+      "user": {
+        "firstNameRequired": "Tên là bắt buộc",
+        "lastNameRequired": "Họ là bắt buộc",
+        "usernameMinLength": "Tên người dùng phải có ít nhất 3 ký tự",
+        "emailInvalid": "Địa chỉ email không hợp lệ",
+        "phoneMinLength": "Số điện thoại phải có ít nhất 10 chữ số",
+        "roleRequired": "Vai trò là bắt buộc"
+      }
+    }
+  },
+  "common": {
+    "title": "Mua sắm dễ dàng",
+    "subtitle": "Giao hàng toàn quốc, thanh toán linh hoạt\nvà đảm bảo hoàn tiền nếu không hài lòng.",
+    "delete": "Xóa",
+    "cancel": "Hủy"
+  },
+  "errorPage": {
+    "title": "Không tìm thấy trang",
+    "subtitle": "Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển.",
+    "backToHome": "Quay về trang chủ"
+  },
+  "language": {
+    "en": "Tiếng Anh",
+    "vi": "Tiếng Việt",
+    "fr": "Tiếng Pháp",
+    "es": "Tiếng Tây Ban Nha",
+    "de": "Tiếng Đức",
+    "zh": "Tiếng Trung"
+  },
+  "validation": {
+    "required": "Trường này là bắt buộc",
+    "email": "Vui lòng nhập địa chỉ email hợp lệ",
+    "phone": "Vui lòng nhập số điện thoại hợp lệ",
+    "minLengthPhone": "Số điện thoại phải có ít nhất 10 ký tự",
+    "fullName": "Vui lòng nhập họ và tên đầy đủ",
+    "invalid email": "Định dạng email không hợp lệ",
+    "invalid phone": "Định dạng số điện thoại không hợp lệ",
+    "password": {
+      "minLength": "Mật khẩu phải có ít nhất 6 ký tự",
+      "maxLength": "Mật khẩu không được vượt quá 20 ký tự",
+      "uppercase": "Mật khẩu phải chứa ít nhất một chữ in hoa",
+      "lowercase": "Mật khẩu phải chứa ít nhất một chữ thường",
+      "number": "Mật khẩu phải chứa ít nhất một số",
+      "specialCharacter": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt",
+      "match": "Mật khẩu không khớp"
+    },
+    "otp": {
+      "length": "OTP phải có 6 chữ số",
+      "numeric": "OTP chỉ được chứa số"
+    },
+    "recovery": {
+      "codeLength": "Mã khôi phục phải có 6 ký tự và bao gồm dấu (-)",
+      "codeFormat": "Mã khôi phục phải gồm 5 ký tự (chữ hoa hoặc số) - 5 ký tự (chữ hoa hoặc số)"
+    }
+  },
+  "auth": {
+    "common": {
+      "full name": "Họ và tên",
+      "email": "Email",
+      "phonenumber": "Số điện thoại",
+      "password": "Mật khẩu",
+      "confirm password": "Xác nhận mật khẩu",
+      "logout": "Đăng xuất",
+      "or": "Hoặc tiếp tục với",
+      "signinWithGoogle": "Đăng nhập với Google",
+      "signupWithGoogle": "Đăng ký với Google",
+      "cancel": "Hủy",
+      "delete": "Xóa?",
+      "firstname": "Họ",
+      "lastname": "Tên",
+      "username": "Tên tài khoản"
+    },
+    "register": {
+      "title": "Đăng ký tài khoản",
+      "subtitle": "Nhập thông tin để hoàn tất đăng ký",
+      "register": "Đăng ký",
+      "registering": "Đang đăng ký...",
+      "password": "Mật khẩu",
+      "confirm password": "Xác nhận mật khẩu",
+      "haveaccount": "Đã có tài khoản?",
+      "login": "Đăng nhập",
+      "start": "Nhập email để bắt đầu đăng ký",
+      "success": "Mã xác minh đã được gửi đến email của bạn",
+      "continue": "Tiếp tục"
+    },
+    "login": {
+      "title": "Chào mừng quay lại ứng dụng",
+      "subtitle": "Vui lòng nhập email và mật khẩu để tiếp tục",
+      "login": "Đăng nhập",
+      "logging in": "Đang đăng nhập...",
+      "forgot password": "Quên mật khẩu?",
+      "no account": "Chưa có tài khoản?",
+      "register": "Đăng ký",
+      "remember me": "Ghi nhớ đăng nhập",
+      "emailOrUsername": "Email hoặc tên tài khoản",
+      "placeholder": "Nhập email hoặc tài khoản người dùng"
+    },
+    "forgotPassword": {
+      "title": "Quên mật khẩu",
+      "subtitle": "Nhập email bên dưới và chúng tôi sẽ gửi liên kết để đặt lại mật khẩu.",
+      "Remember password": "Nhớ mật khẩu?",
+      "login": "Đăng nhập",
+      "confirm": "Xác nhận",
+      "Sending": "Đang gửi",
+      "continue": "Tiếp tục"
+    },
+    "resetPassword": {
+      "title": "Đặt lại mật khẩu",
+      "subtitle": "Nhập mật khẩu mới của bạn vào bên dưới.",
+      "currentPassword": "Mật khẩu hiện tại",
+      "currentPasswordPlaceholder": "Nhập mật khẩu hiện tại của bạn",
+      "newPasswordPlaceholder": "Nhập mật khẩu mới của bạn",
+      "confirmPasswordPlaceholder": "Nhập lại mật khẩu mới của bạn",
+      "new password": "Mật khẩu mới",
+      "confirmnewPassword": "Xác nhận mật khẩu mới",
+      "Remember password": "Bạn đã nhớ mật khẩu chưa?",
+      "changePassword": "Đổi mật khẩu",
+      "login": "Đăng nhập",
+      "Processing": "Đang xử lý...",
+      "success": "Đường dẫn đặt lại mật khẩu đã được gửi đến email của bạn",
+      "send": "Gửi đường dẫn"
+    },
+    "verifyOtp": {
+      "title": "Nhập mã xác minh",
+      "subtitle": "Chúng tôi đã gửi mã OTP gồm 6 chữ số đến email của bạn. Vui lòng nhập mã bên dưới.",
+      "No code": "Không nhận được mã?",
+      "resend": "Gửi lại",
+      "verify": "Xác minh OTP",
+      "verifying": "Đang xác minh"
+    },
+    "verifyEmail": {
+      "title": "Xác thực email",
+      "subtitle": "Nhập email của bạn để xác thực",
+      "success": "Mã xác minh đã được gửi đến email của bạn",
+      "No code": "Không nhận được mã?",
+      "confirm": "Xác nhận",
+      "resend": "Gửi lại",
+      "verify": "Xác minh",
+      "verifying": "Đang xác minh",
+      "back": "Quay lại",
+      "login": "Đăng nhập",
+      "Processing": "Đang xử lý"
+    },
+    "trustDevices": {
+      "title": "Tin cậy thiết bị này?",
+      "subtitle": "Bạn có muốn tin cậy thiết bị này không?\nNếu có, bạn sẽ không cần xác minh 2FA trong 30 ngày tới.",
+      "trust": "Tin cậy",
+      "trusting": "Đang tin cậy...",
+      "cancel": "Hủy",
+      "success": "Thiết bị đã được tin cậy thành công",
+      "no": "Không",
+      "processing": "Đang xử lý...",
+      "trustDevices": "Tin cậy thiết bị này"
+    },
+    "2faVerify": {
+      "enterOTPCode": "Nhập mã xác minh OTP",
+      "enterRecoveryCode": "Nhập mã khôi phục",
+      "enterVerrifyCodeAuthen": "Nhập mã xác minh từ ứng dụng Authenticator của bạn",
+      "sent6DigitCodeEmail": "Chúng tôi đã gửi mã OTP gồm 6 chữ số đến email của bạn. Vui lòng nhập mã bên dưới.",
+      "plsEnterRecoveryCode": "Vui lòng nhập mã khôi phục (ví dụ: 45UXR-RU50C)",
+      "sent6DigitCodeAuthenticator": "Vui lòng nhập mã gồm 6 chữ số từ ứng dụng Authenticator",
+      "enterVerrifyCode": "Nhập mã xác minh",
+      "useRecoveryCode": "Dùng mã khôi phục",
+      "useAuthenticator": "Dùng Authenticator",
+      "didnotReceiveCode": "Không nhận được mã?",
+      "resendOtp": "Gửi lại OTP"
+    }
+  },
+  "system": {
+    "toasts": {
+      "createSuccess": "Thêm thành công!",
+      "editSuccess": "Cập nhật thành công",
+      "deleteSuccess": "Xóa thành công"
+    }
+  },
+  "admin": {
+    "pages": {
+      "category": {
+        "title": "Quản lý danh mục",
+        "subtitle": "Quản lý tất cả danh mục sản phẩm của bạn",
+        "addCategory": "Thêm danh mục",
+        "editCategory": "Chỉnh sửa danh mục",
+        "deleteCategory": "Xóa danh mục",
+        "name": "Tên danh mục",
+        "namePlaceholder": "Nhập tên danh mục",
+        "slug": "Đường dẫn (slug)",
+        "slugPlaceholder": "Nhập slug",
+        "description": "Mô tả",
+        "descriptionPlaceholder": "Nhập mô tả danh mục (tuỳ chọn)",
+        "parent": "Danh mục cha",
+        "active": "Hoạt động",
+        "inactive": "Không hoạt động",
+        "status": "Trạng thái",
+        "statusActive": "Đang hoạt động",
+        "statusInactive": "Ngừng hoạt động",
+        "action": "Thao tác",
+        "noData": "Không có dữ liệu",
+        "searchPlaceholder": "Tìm kiếm theo tên danh mục",
+        "addTitle": "Thêm danh mục mới",
+        "save": "Thêm mới",
+        "editTitle": "Chỉnh sửa danh mục",
+        "addDescription": "Tạo mới một danh mục sản phẩm. Có thể kéo thả để sắp xếp hoặc phân cấp.",
+        "editDescription": "Chỉnh sửa thông tin danh mục. Có thể kéo thả để thay đổi vị trí hoặc phân cấp.",
+        "treeTitle": "Cây danh mục",
+        "treeDescription": "Kéo thả để sắp xếp hoặc phân cấp danh mục. Chỉ hỗ trợ 1 cấp cha - 1 cấp con.",
+        "deleteConfirmTitle": "Xác nhận xoá danh mục",
+        "deleteConfirmDescription": "Bạn có chắc chắn muốn xoá danh mục này? Hành động này không thể hoàn tác.",
+        "column": {
+          "name": "Tên danh mục",
+          "status": "Trạng thái",
+          "createdAt": "Ngày tạo",
+          "actions": "Thao tác"
+        },
+        "actions": {
+          "view": "Xem chi tiết",
+          "edit": "Chỉnh sửa",
+          "delete": "Xóa"
+        }
+      }
+    },
+    "ModuleCategory": {
+      "title": "Quản lý danh mục",
+      "subtitle": "Quản lý tất cả danh mục sản phẩm của bạn",
+      "Table": {
+        "searchPlaceholder": "Tìm kiếm theo tên danh mục",
+        "addCategory": "Thêm danh mục",
+        "name": "Tên danh mục",
+        "parentCategory": "Mã ID danh mục liên kết",
+        "logo": "Logo",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật",
+        "actions": "Hành động",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa danh mục",
+        "deleteTitle": "Xóa danh mục",
+        "deleteSubTitle": "Bạn có chắc chắn xóa danh mục này?",
+        "noParent": "Không có",
+        "noLogo": "Không có hình ảnh",
+        "deleteConfirmTitle": "Xác nhận xoá danh mục",
+        "notFound": "Không có danh mục",
+        "cancel": "Hủy bỏ",
+        "backToRoot": "Quay về",
+        "currentCategory": "Danh mục hiện tại",
+        "deleteConfirmMessage": "Bạn có chắc chắn xóa danh mục"
+      },
+      "ModalCreate": {
+        "noParent": "Không danh mục cha",
+        "logoSelect": "Chọn Logo",
+        "addCategory": "Thêm danh mục",
+        "editCategory": "Chỉnh sửa danh mục",
+        "name": "Tên danh mục",
+        "namePlaceholder": "Nhập tên danh mục...",
+        "parentCategory": "Danh mục cha",
+        "parentPlaceholder": "Chọn danh mục cha",
+        "logo": "Logo",
+        "logoPlaceholder": "Nhập Logo....",
+        "logoHelp": "",
+        "common": {
+          "cancel": "Hủy bỏ",
+          "create": "Tạo danh mục",
+          "save": "Lưu thông tin"
+        }
+      }
+    },
+    "ModuleVouchers": {
+      "breadcrumb": {
+        "title": "Quản lý mã giảm giá",
+        "subtitle": "Quản lý tất cả mã giảm giá tại đây",
+        "vouchers": "Danh sách mã giảm giá",
+        "newPage": "Tạo mã giảm giá"
+      },
+      "title_shop": "Voucher toàn shop",
+      "title_product": "Voucher sản phẩm",
+      "title_private": "Voucher riêng tư",
+      "title": "Quản lý mã giảm giá",
+      "subtitle": "Quản lý tất cả mã giảm giá tại đây",
+      "createVoucher": "Tạo Voucher",
+      "createVoucherDesc": "Tạo Mã giảm giá toàn shop hoặc Mã giảm giá sản phẩm ngay bây giờ để thu hút người mua.",
+      "shopVoucher": "Voucher toàn shop",
+      "productVoucher": "Voucher sản phẩm",
+      "privateVoucher": "Voucher riêng tư",
+      "shopVoucherDesc": "Voucher áp dụng cho tất cả các shop của bạn",
+      "productVoucherDesc": "Voucher áp dụng cho sản phẩm nhất định do shop chọn",
+      "privateVoucherDesc": "Voucher áp dụng cho người dùng riêng tư",
+      "platformVoucher": "Mã giảm giá toàn sàn",
+      "platformVoucherDesc": "Áp dụng cho tất cả sản phẩm trên toàn bộ sàn thương mại điện tử.",
+      "categoriesVoucher": "Mã giảm giá theo danh mục",
+      "categoriesVoucherDesc": "Chỉ áp dụng cho các sản phẩm thuộc danh mục cụ thể.",
+      "brandVoucher": "Mã giảm giá thương hiệu",
+      "brandVoucherDesc": "Chỉ áp dụng cho sản phẩm thuộc một thương hiệu nhất định.",
+      "shopAdminVoucher": "Mã giảm giá cửa hàng",
+      "shopAdminVoucherDesc": "Mã giảm giá được quản lý và phát hành bởi quản trị viên cửa hàng.",
+      "productAdminVoucher": "Mã giảm giá sản phẩm",
+      "productAdminVoucherDesc": "Chỉ áp dụng cho các sản phẩm được chỉ định bởi quản trị viên.",
+      "privateAdminVoucher": "Mã giảm giá riêng tư (Admin)",
+      "privateAdminVoucherDesc": "Mã giảm giá riêng tư cấp nền tảng - chỉ những người có mã mới sử dụng được.",
+      "create": "Tạo",
+      "Table": {
+        "voucherInfo": "Thông tin voucher",
+        "discountType": "Loại giảm giá",
+        "voucherType": "Loại voucher",
+        "displayType": "Loại hiển thị",
+        "discountValue": "Giá trị giảm",
+        "validFrom": "Từ ngày",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật",
+        "validTo": "Đến ngày",
+        "name": "Tên voucher",
+        "code": "Mã voucher",
+        "discount": "Giảm giá",
+        "type": "Loại voucher",
+        "status": "Trạng thái",
+        "actions": {
+          "edit": "Chỉnh sửa",
+          "delete": "Xóa"
+        },
+        "searchPlaceholder": "Tìm kiếm theo tên voucher",
+        "notFound": "Không tìm thấy voucher",
+        "deleteConfirm": {
+          "title": "Xác nhận xóa voucher",
+          "description": "Bạn có chắc chắn muốn xóa voucher này không? Hành động này không thể hoàn tác.",
+          "deleteAction": "Xóa ngay",
+          "cancel": "Hủy bỏ"
+        }
+      }
+    },
+    "ModuleUsers": {
+      "Table": {
+        "role": "Vai trò",
+        "name": "Tên người dùng",
+        "Email": "Email",
+        "status": "Trạng thái",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật",
+        "notFound": "Không tìm thấy người dùng",
+        "addAction": "Thêm người dùng",
+        "searchPlaceholder": "Tìm theo tên hoặc mô tả vai trò....",
+        "deleteConfirm": {
+          "title": "Xác nhận xóa người dùng",
+          "description": "Bạn có chắc chắn muốn xóa người dùng này không? Hành động này không thể hoàn tác.",
+          "deleteAction": "Xóa ngay",
+          "cancel": "Hủy bỏ"
+        },
+        "actions": {
+          "edit": "Chỉnh sửa người dùng",
+          "delete": "Xóa người dùng"
+        }
+      }
+    },
+    "ModuleProduct": {
+      "title": "Quản lý sản phẩm",
+      "subtitle": "Quản lý tất cả sản phẩm tại đây",
+      "DataTable": {
+        "name": "Tên sản phẩm",
+        "price": "Giá bán",
+        "virtualPrice": "Giá gốc",
+        "category": "Danh mục",
+        "stock": "Tồn kho",
+        "status": "Trạng thái",
+        "action": "Hành động",
+        "image": "Hình ảnh",
+        "description": "Mô tả",
+        "slug": "Slug",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật",
+        "edit": "Sửa thông tin",
+        "delete": "Xóa sản phẩm",
+        "view": "Xem sản phẩm",
+        "notFound": "Không tìm thấy sản phẩm"
+      },
+      "Status": {
+        "active": "Hoạt động",
+        "inactive": "Không hoạt động",
+        "archived": "Đã lưu trữ"
+      },
+      "searchPlaceholder": "Tìm kiếm theo tên sản phẩm",
+      "DeleteModal": {
+        "title": "Xác nhận xóa",
+        "description": "Bạn có chắc chắn muốn xóa sản phẩm này?",
+        "confirmText": "Xóa",
+        "cancelText": "Hủy"
+      },
+      "ExportData": {
+        "title": "Xuất dữ liệu",
+        "description": "Xuất dữ liệu sản phẩm",
+        "confirmText": "Xuất",
+        "cancelText": "Hủy",
+        "pickDate": "Chọn ngày",
+        "selectFormat": "Chọn định dạng",
+        "fileFormat": "Định dạng file",
+        "dateRange": "Khoảng thời gian"
+      },
+      "Filter": {
+        "category": "Danh mục",
+        "price": "Giá",
+        "stock": "Tồn kho",
+        "status": "Trạng thái",
+        "action": "Hành động",
+        "image": "Hình ảnh",
+        "description": "Mô tả",
+        "slug": "Slug",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật",
+        "edit": "Sửa thông tin",
+        "delete": "Xóa sản phẩm",
+        "notFound": "Không tìm thấy sản phẩm",
+        "priceRange": "Khoảng giá",
+        "clear": "Xóa bộ lọc",
+        "applyFilter": "Áp dụng bộ lọc",
+        "apply": "Áp dụng",
+        "clearFilter": "Xóa bộ lọc",
+        "activeFilter": "Bộ lọc đang áp dụng",
+        "searchCategory": "Tìm kiếm danh mục",
+        "noResults": "Không có kết quả",
+        "loading": "Đang tải dữ liệu...",
+        "clearFilters": "Xóa tất cả bộ lọc"
+      },
+      "AddNew": {
+        "page": {
+          "breadcrumb": {
+            "products": "Sản phẩm",
+            "newPage": "Thêm mới sản phẩm"
+          },
+          "title": "Thêm sản phẩm",
+          "formPlaceholder": ""
+        }
+      },
+      "mainDetails": {
+        "title": "Chi tiết sản phẩm",
+        "productTitle": "Tên sản phẩm",
+        "productTitlePlaceholder": "Nhập tên sản phẩm",
+        "content": "Nội dung",
+        "contentPlaceholder": "Nhập nội dung"
+      }
+    },
+    "ModuleBrands": {
+      "Table": {
+        "id": "ID",
+        "logo": "Logo",
+        "name": "Tên thương hiệu",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật",
+        "addAction": "Thêm thương hiệu",
+        "notFound": "Không tìm thấy thương hiệu",
+        "deleteConfirm": {
+          "title": "Xác nhận xóa thương hiệu",
+          "description": "Bạn có chắc chắn muốn xóa thương hiệu {name} này không?",
+          "deleteAction": "Xóa ngay",
+          "cancel": "Hủy bỏ"
+        },
+        "actions": {
+          "edit": "Chỉnh sửa thương hiệu",
+          "delete": "Xóa thương hiệu"
+        },
+        "searchPlaceholder": "Tìm kiếm theo tên thương hiệu..."
+      },
+      "modal": {
+        "addTitle": "Thêm mới thương hiệu",
+        "editTitle": "Chỉnh sửa thương hiệu",
+        "addDescription": "Nhập thông tin thương hiệu bên dưới",
+        "editDescription": "Cập nhật thông tin thương hiệu",
+        "name": "Tên thương hiệu",
+        "namePlaceholder": "Nhập tên thương hiệu",
+        "logo": "Logo",
+        "logoPlaceholder": "Nhập Logo",
+        "cancel": "Hủy bỏ",
+        "adding": "Đang thêm...",
+        "saving": "Đang lưu...",
+        "add": "Thêm mới",
+        "save": "Lưu thay đổi",
+        "uploadImage": "Tải ảnh lên",
+        "uploading": "",
+        "selectImage": "Chọn ảnh lên"
+      }
+    },
+    "orders": {
+      "viewDetail": "Xem chi tiết",
+      "printInvoice": "In hóa đơn",
+      "updateStatus": "Cập nhật trạng thái",
+      "products": "Sản phẩm",
+      "title": "Danh sách đơn hàng",
+      "subtitle": "Quản lý tất cả đơn hàng",
+      "searchPlaceholder": "Tìm kiếm đơn hàng",
+      "orderCode": "Mã đơn hàng",
+      "orderDate": "Ngày lên đơn",
+      "customerName": "Khách hàng",
+      "shopName": "Tên shop",
+      "status": "Trạng thái",
+      "paymentMethod": "Thanh toán",
+      "totalAmount": "Tổng tiền",
+      "notFound": "Không có đơn hàng",
+      "statuses": {
+        "pendingPackaging": "Chờ đóng gói",
+        "pendingPayment": "Chờ thanh toán",
+        "pendingPickup": "Chờ lấy hàng",
+        "pendingDelivery": "Đang giao",
+        "delivered": "Đã giao",
+        "returned": "Đã trả hàng",
+        "cancelled": "Đã hủy"
+      }
+    },
+    "sidebar": {
+      "dashboard": "Bảng điều khiển",
+      "voucher": {
+        "voucher": "Mã giảm giá",
+        "listVoucher": "Danh sách mã giảm giá",
+        "newVoucher": "Thêm mới"
+      },
+      "orders": {
+        "orders": "Đơn hàng",
+        "allOrders": "Tất cả đơn hàng",
+        "newOrders": "Đơn hàng mới",
+        "processedOrders": "Đơn hàng đã xử lý",
+        "listOrders": "Danh sách đơn hàng"
+      },
+      "permission": {
+        "permissionManager": "Quản lý quyền"
+      },
+      "role": {
+        "roleManager": "Quản lý vai trò"
+      },
+      "user": {
+        "userManager": "Quản lý người dùng"
+      },
+      "device": {
+        "deviceManager": "Quản lý thiết bị"
+      },
+      "brand": {
+        "brandManager": "Quản lý thương hiệu"
+      },
+      "audit-logs": {
+        "auditLogManager": "Quản lý nhật ký"
+      },
+      "category": {
+        "category": "Danh mục"
+      },
+      "products": {
+        "products": "Sản phẩm",
+        "productsList": "Danh sách sản phẩm",
+        "addProducts": "Thêm sản phẩm",
+        "title": "Quản lý sản phẩm",
+        "subtitle": "Quản lý tất cả sản phẩm tại đây",
+        "form": {
+          "name": "Tên sản phẩm",
+          "slug": "Slug",
+          "category": "Danh mục",
+          "price": "Giá",
+          "stock": "Tồn kho",
+          "status": "Trạng thái",
+          "image": "Hình ảnh",
+          "description": "Mô tả",
+          "submit": "Lưu",
+          "cancel": "Hủy"
+        }
+      },
+      "categories": {
+        "categories": "Danh mục"
+      },
+      "system": {
+        "system": "Hệ thống",
+        "permissionManager": "Quản lý quyền",
+        "roleManager": "Quản lý vai trò",
+        "userManager": "Quản lý người dùng",
+        "systemLog": "Nhật ký hệ thống",
+        "deviceManager": "Quản lý thiết bị"
+      },
+      "language": {
+        "languageManager": "Quản lý ngôn ngữ"
+      },
+      "settings": {
+        "settings": "Cài đặt",
+        "systemSettings": "Cài đặt hệ thống",
+        "accountSettings": "Cài đặt tài khoản",
+        "profile": "Hồ sơ",
+        "passwordAndSecurity": "Mật khẩu & Bảo mật"
+      }
+    },
+    "profileDropdown": {
+      "shopProfile": "Hồ sơ cửa hàng",
+      "shopSettings": "Cài đặt cửa hàng",
+      "logout": "Đăng xuất",
+      "logging out": "Đang đăng xuất",
+      "profileManage": "Quản lý hồ sơ",
+      "language": "Ngôn ngữ: ",
+      "lang": {
+        "vi": "Tiếng Việt",
+        "en": "Tiếng Anh"
+      },
+      "home": "Trang chủ"
+    },
+    "pagination": {
+      "previous": "Trước",
+      "next": "Sau",
+      "first": "Đầu tiên",
+      "last": "Cuối cùng",
+      "page": "Trang",
+      "of": "trên",
+      "results": "Số mục mỗi trang",
+      "total": "Tổng cộng"
+    },
+    "dataTable": {
+      "noData": "Không có dữ liệu",
+      "image": "Hình ảnh",
+      "productName": "Tên sản phẩm",
+      "category": "Danh mục",
+      "price": "Giá",
+      "stock": "Tồn kho",
+      "status": "Trạng thái",
+      "view": "Xem",
+      "toggle_columns": "Bật/tắt cột",
+      "edit": "Sửa nội dung",
+      "delete": "Xóa nội dung",
+      "Active": "Hoạt động",
+      "Inactive": "Ngừng hoạt động"
+    },
+    "dataTableExport": {
+      "export": "Xuất tệp",
+      "export CSV": "Xuất CSV",
+      "export Excel": "Xuất Excel"
+    },
+    "dataTablePagination": {
+      "showing": "Hiển thị",
+      "line is selected": "dòng được chọn",
+      "in": "trong",
+      "Number of lines per page": "Số dòng mỗi trang",
+      "page": "Trang"
+    },
+    "dataTableSearch": {
+      "search": "Tìm kiếm",
+      "search by name": "Tìm theo tên",
+      "search by email": "Tìm theo email",
+      "search by phone number": "Tìm theo số điện thoại",
+      "search by address": "Tìm theo địa chỉ",
+      "placeholder": "Nhập từ khóa để tìm kiếm"
+    },
+    "dataTableToolbar": {
+      "categories": "Danh mục",
+      "add": "Thêm",
+      "edit": "Chỉnh sửa",
+      "delete": "Xóa",
+      "delete selected": "Xóa mục đã chọn",
+      "delete all": "Xóa tất cả",
+      "delete all selected": "Xóa tất cả mục đã chọn",
+      "delete all data": "Xóa toàn bộ dữ liệu",
+      "delete all data confirm": "Bạn có chắc chắn muốn xóa toàn bộ dữ liệu không?",
+      "delete selected confirm": "Bạn có chắc chắn muốn xóa các mục đã chọn không?",
+      "delete confirm": "Bạn có chắc chắn muốn xóa mục này không?"
+    },
+    "dataTableViewOptions": {
+      "display": "Hiển thị",
+      "selectColumns": "Chọn cột"
+    },
+    "common": {
+      "pickday": "Chọn ngày"
+    },
+    "dashboard": {
+      "title": "Tổng quan",
+      "subtitle": "Chào mừng trở lại! Đây là tổng quan về cửa hàng của bạn.",
+      "recentActivity": {
+        "title": "Hoạt động gần đây",
+        "empty": "Không có hoạt động gần đây"
+      },
+      "page": {
+        "totalEarn": "Tổng doanh thu",
+        "newOrders": "Đơn hàng mới",
+        "bestSeller": "Sản phẩm bán chạy",
+        "newCustomer": "Khách hàng mới"
+      },
+      "salesStats": {
+        "title": "Thống kê doanh thu",
+        "empty": "Không có dữ liệu thống kê"
+      },
+      "searchPlaceholder": "Tìm kiếm...",
+      "searchMenu": "Tìm kiếm menu"
+    },
+    "showToast": {
+      "language": {
+        "createSuccessful": "Tạo ngôn ngữ thành công.",
+        "updateSuccessful": "Cập nhật ngôn ngữ thành công.",
+        "deleteSuccessful": "Xóa ngôn ngữ thành công",
+        "errorFetching": "Lỗi khi lấy ngôn ngữ",
+        "errorFetchings": "Lỗi khi lấy danh sách ngôn ngữ"
+      },
+      "role": {
+        "createSuccessful": "Tạo vai trò thành công.",
+        "updateSuccessful": "Cập nhật vai trò thành công.",
+        "deleteSuccessful": "Xóa vai trò thành công"
+      },
+      "auth": {
+        "registerSuccessful": "Đăng ký tài khoản thành công.",
+        "loginSuccessful": "Đăng nhập thành công!",
+        "sessionExpired": "Phiên đăng nhập đã hết hạn.",
+        "changePasswordSuccessful": "Đổi mật khẩu thành công!",
+        "2faVerify": "Xác minh 2FA thành công.",
+        "authSuccessful": "Xác thực thành công.",
+        "sentOtp": "Mã OTP đã được gửi tới email của bạn.",
+        "sentNewOtp": "Mã OTP mới đã được gửi lại.",
+        "sentCode": "Mã xác thực đã được gửi tới email của bạn.",
+        "emailNotFound": "Không tìm thấy email. Vui lòng thử lại.",
+        "sessionExpireds": "Phiên xác thực đã hết hạn. Vui lòng thử lại.",
+        "loginSessionNotFound": "Không tìm thấy phiên đăng nhập. Vui lòng thử lại.",
+        "invalidToken": "Token không hợp lệ."
+      }
+    },
+    "error": {
+      "title": "Đã xảy ra lỗi",
+      "subtitle": "Đã xảy ra lỗi khi tải trang. Vui lòng thử lại hoặc quay về trang chủ.",
+      "tryAgain": "Thử lại",
+      "backToHome": "Về trang chủ"
+    },
+    "profileSettings": {
+      "changePassword": {
+        "title": "Đổi mật khẩu",
+        "subtitle": "Nhập mật khẩu mới bên dưới.",
+        "currentPassword": "Mật khẩu hiện tại",
+        "newPassword": "Mật khẩu mới",
+        "confirmNewPassword": "Xác nhận mật khẩu mới",
+        "rememberPassword": "Nhớ mật khẩu?",
+        "login": "Đăng nhập",
+        "processing": "Đang xử lý",
+        "success": "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn",
+        "send": "Gửi liên kết",
+        "saving": "Đang lưu",
+        "saveChanges": "Lưu thay đổi",
+        "revokeOtherSessions": "Hủy các phiên đăng nhập khác",
+        "passwordPolicy": "Mật khẩu phải chứa ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt"
+      },
+      "password": {
+        "validation": {
+          "currentPasswordRequired": "Yêu cầu mật khẩu hiện tại",
+          "newPasswordMinLength": "Mật khẩu mới phải có ít nhất 6 ký tự",
+          "newPasswordDigit": "Mật khẩu phải chứa ít nhất một chữ số",
+          "newPasswordLetter": "Password must contain at least one letter",
+          "newPasswordSpecialChar": "Password must contain at least one special character (!$@%)",
+          "confirmPasswordRequired": "Confirm password is required",
+          "passwordsDoNotMatch": "Passwords do not match"
+        }
+      },
+      "regenerateCodesTitle": "Tạo lại mã khôi phục",
+      "regenerateCodesDescription": "Nhập mã 6 chữ số từ ứng dụng xác thực để tạo lại mã khôi phục.",
+      "confirm": "Xác nhận",
+      "2fa": {
+        "enable2FAFirst": "Vui lòng bật xác thực hai yếu tố trước khi tạo lại mã khôi phục.",
+        "copyAllRecoveryCodes": "Đã sao chép mã khôi phục vào clipboard",
+        "downloadRecoveryCodes": "Đã tải xuống mã khôi phục",
+        "2faSetupSuccess": "Thiết lập xác thực hai yếu tố thành công!",
+        "2faDisabledSuccess": "Đã tắt xác thực hai yếu tố!",
+        "2faError": "Đã xảy ra lỗi trong quá trình xác thực hai yếu tố",
+        "2faCodeManually": "Mã 2FA (Nhập thủ công)",
+        "recoveryCode": "Mã khôi phục",
+        "recoveryCodes": "Lưu các mã này để khôi phục tài khoản nếu bạn mất quyền truy cập 2FA.",
+        "scanQRCode": "Quét mã QR"
+      },
+      "QrCode": {
+        "title": "Mã khôi phục của bạn",
+        "description": "Lưu trữ các mã này ở nơi an toàn. Bạn sẽ cần chúng nếu mất quyền truy cập vào thiết bị xác thực.",
+        "nofound": "Không tìm thấy mã khôi phục",
+        "email": "Các mã khôi phục cũng đã được gửi tới địa chỉ email của bạn.",
+        "copy": "Sao chép tất cả",
+        "download": "Tải xuống",
+        "done": "Hoàn tất",
+        "title2fa": "Xác thực hai yếu tố",
+        "description2fa": "Thiết lập xác thực hai yếu tố để tăng cường bảo mật tài khoản của bạn",
+        "downloadAuth": "Tải ứng dụng xác thực",
+        "downloadSetup": "Tải và cài đặt",
+        "or": "hoặc",
+        "or2": "trên thiết bị của bạn",
+        "qr": "Quét mã QR",
+        "openQr": "Mở ứng dụng xác thực và quét mã QR này",
+        "secret": "Nhập mã bí mật thủ công",
+        "confirm": "Xác nhận thiết lập",
+        "6code": "Nhập mã 6 chữ số từ ứng dụng xác thực của bạn",
+        "authen": "Đang xác thực...",
+        "2fa": "Kích hoạt 2FA"
+      },
+      "title": "Cài đặt hồ sơ",
+      "description": "Quản lý thông tin cá nhân và bảo mật tài khoản",
+      "personalInfo": "Thông tin cá nhân",
+      "contactInfo": "Thông tin liên hệ",
+      "security": "Bảo mật",
+      "fullName": "Họ và tên",
+      "fullNamePlaceholder": "Nhập họ và tên của bạn",
+      "email": "Email",
+      "emailPlaceholder": "Nhập địa chỉ email của bạn",
+      "phone": "Số điện thoại",
+      "phonePlaceholder": "Nhập số điện thoại của bạn",
+      "address": "Địa chỉ",
+      "addressPlaceholder": "Nhập địa chỉ của bạn",
+      "twoFactorAuth": "Xác thực hai yếu tố",
+      "twoFactorAuthDescription": "Bảo vệ tài khoản của bạn bằng ứng dụng xác thực trên điện thoại",
+      "save": "Lưu thay đổi",
+      "cancel": "Hủy",
+      "enable2FATitle": "Bật xác thực hai yếu tố",
+      "enable2FADescription": "Bạn có chắc chắn muốn bật xác thực hai yếu tố? Bạn sẽ cần quét mã QR bằng ứng dụng xác thực.",
+      "disable2FATitle": "Tắt xác thực hai yếu tố",
+      "disable2FADescription": "Bạn có chắc chắn muốn tắt xác thực hai yếu tố? Tài khoản của bạn sẽ kém an toàn hơn.",
+      "enable": "Bật",
+      "disable": "Tắt",
+      "processing": "Đang xử lý...",
+      "scanQRCode": "Quét mã QR",
+      "scanQRDescription": "Quét mã QR này bằng ứng dụng xác thực của bạn",
+      "qrInstructions": "Sau khi quét, hãy nhập mã 6 chữ số từ ứng dụng xác thực để hoàn tất thiết lập.",
+      "2faSetupSuccess": "Thiết lập xác thực hai yếu tố thành công!",
+      "2faDisabledSuccess": "Đã tắt xác thực hai yếu tố!",
+      "2faError": "Đã xảy ra lỗi trong quá trình xác thực hai yếu tố",
+      "2faCodeManually": "Mã 2FA (Nhập thủ công)",
+      "recoveryCode": "Mã khôi phục",
+      "recoveryCodes": "Lưu các mã này để khôi phục tài khoản nếu bạn mất quyền truy cập 2FA.",
+      "scanQRFirst": "Vui lòng quét mã QR bằng ứng dụng xác thực trước",
+      "enterTOTP": "Nhập mã TOTP",
+      "totpPlaceholder": "Nhập mã 6 chữ số từ ứng dụng xác thực",
+      "verifying": "Đang xác minh...",
+      "activate2FA": "Kích hoạt 2FA",
+      "enableAuthen": "Bật ứng dụng xác thực",
+      "increaseSecurityin3steps": "Tăng cường bảo mật tài khoản trong 3 bước đơn giản:",
+      "dowloadAuthenApp": "Tải ứng dụng xác thực",
+      "openApp": "Mở ứng dụng xác thực và quét hình ảnh từ phải sang trái bằng camera điện thoại.",
+      "loginWithCode": "Đăng nhập bằng mã của bạn",
+      "enterVerrifyCode": "Nhập mã xác thực 6 chữ số được tạo ra.",
+      "dowloadAndInstall": "Tải và cài đặt",
+      "or": "hoặc",
+      "googleAuth": "Google Authenticator",
+      "device": "cho điện thoại hoặc máy tính bảng.",
+      "name": "Tên",
+      "lang": "Ngôn ngữ",
+      "accountInfo": "Thông tin tài khoản",
+      "manageAccount": "Quản lý thông tin tài khoản của bạn",
+      "edit": "Chỉnh sửa",
+      "2faVerify": "Xác thực hai yếu tố"
+    },
+    "profileUpdate": {
+      "title": "Chỉnh sửa thông tin tài khoản",
+      "subtitle": "Cập nhật các trường thông tin bên dưới và nhấn lưu để hoàn tất.",
+      "name": "tên",
+      "lang": "ngôn ngữ",
+      "confirm": "Lưu thay đổi",
+      "cancel": "Hủy"
+    },
+    "auditLogs": {
+      "title": "Nhật ký hệ thống",
+      "subtitle": "Quản lý tất cả nhật ký hệ thống của bạn",
+      "search": "Tìm kiếm",
+      "searchPlaceholder": "Tìm kiếm theo nhật ký",
+      "totalLogs": "Tổng số nhật ký",
+      "totalSuccessLogs": "Số nhật ký thành công",
+      "totalFailureLogs": "Số nhật ký thất bại",
+      "totalEntities": "Tổng số thực thể",
+      "stats": {
+        "total": "Tổng số nhật ký",
+        "success": "Số nhật ký thành công",
+        "failure": "Số nhật ký thất bại",
+        "entities": "Tổng số thực thể"
+      },
+      "modal": {
+        "detailTitle": "Chi tiết nhật ký - ID: {{id}}",
+        "detailDesc": "Xem chi tiết thông tin nhật ký hệ thống",
+        "userEmail": "Email người dùng",
+        "timestamp": "Thời gian",
+        "action": "Hành động",
+        "entity": "Thực thể",
+        "ipAddress": "Địa chỉ IP",
+        "status": "Trạng thái",
+        "statusCode": "Mã trạng thái",
+        "elapsedTime": "Thời gian thực thi",
+        "userAgent": "Trình duyệt",
+        "requestHeaders": "Tiêu đề yêu cầu",
+        "notes": "Ghi chú",
+        "more": "Xem thêm",
+        "close": "Đóng"
+      },
+      "column": {
+        "userEmail": "Email người dùng",
+        "timestamp": "Thời gian",
+        "action": "Hành động",
+        "entity": "Thực thể",
+        "entityId": "ID thực thể",
+        "ipAddress": "Địa chỉ IP",
+        "userAgent": "Trình duyệt",
+        "statusCode": "Mã trạng thái",
+        "status": "Trạng thái",
+        "elapsedTime": "Thời gian thực thi",
+        "notes": "Ghi chú"
+      }
+    },
+    "roles": {
+      "title": "Vai trò",
+      "subtitle": "Quản lý tất cả vai trò của bạn",
+      "add": "Thêm vai trò mới",
+      "edit": "Chỉnh sửa vai trò",
+      "delete": "Xóa vai trò",
+      "confirmDeleteTitle": "Xác nhận xóa vai trò",
+      "confirmDeleteDesc": "Bạn có chắc chắn muốn xóa vai trò {{name}}? Hành động này không thể hoàn tác.",
+      "confirm": "Xác nhận",
+      "cancel": "Hủy",
+      "search": "Tìm kiếm",
+      "searchPlaceholder": "Tìm theo tên hoặc mô tả vai trò",
+      "name": "Tên vai trò",
+      "createdAt": "Ngày tạo",
+      "updatedAt": "Ngày cập nhật",
+      "actions": "Hành động",
+      "noData": "Không có dữ liệu.",
+      "addTitle": "Thêm vai trò",
+      "editTitle": "Chỉnh sửa vai trò",
+      "form": {
+        "id": "ID",
+        "name": "Tên vai trò",
+        "subtitle": "Quản lý tất cả vai trò của bạn",
+        "description": "Mô tả vai trò",
+        "path": "Đường dẫn vai trò",
+        "method": "Phương thức vai trò",
+        "namePlaceholder": "Nhập tên vai trò",
+        "module": "Module",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật"
+      },
+      "toast": {
+        "addSuccess": "Thêm vai trò thành công",
+        "editSuccess": "Cập nhật vai trò thành công",
+        "deleteSuccess": "Xóa vai trò thành công"
+      },
+      "editAction": "Chỉnh sửa thông tin",
+      "deleteAction": "Xóa vai trò",
+      "addAction": "Thêm vai trò",
+      "modal": {
+        "title": "Thêm vai trò mới",
+        "subtitle": "Nhập thông tin vai trò để thêm vào hệ thống",
+        "description": "Mô tả vai trò",
+        "name": "Tên vai trò",
+        "path": "Đường dẫn vai trò",
+        "method": "Phương thức vai trò",
+        "namePlaceholder": "Nhập tên vai trò",
+        "searchPlaceholder": "Tìm theo mã hoặc tên...",
+        "descriptionPlaceholder": "Nhập mô tả vai trò",
+        "pathPlaceholder": "Nhập đường dẫn vai trò",
+        "methodPlaceholder": "Nhập phương thức vai trò",
+        "save": "Lưu thông tin",
+        "cancel": "Hủy",
+        "delete": "Xóa",
+        "processing": "Đang xử lý...",
+        "success": "Thêm vai trò thành công",
+        "error": "Đã xảy ra lỗi",
+        "isActive": "Kích hoạt?",
+        "permissions": "Quyền hạn"
+      },
+      "modalEdit": {
+        "title": "Chỉnh sửa vai trò",
+        "subtitle": "Nhập thông tin vai trò để chỉnh sửa",
+        "save": "Lưu thông tin",
+        "cancel": "Hủy",
+        "processing": "Đang xử lý...",
+        "success": "Cập nhật vai trò thành công",
+        "error": "Đã xảy ra lỗi",
+        "edit": "Chỉnh sửa vai trò"
+      }
+    },
+    "permissions": {
+      "notFound": "Không tìm thấy quyền hạn",
+      "title": "Quyền hạn",
+      "subtitle": "Quản lý tất cả quyền hạn của bạn",
+      "add": "Thêm quyền mới",
+      "edit": "Chỉnh sửa quyền",
+      "delete": "Xóa quyền",
+      "confirmDeleteTitle": "Xác nhận xóa quyền",
+      "confirmDeleteDesc": "Bạn có chắc chắn muốn xóa quyền {{name}}? Hành động này không thể hoàn tác.",
+      "confirm": "Xác nhận",
+      "cancel": "Hủy",
+      "search": "Tìm kiếm",
+      "searchPlaceholder": "Tìm theo người dùng, hành động hoặc ngày",
+      "name": "Tên quyền",
+      "createdAt": "Ngày tạo",
+      "updatedAt": "Ngày cập nhật",
+      "actions": "Hành động",
+      "noData": "Không có dữ liệu.",
+      "addTitle": "Thêm quyền",
+      "editTitle": "Chỉnh sửa quyền",
+      "form": {
+        "name": "Đường dẫn quyền",
+        "subtitle": "Quản lý tất cả quyền hạn của bạn",
+        "description": "Mô tả quyền",
+        "path": "Đường dẫn quyền",
+        "method": "Phương thức quyền",
+        "namePlaceholder": "Nhập tên quyền",
+        "module": "Module",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật",
+        "ID": "ID",
+        "editAction": "Chỉnh sửa quyền",
+        "deleteAction": "Xóa quyền",
+        "Name": "Tên quyền"
+      },
+      "deleteModal": {
+        "deleteTitle": "Thực hiện xóa quyền",
+        "deleteDescription": "Bạn có chắc chắn xóa quyền hạn này không?"
+      },
+      "toast": {
+        "addSuccess": "Thêm quyền thành công",
+        "editSuccess": "Cập nhật quyền thành công",
+        "deleteSuccess": "Xóa quyền thành công"
+      },
+      "editAction": "Chỉnh sửa thông tin",
+      "deleteAction": "Xóa quyền",
+      "addAction": "Thêm quyền",
+      "modal": {
+        "addTitle": "Thêm quyền mới",
+        "addSubtitle": "Nhập thông tin quyền để thêm vào hệ thống",
+        "editTitle": "Sửa quyền hạn",
+        "editSubtitle": "Nhập thông tin quyền để sửa hệ thống",
+        "description": "Mô tả quyền",
+        "name": "Tên quyền",
+        "path": "Đường dẫn quyền",
+        "method": "Phương thức quyền",
+        "namePlaceholder": "Nhập tên quyền",
+        "searchPlaceholder": "Tìm theo mã hoặc tên...",
+        "descriptionPlaceholder": "Nhập mô tả quyền",
+        "pathPlaceholder": "Nhập đường dẫn quyền",
+        "methodPlaceholder": "Nhập phương thức quyền",
+        "save": "Lưu thông tin",
+        "cancel": "Hủy",
+        "delete": "Xóa",
+        "processing": "Đang xử lý...",
+        "success": "Thêm quyền thành công",
+        "error": "Đã xảy ra lỗi",
+        "module": "Module",
+        "modulePlaceholder": "Nhập Module tính năng...."
+      },
+      "modalEdit": {
+        "title": "Chỉnh sửa quyền",
+        "subtitle": "Nhập thông tin quyền để chỉnh sửa",
+        "save": "Lưu thông tin",
+        "cancel": "Hủy",
+        "processing": "Đang xử lý...",
+        "success": "Cập nhật quyền thành công",
+        "error": "Đã xảy ra lỗi",
+        "edit": "Chỉnh sửa quyền"
+      },
+      "methods": {
+        "GET": "GET",
+        "POST": "POST",
+        "PUT": "PUT",
+        "DELETE": "DELETE",
+        "PATCH": "PATCH"
+      }
+    },
+    "users": {
+      "title": "Quản lý người dùng",
+      "subtitle": "Quản lý tất cả người dùng tại đây",
+      "search": "Tìm kiếm",
+      "searchPlaceholder": "Tìm theo tên, hành động hoặc ngày",
+      "add": "Thêm người dùng mới",
+      "table": {
+        "name": "Tên người dùng",
+        "email": "Email",
+        "role": "Vai trò",
+        "status": "Trạng thái",
+        "createdAt": "Ngày tạo",
+        "actions": "Hành động"
+      },
+      "status": {
+        "active": "Hoạt động",
+        "inactive": "Không hoạt động",
+        "pending": "Chờ duyệt"
+      },
+      "role": {
+        "user": "Người dùng",
+        "admin": "Quản trị viên",
+        "editor": "Biên tập viên"
+      },
+      "actions": {
+        "view": "Xem chi tiết",
+        "edit": "Sửa thông tin",
+        "assignPermissions": "Phân quyền",
+        "delete": "Xóa người dùng"
+      },
+      "modal": {
+        "selectRole":"Chọn vai trò",
+        "addTitle": "Thêm người dùng mới",
+        "addDescription": "Nhập thông tin người dùng để thêm mới vào hệ thống.",
+        "editTitle": "Chỉnh sửa người dùng",
+        "editDescription": "Cập nhật thông tin người dùng.",
+        "name": "Tên người dùng",
+        "email": "Email",
+        "role": "Vai trò",
+        "status": "Trạng thái",
+        "cancel": "Hủy",
+        "confirmAdd": "Thêm mới",
+        "confirmEdit": "Cập nhật",
+        "loadingAdd": "Đang thêm...",
+        "loadingEdit": "Đang cập nhật...",
+        "firstName": "Tên",
+        "lastName": "Họ",
+        "username": "Tên người dùng",
+        "phoneNumber": "Số điện thoại",
+        "bio": "Giới thiệu",
+        "countryCode": "Mã quốc gia",
+        "roleId": "Vai trò",
+        "password": "Mật khẩu",
+        "confirmPassword": "Xác nhận mật khẩu",
+        "avatar": "Ảnh đại diện",
+        "passwordStepDescription": "Mật khẩu phải chứa ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+        "confirmPasswordStepDescription": "Xác nhận mật khẩu phải khớp với mật khẩu",
+        "statusActive": "Hoạt động",
+        "statusInactive": "Không hoạt động",
+        "avatarUrl": "Đường dẫn Url avatar của bạn....",
+        "add": "Thêm mới",
+        "uploadImage": "Tải ảnh lên",
+        "selectImage": "Chọn ảnh lên"
+      },
+      "deleteConfirm": {
+        "title": "Xác nhận xóa người dùng",
+        "description": "Bạn có chắc chắn muốn xóa người dùng {{name}} không? Hành động này không thể hoàn tác.",
+        "confirmText": "Xóa",
+        "cancelText": "Hủy"
+      },
+      "loading": "Đang tải dữ liệu..."
+    },
+    "passwordAndSecurity": {
+      "title": "Bảo mật & Mật khẩu",
+      "subtitle": "Quản lý bảo mật tài khoản và các cài đặt liên quan đến mật khẩu.",
+      "changePassword": "Đổi mật khẩu",
+      "whereYouLogIn": "Thiết bị đăng nhập"
+    },
+    "languages": {
+      "notFound": "Không có ngôn ngữ",
+      "title": "Quản lý ngôn ngữ",
+      "subtitle": "Quản lý tất cả ngôn ngữ tại đây",
+      "add": "Thêm ngôn ngữ mới",
+      "edit": "Chỉnh sửa ngôn ngữ",
+      "delete": "Xóa ngôn ngữ",
+      "confirmDeleteTitle": "Xác nhận xóa ngôn ngữ",
+      "confirmDeleteDesc": "Bạn có chắc chắn muốn xóa ngôn ngữ {{name}}? Hành động này không thể hoàn tác.",
+      "confirm": "Xác nhận",
+      "cancel": "Hủy",
+      "search": "Tìm kiếm",
+      "searchPlaceholder": "Tìm kiếm ngôn ngữ...",
+      "code": "Mã ngôn ngữ",
+      "name": "Tên ngôn ngữ",
+      "createdAt": "Ngày tạo",
+      "updatedAt": "Ngày cập nhật",
+      "actions": "Hành động",
+      "noData": "Không có dữ liệu.",
+      "addTitle": "Thêm ngôn ngữ",
+      "editTitle": "Chỉnh sửa ngôn ngữ",
+      "form": {
+        "code": "Mã ngôn ngữ",
+        "name": "Tên ngôn ngữ",
+        "codePlaceholder": "Nhập mã ngôn ngữ",
+        "namePlaceholder": "Nhập tên ngôn ngữ"
+      },
+      "toast": {
+        "addSuccess": "Thêm ngôn ngữ thành công",
+        "editSuccess": "Cập nhật ngôn ngữ thành công",
+        "deleteSuccess": "Xóa ngôn ngữ thành công"
+      },
+      "editAction": "Chỉnh sửa thông tin",
+      "deleteAction": "Xóa ngôn ngữ",
+      "addAction": "Thêm ngôn ngữ",
+      "modal": {
+        "title": "Thêm ngôn ngữ mới",
+        "subtitle": "Nhập thông tin ngôn ngữ để thêm vào hệ thống",
+        "code": "Mã ngôn ngữ",
+        "name": "Tên ngôn ngữ",
+        "codePlaceholder": "Nhập mã ngôn ngữ",
+        "namePlaceholder": "Nhập tên ngôn ngữ",
+        "searchPlaceholder": "Tìm theo mã hoặc tên...",
+        "save": "Lưu thông tin",
+        "cancel": "Hủy",
+        "processing": "Đang xử lý...",
+        "success": "Thêm ngôn ngữ thành công",
+        "error": "Đã xảy ra lỗi"
+      },
+      "modalEdit": {
+        "title": "Chỉnh sửa ngôn ngữ",
+        "subtitle": "Nhập thông tin ngôn ngữ để chỉnh sửa",
+        "save": "Lưu thông tin",
+        "cancel": "Hủy",
+        "processing": "Đang xử lý...",
+        "success": "Cập nhật ngôn ngữ thành công",
+        "error": "Đã xảy ra lỗi",
+        "edit": "Chỉnh sửa ngôn ngữ"
+      },
+      "modalDelete": {
+        "deleteConfirmTitle": "Xóa ngôn ngữ",
+        "deleteConfirmMessage": "Bạn có chắc chắn xóa ngôn ngữ",
+        "cancelAction": "Hủy"
+      }
+    },
+    "settings": {
+      "profile": {
+        "title": "Cài đặt hồ sơ",
+        "subtitle": "Quản lý thông tin cá nhân và bảo mật tài khoản của bạn"
+      }
+    },
+    "notifications": {
+      "title": "Thông báo",
+      "emptyTitle": "Không có thông báo",
+      "emptyDesc": "Hiện tại bạn chưa có thông báo nào, nhưng khi có chúng sẽ hiển thị tại đây.",
+      "esc": "thoát",
+      "close": "Đóng"
+    },
+    "brand": {
+      "title": "Quản lý thương hiệu",
+      "subtitle": "Quản lý danh sách thương hiệu trong hệ thống.",
+      "searchPlaceholder": "Tìm kiếm thương hiệu...",
+      "addAction": "Thêm thương hiệu",
+      "editAction": "Sửa thương hiệu",
+      "deleteAction": "Xóa thương hiệu",
+      "code": "Mã thương hiệu",
+      "name": "Tên thương hiệu",
+      "actions": "Thao tác",
+      "confirmDelete": "Bạn có chắc chắn muốn xóa thương hiệu",
+      "addSuccess": "Thêm thương hiệu thành công",
+      "editSuccess": "Cập nhật thương hiệu thành công",
+      "deleteSuccess": "Xóa thương hiệu thành công",
+      "modal": {
+        "addTitle": "Thêm mới thương hiệu",
+        "editTitle": "Chỉnh sửa thương hiệu",
+        "codePlaceholder": "VD: APPLE",
+        "namePlaceholder": "VD: Apple Inc.",
+        "descriptionPlaceholder": "Nhập mô tả chi tiết về thương hiệu...",
+        "websitePlaceholder": "https://example.com",
+        "countryPlaceholder": "VD: Việt Nam",
+        "uploadLabel": "Chọn hoặc kéo thả logo vào đây",
+        "uploadDescription": "PNG, JPG, GIF tối đa 5MB",
+        "statusPlaceholder": "Chọn trạng thái hoạt động",
+        "statusActive": "Hoạt động",
+        "statusInactive": "Không hoạt động",
+        "website": "Website",
+        "cancel": "Hủy bỏ",
+        "add": "Thêm mới",
+        "update": "Cập nhật",
+        "validation": {
+          "codeRequired": "Mã không được để trống",
+          "nameRequired": "Tên không được để trống",
+          "websiteInvalid": "URL website không hợp lệ"
+        }
+      }
+    },
+    "category": {
+      "title": "Quản lý danh mục",
+      "subtitle": "Quản lý tất cả danh mục sản phẩm của bạn",
+      "searchPlaceholder": "Tìm kiếm theo tên, slug hoặc mô tả",
+      "notFound": "Không tìm thấy danh mục nào.",
+      "stats": {
+        "total": "Tổng số danh mục",
+        "active": "Danh mục đang hoạt động",
+        "inactive": "Danh mục không hoạt động",
+        "root": "Danh mục gốc"
+      },
+      "column": {
+        "name": "Tên danh mục",
+        "slug": "Đường dẫn",
+        "parent": "Danh mục cha",
+        "status": "Trạng thái",
+        "sortOrder": "Thứ tự sắp xếp",
+        "productsCount": "Số lượng sản phẩm",
+        "createdAt": "Ngày tạo",
+        "actions": "Hành động"
+      },
+      "status": {
+        "active": "Hoạt động",
+        "inactive": "Không hoạt động"
+      },
+      "actions": {
+        "view": "Xem chi tiết",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "create": "Tạo danh mục mới"
+      },
+      "modal": {
+        "detailTitle": "Chi tiết danh mục - {{name}}",
+        "detailDesc": "Xem thông tin chi tiết danh mục",
+        "name": "Tên danh mục",
+        "slug": "Đường dẫn",
+        "status": "Trạng thái",
+        "parent": "Danh mục cha",
+        "sortOrder": "Thứ tự sắp xếp",
+        "productsCount": "Số lượng sản phẩm",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật",
+        "description": "Mô tả",
+        "metaTitle": "Tiêu đề Meta",
+        "metaDescription": "Mô tả Meta",
+        "image": "Hình ảnh",
+        "more": "Hiển thị thêm",
+        "close": "Đóng"
+      }
+    }
+  },
+  "user": {
+    "settings": {
+      "title": "Cài đặt",
+      "subtitle": "Tài khoản của bạn được bảo vệ",
+      "description": "Shopsifu bảo vệ thông tin cá nhân của bạn và giữ cho nó riêng tư, an toàn và bảo mật.",
+
+      "items": {
+        "Account security": "Bảo mật tài khoản",
+        "Privacy": "Quyền riêng tư",
+        "Permissions": "Quyền hạn",
+        "Safety center": "Trung tâm an toàn"
+      },
+
+      "section": {
+        "paymentmethods": "Phương thức thanh toán",
+        "country": "Quốc gia & khu vực",
+        "language": "Ngôn ngữ",
+        "currency": "Tiền tệ",
+        "notifications": "Thông báo",
+        "about": "Thông tin ứng dụng",
+        "legalTermPolicies": "Điều khoản & Chính sách",
+        "switchAccount": "Chuyển đổi tài khoản"
+      },
+
+      "signout": "Đăng xuất"
+    },
+
+    "showToast": {
+      "review": {
+        "createSuccessful": "Gửi đánh giá thành công.",
+        "updateSuccessful": "Cập nhật đánh giá thành công.",
+        "deleteSuccessful": "Xóa đánh giá thành công"
+      }
+    },
+
+    "account": {
+      "home": "Trang chủ",
+      "manageAccount": "Quản lý thông tin tài khoản của bạn",
+
+      "notifications": {
+        "notifications": "Thông báo"
+      },
+
+      "profile": {
+        "protected": "Tài khoản của bạn được bảo vệ",
+        "protectionDescription": "Tài khoản Shopsifu của bạn được bảo vệ bởi hệ thống bảo mật nâng cao. Việc cập nhật thông tin này thường xuyên sẽ giúp tài khoản của bạn an toàn hơn.",
+
+        "profile": "Hồ sơ",
+        "policy": "Chính sách bảo hành",
+        "manageProfile": "Quản lý hồ sơ của bạn",
+        "title": "Hồ sơ của tôi",
+        "subtitle": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+        "currentPasswordRequired": "Mật khẩu hiện tại là bắt buộc",
+        "newPasswordInvalid": "Mật khẩu mới không hợp lệ",
+        "confirmPasswordRequired": "Xác nhận mật khẩu là bắt buộc",
+        "passwordsMismatch": "Mật khẩu không khớp",
+        "emailPhone": "Thông tin",
+        "noPhone": "Chưa có số điện thoại",
+        "password": "Mật khẩu",
+        "twoFactor": "Xác thực hai yếu tố",
+        "twoFactorDescription": "Bảo vệ tài khoản của bạn bằng một lớp bảo mật bổ sung.",
+        "thirdPartyAccounts": "Tài khoản bên thứ ba",
+        "turnOn": "Bật",
+        "edit": "Chỉnh sửa",
+
+        "editEmailPhone": "Email & Số điện thoại",
+        "email": "Email",
+        "phoneNumber": "Số điện thoại",
+        "cancel": "Hủy",
+        "save": "Lưu thay đổi",
+
+        "passwordQuality": "Chất lượng mật khẩu",
+        "editPassword": "Chỉnh sửa mật khẩu",
+        "currentPassword": "Mật khẩu hiện tại",
+        "newPassword": "Mật khẩu mới",
+        "confirmPassword": "Xác nhận mật khẩu",
+
+        "enable2FA": "Bật xác thực hai yếu tố",
+        "enable2FADescription": "Bạn có chắc chắn muốn bật xác thực hai yếu tố không? Bạn sẽ cần quét mã QR bằng ứng dụng xác thực.",
+        "enable": "Bật",
+
+        "deleteAccount": "Xóa tài khoản",
+        "confirmDelete": "Xác nhận xóa",
+        "accountTermination": "Xóa tài khoản",
+
+        "name": "Tên",
+        "firstName": "Tên",
+        "lastName": "Họ",
+        "username": "Tên tài khoản",
+        "phone": "Số điện thoại",
+        "updateProfile": "Thông tin người dùng",
+        "clickToChange": "Tải lên ảnh đại diện",
+
+        "on": "Đã bật",
+        "off": "Chưa bật",
+        "turnOff": "Tắt",
+
+        "dashboard": "Tổng quan"
+      },
+
+      "password": {
+        "title": "Đổi mật khẩu",
+        "subtitle": "Mật khẩu của bạn phải có ít nhất 6 ký tự và bao gồm chữ, số và ký tự đặc biệt",
+        "currentPassword": "Mật khẩu hiện tại",
+        "newPassword": "Mật khẩu mới",
+        "confirmPassword": "Xác nhận mật khẩu",
+        "forgotPassword": "Quên mật khẩu?",
+
+        "currentPasswordPlaceholder": "Nhập mật khẩu hiện tại",
+        "newPasswordPlaceholder": "Nhập mật khẩu mới",
+        "confirmPasswordPlaceholder": "Nhập lại mật khẩu mới",
+
+        "changePassword": "Đổi mật khẩu",
+        "processing": "Đang xử lý...",
+        "passwordChanged": "Mật khẩu đã được thay đổi thành công!",
+
+        "minLength": "Mật khẩu phải có ít nhất 6 ký tự",
+        "revokeOtherSessions": "Hủy các phiên đăng nhập khác"
+      },
+
+      "address": {
+        "address": "Địa chỉ",
+        "myAddresses": "Địa chỉ của tôi",
+        "addNewAddress": "Thêm địa chỉ mới",
+        "noAddress": "Bạn chưa có địa chỉ nào.",
+        "processing": "Đang xử lý...",
+        "changePassword": "Đổi mật khẩu",
+        "encryptedNote": "Tất cả dữ liệu bạn đã thêm sẽ được mã hóa"
+      },
+
+      "payment": {
+        "payment": "Thanh toán",
+        "creditDebitCard": "Thẻ tín dụng / Thẻ ghi nợ",
+        "noCardLinked": "Bạn chưa có thẻ nào.",
+        "bankAccount": "Tài khoản ngân hàng của tôi",
+        "addBankLink": "Thêm tài khoản ngân hàng mới",
+        "noBankLinked": "Bạn chưa có tài khoản ngân hàng nào.",
+        "title": "Phương thức thanh toán của bạn",
+        "encrypted": "Tất cả dữ liệu đều được mã hóa",
+        "fastCheckout": "Lưu thẻ để thanh toán nhanh hơn",
+        "secure": "Thanh toán an toàn",
+        "convenient": "Thanh toán tiện lợi",
+        "addNewCard": "Thêm thẻ tín dụng hoặc thẻ ghi nợ",
+        "cardSecurityTitle": "Shopsifu bảo vệ thông tin thẻ của bạn",
+        "compliesPCI": "Shopsifu tuân thủ Tiêu chuẩn bảo mật dữ liệu ngành thẻ thanh toán (PCI DSS) khi xử lý dữ liệu thẻ",
+        "secureInfo": "Thông tin thẻ được bảo mật và không bị xâm phạm",
+        "encryptedAgain": "Tất cả dữ liệu đều được mã hóa",
+        "noSellInfo": "Shopsifu không bao giờ bán thông tin thẻ của bạn",
+        "secureTrustedTitle": "An toàn & đáng tin cậy",
+        "secureTrustedDesc": "Bảo mật của bạn là ưu tiên hàng đầu của chúng tôi. Để đảm bảo an toàn, chúng tôi sử dụng hệ thống phòng chống rủi ro và gian lận hàng đầu cho mọi giao dịch.",
+        "needHelp": "Cần hỗ trợ về vấn đề bảo mật?",
+        "contactUs": "Liên hệ chúng tôi",
+        "supportTitle": "Hỗ trợ khách hàng",
+        "supportDesc": "Bộ phận hỗ trợ khách hàng sẽ giải đáp các thắc mắc về thanh toán của bạn.",
+        "doubt": "Bạn có thắc mắc về giao dịch?",
+        "faq": "Câu hỏi thường gặp về thanh toán"
+      },
+
+      "security": {
+        "security": "Bảo mật",
+        "title": "Thiết bị đang hoạt động",
+        "subtitle": "Để đảm bảo an toàn, không chia sẻ mật khẩu với người khác",
+        "loggedInDevices": "Thiết bị đã đăng nhập",
+        "totalSessionsSummary": "Tổng cộng có {{totalSessions}} phiên hoạt động trên {{deviceCount}} thiết bị",
+        "total": "Tổng cộng",
+        "active": "phiên hoạt động trên",
+        "device": "thiết bị",
+        "deviceSessionCount": "{{count}} phiên hoạt động",
+        "terminateSession": "Kết thúc phiên này",
+        "deleteSession": "Xóa phiên này",
+        "loginSession": "Phiên đăng nhập"
+      },
+
+      "myPurchase": {
+        "myPurchase": "Lịch sử mua hàng"
+      }
+    },
+
+    "cart": {
+      "title": "Giỏ hàng",
+      "edit": "Chỉnh sửa",
+      "done": "Hoàn tất",
+      "emptyCart": "Giỏ hàng của bạn đang trống",
+      "continueShopping": "Tiếp tục mua sắm",
+      "checkout": "Thanh toán",
+      "itemsInCart": "{{count}} sản phẩm trong giỏ hàng",
+      "totalPrice": "Tổng giá",
+      "removeItem": "Xóa sản phẩm",
+      "updateQuantity": "Cập nhật số lượng",
+      "quantity": "Số lượng",
+      "subtotal": "Tạm tính",
+      "taxesAndFees": "Thuế & Phí",
+      "shippingCost": "Phí vận chuyển",
+      "totalAmount": "Tổng cộng",
+      "proceedToCheckout": "Tiến hành thanh toán",
+
+      "topbar": {
+        "notifications": "Thông báo",
+        "help": "Trợ giúp",
+        "language": "Ngôn ngữ",
+        "saleRegister": "Đăng ký bán hàng"
+      },
+
+      "productTitle": {
+        "product": "Sản phẩm",
+        "unitPrice": "Đơn giá",
+        "quantity": "Số lượng",
+        "totalPrice": "Tổng cộng",
+        "actions": "Hành động"
+      },
+
+      "footer": {
+        "platformVoucher": "Mã giảm giá sàn",
+        "selectOrEnterCode": "Chọn hoặc nhập mã",
+        "noItemSelected": "Chưa chọn sản phẩm nào",
+        "selectAll": "Chọn tất cả",
+        "delete": "Xóa",
+        "removeInactive": "Xóa sản phẩm không còn hoạt động",
+        "moveToLikes": "Chuyển vào Mục yêu thích",
+        "total": "Tổng",
+        "items": "sản phẩm",
+        "youSaved": "Bạn đã tiết kiệm ₫{{amount}}",
+        "checkout": "Thanh toán"
+      }
+    }
+  }
+}

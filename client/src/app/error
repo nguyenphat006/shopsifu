@@ -1,0 +1,40 @@
+// 'use client';
+
+// import { useEffect } from 'react';
+// import { useTranslations } from "next-intl"
+
+// export default function Error({
+//   error,
+//   reset,
+// }: {
+//   error: Error;
+//   reset: () => void;
+// }) {
+//   const t = useTranslations('admin.error');
+//   useEffect(() => {
+//     console.error('Lỗi tại route:', error);
+//   }, [error]);
+
+//   return (
+//     <div className="min-h-screen flex flex-col items-center justify-center bg-white text-[#D0201C] p-6">
+//       <h1 className="text-4xl font-bold mb-4">{t('title')}</h1>
+//       <p className="mb-4 text-center max-w-md">
+//         {t('subtitle')}
+//       </p>
+//       <div className="flex gap-4">
+//         <button
+//           onClick={() => reset()}
+//           className="px-6 py-2 border border-[#D0201C] text-[#D0201C] hover:bg-[#D0201C] hover:text-white transition rounded"
+//         >
+//           {t('tryAgain')}
+//         </button>
+//         <a
+//           href="/"
+//           className="px-6 py-2 border border-[#D0201C] text-[#D0201C] hover:bg-[#D0201C] hover:text-white transition rounded"
+//         >
+//           {t('backToHome')}
+//         </a>
+//       </div>
+//     </div>
+//   );
+// }

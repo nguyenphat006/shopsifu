@@ -1,0 +1,68 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# API Response Handling Rules
+
+## Success Response Format
+When an API call is successful, the response will have the following structure:
+```typescript
+{
+    // Response data fields directly accessible
+    "id": 93,
+    "email": "example@email.com",
+    "code": "123456",
+    "type": "REGISTER",
+    "expiresAt": "2025-05-07T06:49:42.156Z",
+    "createdAt": "2025-05-07T06:44:42.157Z"
+    // Other possible fields depending on the endpoint
+}
+```
+
+## Error Response Format
+When an API call fails, the response will have this consistent error structure:
+```typescript
+{
+    "message": [
+        {
+            "message": "Email đã tồn tại",  // Error message
+            "path": "email"                 // Field that caused the error
+        }
+        // Potentially multiple error objects in the array
+    ],
+    "error": "Unprocessable Entity",        // Error type
+    "statusCode": 422                       // HTTP status code
+}
+```
+
+## Error Handling Guidelines
+
+1. Always properly extract error messages from the response structure
+2. Use the correct error handling pattern:
+   ```typescript
+   try {
+     const response = await authService.register(data);
+     // Handle success case
+     return response;
+   } catch (error) {
+     // Extract error messages from the error response
+     if (error.response?.data?.message) {
+       const errorMessages = error.response.data.message.map(err => ({
+         message: err.message,
+         field: err.path
+       }));
+       // Now you can use these structured error messages
+       return { error: errorMessages };
+     }
+     // Handle unexpected error format
+     return { error: 'An unexpected error occurred' };
+   }
+   ```
+
+3. For field-specific errors, match the error to the corresponding form field using the `path` property
+4. Always handle both specific API errors and unexpected error formats
+5. Centralize error handling in service or hook layers for consistency
+
+
+Following these guidelines ensures proper error handling throughout the application with consistent user feedback.

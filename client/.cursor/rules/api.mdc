@@ -1,0 +1,53 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+React Project Data Fetching Rules
+Data Fetching Architecture
+Our project follows a structured approach to data fetching, organizing code across several key folders and files:
+Component-level Hooks
+
+Custom hooks for specific features are placed directly in the component folder
+Examples: useSignin, useProducts, etc.
+These hooks call services directly without intermediate hooks
+The Hooks folder is reserved for shared utility hooks only (e.g., useResize, useLocalStorage)
+
+API Layer (/lib/api.ts)
+
+Contains three main axios instances:
+
+publicAxios: For endpoints that don't require authentication
+privateAxios: For authenticated endpoints (automatically includes tokens)
+refreshAxios: Specifically designed for token refresh operations
+
+
+
+Service Layer (/services)
+
+Services encapsulate all API calls to backend endpoints
+Naming convention: featureService.ts (e.g., authService.ts, productService.ts)
+Services use API URLs defined in constants, not hardcoded values
+
+Constants
+
+/constants/api.ts: Contains all backend API endpoint paths
+/constants/route.ts: Defines frontend routes for navigation (e.g., LOGIN = "/login")
+
+Types
+
+Types and interfaces are in /types folder
+Naming convention: feature.interface.ts (e.g., auth.interface.ts)
+Each feature has its own dedicated interface file
+
+Implementation Guidelines
+
+Always use the correct axios instance for the endpoint type
+Never hardcode API URLs - always reference from constants
+Service functions should be descriptive and handle specific API operations
+Feature-specific hooks should be placed with their components
+Shared hooks go in the central Hooks folder
+Always define types for request/response data in dedicated interface files
+
+
+Following these guidelines ensures consistent, maintainable code and clear separation of concerns across the application.

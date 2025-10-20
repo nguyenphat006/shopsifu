@@ -1,0 +1,11 @@
+/* Gallery Mobile Styles */
+
+.galleryWrapper {
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(var(--translate-x, 0));
+}
+
+.galleryWrapperNoTransition {
+  transition: none;
+  transform: translateX(var(--translate-x, 0)); /* 👈 giữ nguyên */
+}
