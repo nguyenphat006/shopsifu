@@ -1,0 +1,194 @@
+@startuml Order Management Activity Diagram
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam activityFontSize 12
+skinparam activityFontColor #333333
+skinparam activityBorderColor #666666
+skinparam activityBackgroundColor #F0F0F0
+skinparam activityDiamondBackgroundColor #FFE6E6
+skinparam activityDiamondBorderColor #CC0000
+
+title Quản Lý Đơn Hàng - Sơ Đồ Hoạt Động
+
+start
+
+:Người dùng yêu cầu thao tác đơn hàng;
+
+if (Loại thao tác?) then (GET /orders - Lấy danh sách)
+  :Trích xuất user từ JWT token;
+  :Lấy query parameters {page, limit, status};
+  :Thực thi list query với pagination;
+  note right
+  Logic Truy Vấn Database:
+  • WHERE userId = user.userId
+  • Filter theo status (optional)
+  • Include order items
+  • Pagination với skip/take
+  • ORDER BY createdAt DESC
+  • Tính toán metadata
+  end note
+  :Tính toán pagination metadata;
+  :Tạo localized success message;
+  :Trả về danh sách orders với metadata;
+
+elseif (POST /orders - Tạo đơn hàng mới) then
+  :Người dùng tạo đơn hàng mới;
+  :Trích xuất {shopId, receiver, cartItemIds, discountCodes} từ body;
+  :Validate discount codes nếu có;
+  note right
+  Discount Validation Logic:
+  • Thu thập tất cả discount codes
+  • Kiểm tra tồn tại trong database
+  • Validate trạng thái ACTIVE
+  • Kiểm tra thời gian hiệu lực
+  • Validate maxUses và maxUsesPerUser
+  end note
+  if (Discount codes được cung cấp?) then (có)
+    :Lấy thông tin discounts từ database;
+    :Validate discount eligibility;
+    if (Discounts hợp lệ?) then (có)
+      :Tiếp tục xử lý;
+    else (không)
+      :Ném BadRequestException;
+    endif
+  else (không)
+    :Bỏ qua validation discount;
+  endif
+
+  :Acquire Redis locks cho tất cả SKUs;
+  note right
+  Redis Lock Logic:
+  • Lock tất cả SKU IDs cần mua
+  • Timeout 3 giây
+  • Prevent race conditions
+  end note
+
+  :Bắt đầu database transaction;
+  :Lấy cart items với relations;
+  :Validate cart items;
+  note right
+  Cart Items Validation:
+  • Kiểm tra tất cả cartItemIds tồn tại
+  • Validate stock quantity
+  • Kiểm tra product publish status
+  • Validate shop ownership
+  end note
+
+  if (Validation thành công?) then (có)
+    :Tạo payment record với status PENDING;
+
+    loop Cho mỗi shop order
+      :Tính toán order total;
+      :Xử lý discounts nếu có;
+      note right
+      Discount Processing:
+      • Validate discount eligibility
+      • Calculate discount amounts
+      • Prepare discount snapshots
+      • Update discount usage count
+      end note
+
+      :Tạo order với items;
+      :Tạo discount snapshots;
+      :Cập nhật discount usage count;
+    end
+
+    :Xóa cart items;
+    :Decrement SKU stock với optimistic lock;
+    :Thêm cancel payment job vào queue;
+    note right
+    Queue Job Logic:
+    • Delay 24 giờ
+    • Auto-cancel payment nếu chưa thanh toán
+    • Remove job sau khi hoàn thành
+    end note
+
+    :Commit transaction;
+    :Release Redis locks;
+    :Trả về success response;
+  else (không)
+    :Rollback transaction;
+    :Release Redis locks;
+    :Ném validation exception;
+  endif
+
+elseif (GET /orders/:orderId - Chi tiết đơn hàng) then
+  :Trích xuất orderId từ params;
+  :Trích xuất user từ JWT token;
+  :Thực thi findById query;
+  if (Order được tìm thấy?) then (có)
+    :Load order với items và discounts;
+    :Tính toán order totals;
+    note right
+    Total Calculation:
+    • totalItemCost = sum(items * price * quantity)
+    • totalVoucherDiscount = sum(discount amounts)
+    • totalPayment = totalItemCost - totalVoucherDiscount
+    end note
+    :Tạo localized success message;
+    :Trả về order detail với totals;
+  else (không)
+    :Ném OrderNotFoundException;
+  endif
+
+elseif (PUT /orders/:orderId - Hủy đơn hàng) then
+  :Người dùng hủy đơn hàng;
+  :Trích xuất orderId từ params;
+  :Trích xuất user từ JWT token;
+  :Tìm order theo ID;
+  if (Order tồn tại?) then (có)
+    :Validate cancel eligibility;
+    note right
+    Cancel Validation:
+    • Kiểm tra status = PENDING_PAYMENT
+    • Validate user ownership
+    • Check business rules
+    end note
+    if (Order có thể hủy?) then (có)
+      :Cập nhật order status thành CANCELLED;
+      :Cập nhật updatedById;
+      :Tạo localized success message;
+      :Trả về success response;
+    else (không)
+      :Ném CannotCancelOrderException;
+    endif
+  else (không)
+    :Ném OrderNotFoundException;
+  endif
+
+elseif (POST /orders/calculate - Tính toán đơn hàng) then
+  :Người dùng tính toán đơn hàng;
+  :Trích xuất {cartItemIds, discountCodes} từ body;
+  :Lấy cart items với relations;
+  if (Cart items tồn tại?) then (có)
+    :Tính toán total payment;
+    if (Có discount codes?) then (có)
+      :Lấy thông tin discounts từ database;
+      :Validate discount eligibility;
+      :Tính toán discount amounts;
+      note right
+      Discount Calculation:
+      • Validate discount codes
+      • Check eligibility criteria
+      • Calculate discount amounts
+      • Apply max discount limits
+      end note
+      :Tính toán final totals;
+    else (không)
+      :Bỏ qua discount calculation;
+    endif
+    :Trả về calculation result;
+  else (không)
+    :Trả về zero totals;
+  endif
+
+else (Thao tác không hợp lệ)
+  :Ném InvalidOperationException;
+endif
+
+:Tạo thông báo thành công đa ngôn ngữ;
+:Trả về JSON response với metadata;
+
+stop
+
+@enduml

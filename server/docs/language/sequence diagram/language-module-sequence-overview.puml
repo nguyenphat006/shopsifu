@@ -1,0 +1,324 @@
+@startuml Language Module - Sequence Overview
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+
+title Mô-đun Ngôn Ngữ - Tổng Quan Luồng Xử Lý
+note top : Hệ thống quản lý ngôn ngữ với CRUD operations và audit trail
+
+actor "Client" as Client
+actor "Admin" as Admin
+participant "LanguageController" as LC
+participant "LanguageService" as LS
+participant "LanguageRepo" as LR
+participant "ActiveUser" as AU
+participant "I18nService" as IS
+participant "PrismaService" as PS
+database "PostgreSQL" as DB
+
+== GET /languages - Lấy Danh Sách Ngôn Ngữ ==
+Client -> LC: GET /languages
+LC -> LS: findAll()
+
+LS -> LS: Xử lý yêu cầu
+note right
+Logic Lấy Danh Sách:
+• Lấy tất cả languages chưa bị xóa
+• Không cần authentication
+• Trả về danh sách đầy đủ
+• Tính toán totalItems
+end note
+
+LS -> LR: findAll()
+LR -> PS: findMany với WHERE deletedAt IS NULL
+note right
+Database Query:
+• Filter deletedAt IS NULL
+• Không cần pagination
+• Trả về tất cả active languages
+• Include audit fields
+end note
+PS -> DB: Thực thi findMany query
+DB -> PS: Language records
+PS -> LR: Languages data
+LR -> LS: Languages data
+
+LS -> LS: Định dạng phản hồi
+note right
+Định Dạng Phản Hồi:
+• Tạo message đa ngôn ngữ
+• Tính totalItems từ array length
+• Wrap data trong response object
+• Include i18n message
+end note
+
+LS -> IS: i18n.t('language.language.success.GET_SUCCESS')
+IS -> LS: Trả về message đã localize
+LS -> LC: Phản hồi với data và totalItems
+LC -> Client: JSON với danh sách languages
+
+== GET /languages/:languageId - Lấy Chi Tiết Ngôn Ngữ ==
+Client -> LC: GET /languages/:languageId
+LC -> LS: findById(languageId)
+
+LS -> LS: Validate languageId
+note right
+Xác Thực Language ID:
+• Validate string format
+• Max length 10 characters
+• Zod schema validation
+• Parameter sanitization
+end note
+
+LS -> LR: findById(languageId)
+LR -> PS: findUnique với WHERE id = languageId AND deletedAt IS NULL
+note right
+Database Query:
+• Find unique language by ID
+• Filter deletedAt IS NULL
+• Return single language record
+• Include all audit fields
+end note
+PS -> DB: Thực thi findUnique query
+DB -> PS: Language record hoặc null
+
+alt Language found
+    PS -> LR: Language data
+    LR -> LS: Language data
+    LS -> LS: Định dạng phản hồi
+    note right
+    Success Response:
+    • Tạo message đa ngôn ngữ
+    • Wrap data trong response object
+    • Include language details
+    end note
+    LS -> IS: i18n.t('language.language.success.GET_DETAIL_SUCCESS')
+    IS -> LS: Trả về message đã localize
+    LS -> LC: Success response
+    LC -> Client: 200 OK + language details
+
+else Language not found
+    PS -> LR: null
+    LR -> LS: null
+    LS -> LS: Ném NotFoundRecordException
+    LS -> LC: NotFoundRecordException
+    LC -> Client: 404 Not Found
+end
+
+== POST /languages - Tạo Ngôn Ngữ Mới ==
+Admin -> AU: @ActiveUser()
+AU -> Admin: Trả về user context
+Admin -> LC: POST /languages + {id, name}
+LC -> LS: create({data, createdById})
+
+LS -> LS: Validate request body
+note right
+Xác Thực Tạo Mới:
+• id: required string, max 10 chars
+• name: required string, max 500 chars
+• Zod schema validation
+• Strict object validation
+end note
+
+alt Validation passed
+    LS -> LR: create({createdById, data})
+    LR -> PS: INSERT INTO language với audit fields
+    note right
+    Database Insert:
+    • Insert new language record
+    • Set createdById từ user context
+    • Auto-set timestamps
+    • Handle unique constraint
+    end note
+    PS -> DB: INSERT language với audit fields
+    DB -> PS: New language record
+    PS -> LR: Created language
+    LR -> LS: Created language
+    LS -> LS: Định dạng success response
+    LS -> IS: i18n.t('language.language.success.CREATE_SUCCESS')
+    IS -> LS: Trả về message đã localize
+    LS -> LC: Success response
+    LC -> Admin: 201 Created + language details
+
+else Unique constraint violation
+    PS -> LR: UniqueConstraintError
+    LR -> LS: Prisma error
+    LS -> LS: Xử lý unique constraint
+    note right
+    Error Handling:
+    • Check isUniqueConstraintPrismaError
+    • Throw LanguageAlreadyExistsException
+    • Return proper error message
+    end note
+    LS -> LC: LanguageAlreadyExistsException
+    LC -> Admin: 422 Unprocessable Entity
+end
+
+else Validation failed
+    LS -> LC: ValidationException
+    LC -> Admin: 400 Bad Request
+end
+
+== PUT /languages/:languageId - Cập Nhật Ngôn Ngữ ==
+Admin -> AU: @ActiveUser()
+AU -> Admin: Trả về user context
+Admin -> LC: PUT /languages/:languageId + {name}
+LC -> LS: update({id, data, updatedById})
+
+LS -> LS: Validate request
+note right
+Xác Thực Cập Nhật:
+• languageId: required string, max 10 chars
+• name: required string, max 500 chars
+• Zod schema validation
+• Parameter sanitization
+• Immutable language ID
+end note
+
+alt Validation passed
+    LS -> LR: update({id, updatedById, data})
+    LR -> PS: UPDATE language với audit fields
+    note right
+    Database Update:
+    • Update language name only
+    • Set updatedById từ user context
+    • Auto-update updatedAt
+    • Filter deletedAt IS NULL
+    • Immutable language ID
+    end note
+    PS -> DB: UPDATE language với audit fields
+    DB -> PS: Updated language record
+    PS -> LR: Updated language
+    LR -> LS: Updated language
+    LS -> LS: Định dạng success response
+    LS -> IS: i18n.t('language.language.success.UPDATE_SUCCESS')
+    IS -> LS: Trả về message đã localize
+    LS -> LC: Success response
+    LC -> Admin: 200 OK + updated language
+
+else Language not found
+    PS -> LR: NotFoundError
+    LR -> LS: Prisma error
+    LS -> LS: Xử lý not found
+    note right
+    Error Handling:
+    • Check isNotFoundPrismaError
+    • Throw NotFoundRecordException
+    • Return proper error message
+    end note
+    LS -> LC: NotFoundRecordException
+    LC -> Admin: 404 Not Found
+end
+
+else Validation failed
+    LS -> LC: ValidationException
+    LC -> Admin: 400 Bad Request
+end
+
+== DELETE /languages/:languageId - Xóa Ngôn Ngữ ==
+Admin -> LC: DELETE /languages/:languageId
+LC -> LS: delete(languageId)
+
+LS -> LS: Validate languageId
+LS -> LR: delete(languageId, true)
+note right
+Hard Delete Logic:
+• Sử dụng hard delete (isHard = true)
+• Xóa hoàn toàn khỏi database
+• Không sử dụng soft delete
+• Immediate removal
+end note
+
+LR -> PS: DELETE FROM language WHERE id = languageId
+note right
+Database Delete:
+• Hard delete operation
+• Remove record completely
+• No soft delete logic
+• Immediate deletion
+end note
+PS -> DB: Thực thi DELETE query
+DB -> PS: Deleted record
+PS -> LR: Delete confirmation
+LR -> LS: Delete confirmation
+LS -> LS: Định dạng success response
+LS -> IS: i18n.t('language.language.success.DELETE_SUCCESS')
+IS -> LS: Trả về message đã localize
+LS -> LC: Success response
+LC -> Admin: 200 OK + success message
+
+else Language not found
+    PS -> LR: NotFoundError
+    LR -> LS: Prisma error
+    LS -> LS: Xử lý not found
+    LS -> LC: NotFoundRecordException
+    LC -> Admin: 404 Not Found
+end
+
+== Xử Lý Lỗi & Validation ==
+alt Lỗi validation input
+    LS -> LC: ValidationException
+    LC -> Client: 400 Bad Request
+    note right
+    Validation Errors:
+    • Invalid language ID format
+    • Name too long (>500 chars)
+    • Missing required fields
+    • Invalid data types
+    end note
+
+else Lỗi unique constraint
+    LS -> LC: LanguageAlreadyExistsException
+    LC -> Client: 422 Unprocessable Entity
+    note right
+    Unique Constraint Errors:
+    • Language ID đã tồn tại
+    • Duplicate language creation
+    • Constraint violation
+    end note
+
+else Lỗi không tìm thấy
+    LS -> LC: NotFoundRecordException
+    LC -> Client: 404 Not Found
+    note right
+    Not Found Errors:
+    • Language ID không tồn tại
+    • Record đã bị xóa
+    • Invalid ID format
+    end note
+
+else Lỗi database
+    LS -> LC: DatabaseException
+    LC -> Client: 500 Internal Server Error
+    note right
+    Database Errors:
+    • Connection issues
+    • Transaction failures
+    • Constraint violations
+    • System errors
+    end note
+end
+
+== Trả Kết Quả ==
+LS -> IS: i18n.t('language.language.success.XXX')
+IS -> LS: Trả về message đã localize
+LS -> LC: Phản hồi + Message đã localize
+LC -> Client: JSON Response với metadata đầy đủ
+
+note bottom
+**Đặc điểm chính của module Language:**
+• CRUD operations đầy đủ cho language management
+• Hard delete thay vì soft delete
+• Unique constraint validation cho language ID
+• Audit trail với createdById, updatedById
+• Multi-language support với i18n
+• Zod schema validation cho input/output
+• Comprehensive error handling
+• No pagination cho list operation
+• Immutable language ID (không cho update ID)
+• Admin-only access cho create/update/delete
+end note
+
+@enduml

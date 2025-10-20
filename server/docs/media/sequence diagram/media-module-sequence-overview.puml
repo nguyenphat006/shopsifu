@@ -1,0 +1,286 @@
+@startuml Media Module - Sequence Overview
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+
+title Mô-đun Media - Tổng Quan Luồng Xử Lý
+note top : Hệ thống quản lý media với file upload, S3 integration và presigned URL
+
+actor "Khách hàng" as Client
+participant "MediaController" as MC
+participant "MediaService" as MS
+participant "S3Service" as S3
+participant "ParseFilePipeWithUnlink" as PFP
+participant "I18nService" as IS
+participant "MulterModule" as MM
+participant "FilesInterceptor" as FI
+database "LocalStorage" as LS
+database "AWS_S3" as S3DB
+
+== POST /media/images/upload - Tải Lên Tệp ==
+Client -> MC: POST /media/images/upload + multipart files
+note right
+Yêu Cầu Tải Lên:
+• Multipart form data với field 'files'
+• Tối đa 100 files
+• Tối đa 5MB mỗi file (limit config)
+• Loại file hỗ trợ: jpg, jpeg, png, webp
+end note
+
+MC -> FI: FilesInterceptor('files', 100)
+FI -> MM: Cấu hình Multer
+note right
+Cấu Hình Multer:
+• Storage: multer.diskStorage
+• Destination: UPLOAD_DIR
+• Filename: generateRandomFilename()
+• Giới hạn kích thước file: 5MB
+end note
+
+MM -> LS: Lưu files vào UPLOAD_DIR
+LS -> MM: Files đã lưu với tên ngẫu nhiên
+MM -> MC: Files với metadata
+
+MC -> PFP: ParseFilePipeWithUnlink validation
+PFP -> PFP: Xác thực file
+note right
+Xác Thực File:
+• MaxFileSizeValidator: 1MB mỗi file
+• FileTypeValidator: jpg, jpeg, png, webp
+• Skip magic numbers validation
+• Tự động dọn dẹp khi validation thất bại
+end note
+
+alt Xác thực file thành công
+    PFP --> MC: Files đã xác thực
+    MC -> MS: uploadFile(files)
+
+    MS -> MS: Xử lý files song song với Promise.all
+    note right
+    Xử Lý File:
+    • Map files thành S3 upload promises
+    • Tạo S3 key: 'images/' + filename
+    • Upload lên S3 với đường dẫn phù hợp
+    • Xử lý nhiều files đồng thời
+    end note
+
+    loop Với mỗi file
+        MS -> S3: uploadedFile({filename, filepath, contentType})
+        S3 -> S3: Chuẩn bị upload S3
+        note right
+        Chuẩn Bị Upload S3:
+        • Tạo S3 key: 'images/' + filename
+        • Đọc file từ đường dẫn local
+        • Thiết lập content type phù hợp
+        • Upload lên S3 bucket
+        end note
+
+        S3 -> S3DB: Upload file lên S3
+        S3DB --> S3: Kết quả upload với Location
+        S3 --> MS: Phản hồi upload S3
+
+        MS -> MS: Trích xuất S3 URL
+        note right
+        Trích Xuất URL:
+        • Lấy Location từ phản hồi S3
+        • Trả về public S3 URL
+        • Xử lý upload thành công/thất bại
+        end note
+    end
+
+    MS -> MS: Dọn dẹp files local với Promise.all
+    note right
+    Dọn Dẹp File Local:
+    • Xóa files tạm sau khi upload
+    • Sử dụng Promise.all cho xóa song song
+    • Đảm bảo không rò rỉ file local
+    • unlink(file.path) cho mỗi file
+    end note
+
+    MS -> LS: unlink(file.path) cho mỗi file
+    LS --> MS: Files đã xóa
+
+    MS -> IS: i18n.t('media.media.success.UPLOAD_SUCCESS')
+    IS -> MS: Trả về message đã localize
+    MS --> MC: Kết quả upload với URLs
+    MC --> Client: JSON với URLs và message
+
+else Xác thực file thất bại
+    PFP -> PFP: Tự động dọn dẹp files
+    PFP -> LS: unlink(file.path) cho mỗi file
+    LS --> PFP: Files đã xóa
+    PFP --> MC: ValidationException
+    MC --> Client: 400 Bad Request
+end
+
+== GET /media/static/:filename - Phục Vụ File Tĩnh ==
+Client -> MC: GET /media/static/:filename
+MC -> MC: serveFile(filename, res)
+note right
+Phục Vụ File Tĩnh:
+• Phục vụ files từ local UPLOAD_DIR
+• Truy cập công khai (không cần xác thực)
+• Xử lý lỗi file không tìm thấy
+• Stream file trực tiếp với res.sendFile()
+end note
+
+MC -> LS: Kiểm tra file tồn tại tại UPLOAD_DIR
+LS --> MC: Trạng thái file
+
+alt File tồn tại
+    MC -> Client: Gửi file stream
+    Client -> Client: Hiển thị/tải xuống file
+else File không tìm thấy
+    MC -> Client: 404 Not Found với thông báo lỗi
+end
+
+== POST /media/images/upload/presigned-url - Tạo Presigned URL ==
+Client -> MC: POST /media/images/upload/presigned-url + {filename, filesize}
+MC -> MS: getPresignUrl(body)
+
+MS -> MS: Xác thực request body
+note right
+Xác Thực Presigned URL:
+• filename: string bắt buộc
+• filesize: tối đa 1MB
+• Xác thực schema Zod
+end note
+
+alt Xác thực thành công
+    MS -> MS: generateRandomFilename(filename)
+    note right
+    Tạo Tên File:
+    • Tạo tên file ngẫu nhiên duy nhất
+    • Ngăn chặn xung đột tên file
+    • Giữ nguyên phần mở rộng file
+    • Đảm bảo bảo mật
+    end note
+
+    MS -> S3: createPresignedUrlWithClient(randomFilename)
+    S3 -> S3: Tạo presigned URL
+    note right
+    Tạo Presigned URL:
+    • Tạo S3 presigned URL
+    • Thiết lập thời gian hết hạn phù hợp
+    • Cho phép upload trực tiếp lên S3
+    • Kiểm soát truy cập bảo mật
+    end note
+
+    S3 -> S3DB: Tạo presigned URL
+    S3DB --> S3: Presigned URL
+    S3 --> MS: Presigned URL
+
+    MS -> MS: Trích xuất base URL
+    note right
+    Xử Lý URL:
+    • Tách presigned URL tại '?'
+    • Trích xuất base URL không có query params
+    • Trả về cả presigned và base URLs
+    end note
+
+    MS -> IS: i18n.t('media.media.success.GET_PRESIGNED_URL_SUCCESS')
+    IS -> MS: Trả về message đã localize
+    MS --> MC: Phản hồi Presigned URL
+    MC --> Client: JSON với presignedUrl và url
+
+else Xác thực thất bại
+    MS --> MC: ValidationException
+    MC --> Client: 400 Bad Request
+end
+
+== Khởi Tạo Module ==
+MC -> MC: Constructor kiểm tra UPLOAD_DIR
+note right
+Quản Lý Thư Mục:
+• Tự động tạo UPLOAD_DIR nếu chưa tồn tại
+• Đảm bảo quyền truy cập phù hợp
+• Xử lý lỗi tạo thư mục
+• existsSync() và mkdirSync() với recursive
+end note
+
+MC -> LS: Kiểm tra UPLOAD_DIR tồn tại
+LS --> MC: Trạng thái thư mục
+
+alt Thư mục không tồn tại
+    MC -> LS: mkdirSync(UPLOAD_DIR, { recursive: true })
+    LS --> MC: Thư mục đã tạo
+end
+
+== Xử Lý Lỗi & Xác Thực ==
+alt Lỗi xác thực file
+    PFP --> MC: ValidationException
+    MC --> Client: 400 Bad Request
+    note right
+    Lỗi Xác Thực File:
+    • Kích thước file quá lớn (> 1MB)
+    • Loại file không hợp lệ (không phải jpg, jpeg, png, webp)
+    • File bị hỏng
+    • Tự động dọn dẹp khi thất bại
+    end note
+
+else Lỗi upload S3
+    S3 --> MS: S3UploadException
+    MS --> MC: Phản hồi lỗi
+    MC --> Client: 500 Internal Server Error
+    note right
+    Lỗi Upload S3:
+    • Vấn đề kết nối mạng
+    • S3 bucket access denied
+    • File upload timeout
+    • Credentials không hợp lệ
+    • Bucket không tồn tại
+    end note
+
+else Lỗi file không tìm thấy
+    MC --> Client: 404 Not Found
+    note right
+    File Không Tìm Thấy:
+    • File tĩnh không tồn tại trong UPLOAD_DIR
+    • Thông báo lỗi rõ ràng
+    • HTTP status phù hợp
+    end note
+
+else Lỗi tạo presigned URL
+    S3 --> MS: PresignedUrlException
+    MS --> MC: Phản hồi lỗi
+    MC --> Client: 500 Internal Server Error
+    note right
+    Lỗi Presigned URL:
+    • S3 service không khả dụng
+    • Cấu hình bucket không hợp lệ
+    • Vấn đề quyền truy cập
+    • Lỗi mạng
+    • Credentials không hợp lệ
+    end note
+
+else Lỗi tạo thư mục
+    MC --> MC: DirectoryCreationException
+    MC --> Client: 500 Internal Server Error
+    note right
+    Lỗi Tạo Thư Mục:
+    • Quyền truy cập không đủ
+    • Ổ đĩa hết dung lượng
+    • Xung đột đường dẫn
+    end note
+end
+
+== Đa Ngôn Ngữ ==
+MS -> IS: i18n.t('media.media.success.XXX')
+IS -> MS: Trả về message đã localize
+MS --> MC: Phản hồi + Message đã localize
+MC --> Client: JSON Response với metadata đầy đủ
+
+note bottom
+**Đặc điểm chính của module Media:**
+• Upload file với validation nghiêm ngặt
+• Tích hợp AWS S3 cho lưu trữ
+• Presigned URL cho upload trực tiếp
+• Tự động dọn dẹp file tạm
+• Hỗ trợ đa ngôn ngữ với I18nService
+• Xử lý lỗi toàn diện
+• Phục vụ file tĩnh công khai
+end note
+
+@enduml

@@ -1,0 +1,184 @@
+@startuml Product Management Activity Diagram
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam activityFontSize 12
+skinparam activityFontColor #333333
+skinparam activityBorderColor #666666
+skinparam activityBackgroundColor #F0F0F0
+skinparam activityDiamondBackgroundColor #FFE6E6
+skinparam activityDiamondBorderColor #CC0000
+
+title Quản Lý Sản Phẩm - Sơ Đồ Hoạt Động
+
+start
+
+:Người dùng yêu cầu thao tác sản phẩm;
+
+if (Loại thao tác?) then (GET /products - Lấy danh sách công khai)
+  :Trích xuất query parameters;
+  :Lấy {page, limit, name, brandIds, categories, minPrice, maxPrice};
+  :Xây dựng where clause cho public products;
+  note right
+  Logic Xây Dựng Query:
+  • WHERE deletedAt IS NULL
+  • WHERE publishedAt <= now (public only)
+  • Filter theo name, brandIds, categories
+  • Filter theo price range
+  • Include productTranslations theo language
+  end note
+  :Thực thi findMany query với includes;
+  :Tính toán pagination metadata;
+  :Trả về danh sách products với translations;
+
+elseif (GET /products/:productId - Chi tiết sản phẩm công khai) then
+  :Trích xuất productId từ params;
+  :Lấy ngôn ngữ hiện tại từ I18nContext;
+  :Thực thi findUnique query với includes;
+  note right
+  Detail Includes:
+  • productTranslations theo language
+  • skus (active only)
+  • brand với translations
+  • categories với translations
+  end note
+  if (Product được tìm thấy?) then (có)
+    :Load product với đầy đủ relations;
+    :Áp dụng dịch thuật theo ngôn ngữ;
+    :Trả về product detail;
+  else (không)
+    :Ném NotFoundRecordException;
+  endif
+
+elseif (POST /manage-product/products - Tạo sản phẩm mới) then
+  :Người dùng tạo sản phẩm mới;
+  :Trích xuất {name, description, variants, skus, categories, ...} từ body;
+  :Validate SKUs với variants;
+  note right
+  SKU Validation Logic:
+  • Generate SKUs từ variants
+  • Validate số lượng SKU matches
+  • Validate SKU values
+  • Business rules validation
+  end note
+  if (SKU validation thành công?) then (có)
+    :Tạo product với audit fields;
+    :Connect categories;
+    :Create SKUs với variants;
+    :Include all relations;
+    :Trigger Elasticsearch sync job;
+    note right
+    Elasticsearch Sync:
+    • addSyncProductJob(productId, 'create')
+    • Background job processing
+    • Non-blocking operation
+    end note
+    :Trả về product đã tạo;
+  else (không)
+    :Ném ValidationException;
+  endif
+
+elseif (PUT /manage-product/products/:productId - Cập nhật sản phẩm) then
+  :Người dùng cập nhật sản phẩm;
+  :Trích xuất productId từ params;
+  :Tìm product theo ID;
+  if (Product tồn tại?) then (có)
+    :Validate quyền truy cập product;
+    note right
+    Kiểm Soát Truy Cập:
+    • Admin: truy cập tất cả products
+    • Seller: chỉ truy cập của chính mình
+    • createdById validation
+    end note
+    if (Có quyền truy cập?) then (có)
+      :Validate SKUs với variants;
+      if (SKU validation thành công?) then (có)
+        :Handle SKU updates;
+        note right
+        SKU Update Logic:
+        • Find existing SKUs
+        • Identify SKUs to delete
+        • Map SKUs to update
+        • Create new SKUs
+        • Transaction-based updates
+        end note
+        :Cập nhật product với audit fields;
+        :Update SKUs trong transaction;
+        :Trigger Elasticsearch sync job;
+        :Trả về product đã cập nhật;
+      else (không)
+        :Ném ValidationException;
+      endif
+    else (không)
+      :Ném ForbiddenException;
+    endif
+  else (không)
+    :Ném NotFoundRecordException;
+  endif
+
+elseif (DELETE /manage-product/products/:productId - Xóa sản phẩm) then
+  :Người dùng xóa sản phẩm;
+  :Trích xuất productId từ params;
+  :Tìm product theo ID;
+  if (Product tồn tại?) then (có)
+    :Validate quyền truy cập product;
+    if (Có quyền truy cập?) then (có)
+      :Thực thi soft delete;
+      :Cập nhật deletedAt field;
+      :Cập nhật deletedById;
+      :Soft delete related translations;
+      :Soft delete related SKUs;
+      :Trigger Elasticsearch sync job;
+      :Trả về success response;
+    else (không)
+      :Ném ForbiddenException;
+    endif
+  else (không)
+    :Ném NotFoundRecordException;
+  endif
+
+elseif (POST /product-translations - Tạo translation) then
+  :Người dùng tạo translation;
+  :Trích xuất {productId, languageId, name, description} từ body;
+  :Validate dữ liệu translation;
+  if (Dữ liệu hợp lệ?) then (có)
+    :Kiểm tra unique constraint;
+    if (Translation đã tồn tại?) then (có)
+      :Ném ProductTranslationAlreadyExistsException;
+    else (không)
+      :Tạo translation với audit fields;
+      :Trả về translation đã tạo;
+    endif
+  else (không)
+    :Ném ValidationException;
+  endif
+
+elseif (PUT /product-translations/:productTranslationId - Cập nhật translation) then
+  :Người dùng cập nhật translation;
+  :Trích xuất productTranslationId từ params;
+  :Trích xuất {productId, languageId, name, description} từ body;
+  :Validate dữ liệu translation;
+  if (Dữ liệu hợp lệ?) then (có)
+    :Cập nhật translation với audit fields;
+    :Trả về translation đã cập nhật;
+  else (không)
+    :Ném ValidationException;
+  endif
+
+elseif (DELETE /product-translations/:productTranslationId - Xóa translation) then
+  :Người dùng xóa translation;
+  :Trích xuất productTranslationId từ params;
+  :Thực thi soft delete operation;
+  :Cập nhật deletedAt field;
+  :Cập nhật deletedById;
+  :Trả về success response;
+
+else (Thao tác không hợp lệ)
+  :Ném InvalidOperationException;
+endif
+
+:Tạo thông báo thành công đa ngôn ngữ;
+:Trả về JSON response với metadata;
+
+stop
+
+@enduml

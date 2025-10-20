@@ -1,0 +1,135 @@
+groups:
+  - name: VPS Performance Monitoring
+    rules:
+      # CPU Monitoring
+      - alert: HighCPUUsagePerCore
+        expr: 100 - (avg by (cpu) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High CPU usage on {{ $labels.cpu }}'
+          description: 'CPU usage is {{ $value }}% on {{ $labels.cpu }} for more than 3 minutes'
+
+      - alert: CriticalCPUUsagePerCore
+        expr: 100 - (avg by (cpu) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 95
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: 'Critical CPU usage on {{ $labels.cpu }}'
+          description: 'CPU usage is {{ $value }}% on {{ $labels.cpu }} for more than 2 minutes'
+
+      # Memory Monitoring
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 85
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High memory usage'
+          description: 'Memory usage is {{ $value }}% for more than 3 minutes'
+
+      - alert: CriticalMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 95
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: 'Critical memory usage'
+          description: 'Memory usage is {{ $value }}% for more than 2 minutes'
+
+      # Load Average Monitoring
+      - alert: HighLoadAverage
+        expr: node_load1 > count(count by (cpu) (node_cpu_seconds_total)) * 0.8
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High system load average'
+          description: '1-minute load average is {{ $value }} for more than 3 minutes'
+
+      - alert: CriticalLoadAverage
+        expr: node_load1 > count(count by (cpu) (node_cpu_seconds_total)) * 1.2
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: 'Critical system load average'
+          description: '1-minute load average is {{ $value }} for more than 2 minutes'
+
+      # Disk I/O Monitoring
+      - alert: HighDiskIO
+        expr: rate(node_disk_io_time_seconds_total[5m]) > 0.8
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High disk I/O utilization'
+          description: 'Disk I/O utilization is {{ $value }} for more than 3 minutes'
+
+      # Network I/O Monitoring
+      - alert: HighNetworkIO
+        expr: rate(node_network_receive_bytes_total[5m]) + rate(node_network_transmit_bytes_total[5m]) > 1000000000
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High network I/O'
+          description: 'Network I/O is {{ $value }} bytes/s for more than 3 minutes'
+
+  - name: VPS Infrastructure Health
+    rules:
+      # Disk Space Monitoring
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100) < 15
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Low disk space on root filesystem'
+          description: 'Disk space is {{ $value }}% available on root filesystem'
+
+      - alert: CriticalDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100) < 5
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: 'Critical disk space on root filesystem'
+          description: 'Disk space is {{ $value }}% available on root filesystem'
+
+      # System Uptime Monitoring
+      - alert: SystemReboot
+        expr: node_boot_time_seconds > 0
+        for: 0m
+        labels:
+          severity: info
+        annotations:
+          summary: 'System reboot detected'
+          description: 'System has been rebooted'
+
+  - name: API SLO
+    rules:
+      - alert: APIErrorBudgetBurnFast
+        expr: (sum(rate(http_server_requests_total{service="api",status_code=~"5.."}[5m])) /
+          sum(rate(http_server_requests_total{service="api"}[5m]))) > (0.01 * 14.4)
+        for: 5m
+        labels: { severity: page }
+        annotations: { summary: 'Fast burn >14.4x (5m)' }
+      - alert: APIErrorBudgetBurnSlow
+        expr: (sum(rate(http_server_requests_total{service="api",status_code=~"5.."}[1h])) /
+          sum(rate(http_server_requests_total{service="api"}[1h]))) > (0.01 * 6)
+        for: 2h
+        labels: { severity: page }
+        annotations: { summary: 'Slow burn >6x (1h)' }
+
+      - alert: APIP99High
+        expr: histogram_quantile(0.99, sum by (le) (rate(http_server_duration_seconds_bucket{service="api"}[5m]))) > 0.8
+        for: 10m
+        labels: { severity: page }
+
+      - alert: CPUHigh
+        expr: avg by (instance) (rate(node_cpu_seconds_total{mode!="idle"}[5m])) > 0.9
+        for: 10m
+        labels: { severity: warning }

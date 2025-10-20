@@ -1,0 +1,227 @@
+@startuml Category Module - Sequence Overview
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+
+title Mô-đun Danh Mục - Tổng Quan Luồng Xử Lý
+note top : Hệ thống quản lý danh mục với phân cấp và đa ngôn ngữ
+
+actor "Khách hàng" as Client
+actor "Người dùng" as User
+participant "CategoryController" as CC
+participant "CategoryTranslationController" as CTC
+participant "CategoryService" as CS
+participant "CategoryTranslationService" as CTS
+participant "CategoryRepo" as CR
+participant "CategoryTranslationRepo" as CTR
+participant "I18nService" as IS
+participant "I18nContext" as IC
+participant "ActiveUser" as AU
+participant "PrismaService" as PS
+database "PostgreSQL" as DB
+
+== API Công Khai (Public Categories) ==
+Client -> CC: GET /categories?parentCategoryId=123
+note right
+Cấu Hình Endpoint:
+• @IsPublic() - Không cần xác thực
+• @ZodSerializerDto(GetAllCategoriesResDTO) - Chuẩn hóa phản hồi
+end note
+
+CC -> CS: findAll(parentCategoryId)
+CS -> IC: I18nContext.current()?.lang
+IC -> CS: trả về ngôn ngữ hiện tại
+CS -> CR: findAll({parentCategoryId, languageId})
+CR -> PS: category.findMany()
+note right
+Logic Truy Vấn Database:
+• WHERE deletedAt IS NULL
+• Filter theo parentCategoryId (hierarchical)
+• Include categoryTranslations
+• Language-specific translations
+• ORDER BY createdAt DESC
+end note
+PS -> DB: Thực thi query với JOINs
+DB -> PS: Trả về categories với translations
+PS -> CR: Trả về categories data + totalItems
+CR -> CS: Trả về {data, totalItems}
+CS -> IS: i18n.t('category.category.success.GET_SUCCESS')
+IS -> CS: Trả về message đã localize
+CS -> CC: Trả về response với data + totalItems
+CC -> Client: Trả về JSON response
+
+Client -> CC: GET /categories/:categoryId
+note right
+Cấu Hình Endpoint:
+• @IsPublic() - Không cần xác thực
+• @ZodSerializerDto(GetCategoryDetailResDTO) - Chuẩn hóa phản hồi
+end note
+
+CC -> CS: findById(categoryId)
+CS -> IC: I18nContext.current()?.lang
+IC -> CS: trả về ngôn ngữ hiện tại
+CS -> CR: findById({id, languageId})
+CR -> PS: category.findUnique()
+PS -> DB: Thực thi findUnique query
+DB -> PS: Trả về category detail với translations
+PS -> CR: Trả về category với đa ngôn ngữ
+CR -> CS: Trả về category data
+
+alt Category tồn tại
+    CS -> IS: i18n.t('category.category.success.GET_DETAIL_SUCCESS')
+    IS -> CS: Trả về message đã localize
+    CS -> CC: Trả về response chi tiết
+    CC -> Client: Trả về JSON category detail
+else Category không tồn tại
+    CS -> CC: Throw NotFoundRecordException
+    CC -> Client: Trả về 404 Not Found
+end
+
+== API Quản Lý (Management Categories) ==
+User -> AU: @ActiveUser()
+AU -> User: Trả về user context
+User -> CC: POST /categories + {name, logo, parentCategoryId}
+CC -> CS: create({data, user})
+CS -> CR: create({createdById, data})
+CR -> PS: category.create()
+PS -> DB: INSERT category với audit fields
+DB -> PS: Trả về category mới với translations
+PS -> CR: Trả về category đã tạo
+CR -> CS: Trả về category data
+CS -> IS: i18n.t('category.category.success.CREATE_SUCCESS')
+IS -> CS: Trả về message đã localize
+CS -> CC: Trả về success response
+CC -> User: Trả về 201 Created + JSON response
+
+User -> AU: @ActiveUser()
+AU -> User: Trả về user context
+User -> CC: PUT /categories/:categoryId + {name, logo, parentCategoryId}
+CC -> CS: update({id, data, user})
+CS -> CR: update({id, updatedById, data})
+CR -> PS: category.update()
+PS -> DB: UPDATE category với audit
+DB -> PS: Trả về category updated
+PS -> CR: Trả về category đã cập nhật
+CR -> CS: Trả về category data
+CS -> IS: i18n.t('category.category.success.UPDATE_SUCCESS')
+IS -> CS: Trả về message đã localize
+CS -> CC: Trả về success response
+CC -> User: Trả về 200 OK + JSON response
+
+User -> AU: @ActiveUser()
+AU -> User: Trả về user context
+User -> CC: DELETE /categories/:categoryId
+CC -> CS: delete({id, user})
+CS -> CR: delete({id, deletedById})
+CR -> PS: category.update() soft delete
+PS -> DB: UPDATE deletedAt field
+DB -> PS: Trả về category marked deleted
+PS -> CR: Trả về success
+CR -> CS: Trả về success
+CS -> IS: i18n.t('category.category.success.DELETE_SUCCESS')
+IS -> CS: Trả về message đã localize
+CS -> CC: Trả về success response
+CC -> User: Trả về 200 OK + JSON response
+
+== API Quản Lý Translation ==
+User -> AU: @ActiveUser()
+AU -> User: Trả về user context
+User -> CTC: POST /category-translations + {categoryId, languageId, name, description}
+CTC -> CTS: create({data, user})
+CTS -> CTR: create({createdById, data})
+CTR -> PS: categoryTranslation.create()
+PS -> DB: INSERT categoryTranslation
+DB -> PS: Trả về translation created
+PS -> CTR: Trả về translation data
+CTR -> CTS: Trả về translation
+CTS -> IS: i18n.t('category.categoryTranslation.success.CREATE_SUCCESS')
+IS -> CTS: Trả về message đã localize
+CTS -> CTC: Trả về success response
+CTC -> User: Trả về 201 Created + JSON response
+
+alt Unique constraint violation
+    CTR -> PS: categoryTranslation.create()
+    PS -> DB: INSERT categoryTranslation
+    DB -> PS: Unique constraint error
+    PS -> CTR: Throw PrismaException
+    CTR -> CTS: Throw exception
+    CTS -> CTS: isUniqueConstraintPrismaError(error)
+    CTS -> CTC: Throw CategoryTranslationAlreadyExistsException
+    CTC -> User: Trả về 422 Unprocessable Entity
+end
+
+User -> AU: @ActiveUser()
+AU -> User: Trả về user context
+User -> CTC: PUT /category-translations/:categoryTranslationId + {categoryId, languageId, name, description}
+CTC -> CTS: update({id, data, user})
+CTS -> CTR: update({id, updatedById, data})
+CTR -> PS: categoryTranslation.update()
+PS -> DB: UPDATE categoryTranslation
+DB -> PS: Trả về translation updated
+PS -> CTR: Trả về translation đã cập nhật
+CTR -> CTS: Trả về translation data
+CTS -> IS: i18n.t('category.categoryTranslation.success.UPDATE_SUCCESS')
+IS -> CTS: Trả về message đã localize
+CTS -> CTC: Trả về success response
+CTC -> User: Trả về 200 OK + JSON response
+
+User -> AU: @ActiveUser()
+AU -> User: Trả về user context
+User -> CTC: DELETE /category-translations/:categoryTranslationId
+CTC -> CTS: delete({id, user})
+CTS -> CTR: delete({id, deletedById})
+CTR -> PS: categoryTranslation.update() soft delete
+PS -> DB: UPDATE deletedAt field
+DB -> PS: Trả về translation marked deleted
+PS -> CTR: Trả về success
+CTR -> CTS: Trả về success
+CTS -> IS: i18n.t('category.categoryTranslation.success.DELETE_SUCCESS')
+IS -> CTS: Trả về message đã localize
+CTS -> CTC: Trả về success response
+CTC -> User: Trả về 200 OK + JSON response
+
+== Xử Lý Lỗi ==
+alt Lỗi không tìm thấy category
+    CR -> CS: Return null
+    CS -> CS: Throw NotFoundRecordException
+    CS -> CC: Throw exception
+    CC -> Client: Trả về 404 Not Found
+
+else Lỗi unique constraint (translation)
+    CTR -> CTS: Throw PrismaException
+    CTS -> CTS: isUniqueConstraintPrismaError(error)
+    CTS -> CTC: Throw CategoryTranslationAlreadyExistsException
+    CTC -> User: Trả về 422 Unprocessable Entity
+
+else Lỗi database constraint
+    CR -> CS: PrismaException
+    CS -> CC: Database error
+    CC -> User: Trả về 500 Internal Server Error
+
+else Lỗi authentication
+    CC -> User: Trả về 401 Unauthorized
+end
+
+== Đa Ngôn Ngữ ==
+CS -> IS: i18n.t('category.category.success.XXX')
+IS -> CS: Trả về message đã localize
+CS -> CC: Response + Message đã localize
+CC -> Client: JSON Response với metadata đầy đủ
+
+note bottom
+**Đặc điểm chính của module Category:**
+• CRUD operations đầy đủ cho category management
+• Hierarchical structure với parentCategoryId
+• Multi-language support với categoryTranslations
+• Public API cho read operations (@IsPublic())
+• Admin-only access cho create/update/delete
+• Soft delete pattern với audit trail
+• Zod schema validation cho input/output
+• Comprehensive error handling
+• I18nContext integration cho language detection
+• Translation management sub-module
+end note
+
+@enduml

@@ -1,0 +1,187 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: shopsifu-vps
+    environment: production
+    application: shopsifu
+    datacenter: vps
+
+# Alerting rules
+rule_files:
+  - 'rules/performance.yml'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+            - shopsifu_alertmanager:9093
+
+scrape_configs:
+  # Prometheus tự monitor
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    metrics_path: /metrics
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    honor_labels: true
+
+  # ShopSifu API Server - Performance monitoring
+  - job_name: 'shopsifu-api'
+    static_configs:
+      - targets:
+          [
+            '103.147.186.84:9500',
+            '103.147.186.84:9501',
+            '103.147.186.84:9502',
+            '103.147.186.84:9503',
+            '103.147.186.84:9504',
+            '103.147.186.84:9505',
+            '103.147.186.84:9506',
+            '103.147.186.84:9507',
+            '103.147.186.84:9508',
+            '103.147.186.84:9509',
+            '103.147.186.84:9510',
+            '103.147.186.84:9511',
+            '103.147.186.84:9512',
+            '103.147.186.84:9513',
+            '103.147.186.84:9514',
+            '103.147.186.84:9515',
+            '103.147.186.84:9516',
+            '103.147.186.84:9517',
+            '103.147.186.84:9518',
+            '103.147.186.84:9519',
+            '103.147.186.84:9520',
+            '103.147.186.84:9521',
+            '103.147.186.84:9522',
+            '103.147.186.84:9523',
+            '103.147.186.84:9524',
+            '103.147.186.84:9525',
+            '103.147.186.84:9526',
+            '103.147.186.84:9527',
+            '103.147.186.84:9528',
+            '103.147.186.84:9529',
+            '103.147.186.84:9530',
+            '103.147.186.84:9531'
+          ]
+        labels:
+          env: production
+          service: api
+          instance: vps-103-147-186-84
+    metrics_path: /metrics
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    honor_labels: true
+
+  # PostgreSQL với postgres_exporter - Database performance
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['shopsifu_postgres_exporter:9187']
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    metrics_path: /metrics
+    honor_labels: true
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        regex: '([^:]+)(?::\d+)?'
+        replacement: '${1}'
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'postgresql'
+
+  # Redis với redis_exporter - Cache performance
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['shopsifu_redis_exporter:9121']
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    metrics_path: /metrics
+    honor_labels: true
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        regex: '([^:]+)(?::\d+)?'
+        replacement: '${1}'
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'redis'
+
+  # Node Exporter cho system metrics - Infrastructure monitoring
+  - job_name: 'node'
+    static_configs:
+      - targets: ['shopsifu_node_exporter:9100']
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    metrics_path: /metrics
+    honor_labels: true
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        regex: '([^:]+)(?::\d+)?'
+        replacement: '${1}'
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'system'
+
+  # Grafana monitoring
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['shopsifu_grafana:3000']
+    metrics_path: /metrics
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    honor_labels: true
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        regex: '([^:]+)(?::\d+)?'
+        replacement: '${1}'
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'grafana'
+
+  # System Monitor - Advanced system metrics cho high-load scenarios
+  - job_name: 'system-monitor'
+    static_configs:
+      - targets: ['shopsifu_system_monitor:9226']
+  # Blackbox synthetic probe
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets: ['http://103.147.186.84:3000/health']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox_exporter:9115
+
+  # Nginx exporter
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['shopsifu_nginx_exporter:9113']
+
+  # Loki metrics
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+    metrics_path: /metrics
+
+  # Tempo metrics
+  - job_name: 'tempo'
+    static_configs:
+      - targets: ['tempo:3200']
+    metrics_path: /metrics
+  # PM2 exporter metrics
+  - job_name: 'pm2'
+    static_configs:
+      - targets: ['103.147.186.84:9209']
+
+  # Prometheus Exporters

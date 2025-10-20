@@ -1,0 +1,280 @@
+@startuml Review Module - Sequence Overview
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+
+title Mô-đun Đánh Giá - Tổng Quan Luồng Xử Lý
+note top : Hệ thống quản lý đánh giá sản phẩm với xác thực và quản lý media
+
+actor "Khách hàng" as Client
+actor "Người dùng" as User
+participant "ReviewController" as RC
+participant "ReviewService" as RS
+participant "ReviewRepository" as RR
+participant "ActiveUser" as AU
+participant "I18nService" as IS
+participant "PrismaService" as PS
+database "PostgreSQL" as DB
+
+== GET /reviews/products/:productId - Lấy Danh Sách Đánh Giá ==
+Client -> RC: GET /reviews/products/:productId?page=1&limit=10
+note right
+Cấu Hình Endpoint:
+• @IsPublic() - Không cần xác thực
+• @ZodSerializerDto(GetReviewsDTO) - Chuẩn hóa phản hồi
+end note
+
+RC -> RS: list(productId, pagination)
+
+RS -> RR: list(productId, pagination)
+RR -> RR: Tính toán metadata phân trang
+note right
+Logic Phân Trang:
+• skip = (page - 1) * limit
+• take = limit
+• Truy vấn song song: count + findMany
+• Lọc theo productId
+• Bao gồm thông tin người dùng và media
+end note
+
+RR -> PS: count() với WHERE productId
+RR -> PS: findMany() với include và pagination
+note right
+Tính Năng Truy Vấn Database:
+• WHERE productId = :productId
+• Include user (id, name, avatar)
+• Include medias (url, type)
+• ORDER BY createdAt DESC
+• Phân trang với skip/take
+end note
+PS -> DB: Thực thi parallel queries
+DB -> PS: Tổng số + dữ liệu đánh giá
+PS -> RR: Đánh giá với metadata
+RR -> RS: Đánh giá với metadata
+RS -> IS: i18n.t('review.review.success.GET_SUCCESS')
+IS -> RS: Trả về message đã localize
+RS -> RC: Phản hồi + thông báo đã localize
+RC -> Client: JSON với dữ liệu + metadata
+
+== POST /reviews - Tạo Đánh Giá Mới ==
+User -> RC: POST /reviews + {content, rating, productId, orderId, medias}
+note right
+Cấu Hình Endpoint:
+• @ActiveUser() - Xác thực người dùng
+• @ZodSerializerDto(CreateReviewResDTO) - Chuẩn hóa phản hồi
+end note
+
+RC -> AU: @ActiveUser()
+AU -> RC: Trả về user context
+RC -> RS: create(user, body)
+
+RS -> RR: create(userId, body)
+RR -> RR: validateOrder({orderId, userId})
+note right
+Logic Xác Thực Đơn Hàng:
+• Kiểm tra đơn hàng tồn tại và thuộc về người dùng
+• Xác thực order.status = DELIVERED
+• Chỉ đơn hàng đã giao mới được đánh giá
+end note
+
+RR -> PS: findUnique order với userId
+PS -> DB: Query order với userId
+DB -> PS: Dữ liệu đơn hàng
+PS -> RR: Trả về order data
+
+alt Xác thực đơn hàng thành công
+    RR -> PS: $transaction (hoạt động nguyên tử)
+    note right
+    Giao Dịch Tạo Đánh Giá:
+    • CREATE review với các trường audit
+    • CREATE reviewMedia cho từng media
+    • Xác thực unique constraint (user + product)
+    • Hoạt động nguyên tử đảm bảo tính nhất quán
+    end note
+
+    RR -> PS: INSERT review
+    PS -> DB: INSERT review với audit fields
+    DB -> PS: Review created
+    PS -> RR: Trả về review đã tạo
+
+    RR -> PS: createManyAndReturn reviewMedia
+    note right
+    Quản Lý Media:
+    • Tạo nhiều reviewMedia cùng lúc
+    • Liên kết với reviewId
+    • Hỗ trợ nhiều loại media
+    • Trả về media đã tạo
+    end note
+    PS -> DB: INSERT reviewMedia
+    DB -> PS: Review media đã tạo
+    PS -> RR: Trả về reviewMedia
+
+    RR -> PS: findUnique review với include
+    PS -> DB: Query review với user và media
+    DB -> PS: Review với user và media
+    PS -> RR: Review hoàn chỉnh với user và media
+    RR -> RS: Dữ liệu review hoàn chỉnh
+    RS -> IS: i18n.t('review.review.success.CREATE_SUCCESS')
+    IS -> RS: Trả về message đã localize
+    RS -> RC: Phản hồi thành công
+    RC -> User: 201 Created + JSON response
+
+else Xác thực đơn hàng thất bại
+    RR -> RS: BadRequestException
+    RS -> RC: Phản hồi lỗi
+    RC -> User: 400 Bad Request
+end
+
+== PUT /reviews/:reviewId - Cập Nhật Đánh Giá ==
+User -> RC: PUT /reviews/:reviewId + {data}
+note right
+Cấu Hình Endpoint:
+• @ActiveUser() - Xác thực người dùng
+• @ZodSerializerDto(UpdateReviewResDTO) - Chuẩn hóa phản hồi
+end note
+
+RC -> AU: @ActiveUser()
+AU -> RC: Trả về user context
+RC -> RS: update({user, reviewId, body})
+
+RS -> RR: update({userId, reviewId, body})
+
+RR -> RR: Xác thực song song
+note right
+Xác Thực Cập Nhật:
+• validateOrder: Kiểm tra đơn hàng vẫn hợp lệ
+• validateUpdateReview: Kiểm tra review thuộc về người dùng
+• Kiểm tra updateCount < 1 (chỉ được sửa 1 lần)
+end note
+
+RR -> PS: findUnique order
+RR -> PS: findUnique review
+PS -> DB: Query order và review
+DB -> PS: Dữ liệu đơn hàng và review
+PS -> RR: Trả về order và review data
+
+alt Xác thực thành công
+    RR -> PS: $transaction (hoạt động nguyên tử)
+    note right
+    Giao Dịch Cập Nhật Review:
+    • UPDATE review với increment updateCount
+    • DELETE tất cả reviewMedia cũ
+    • CREATE reviewMedia mới
+    • Hoạt động nguyên tử
+    end note
+
+    RR -> PS: UPDATE review với updateCount
+    PS -> DB: UPDATE review với increment updateCount
+    DB -> PS: Review đã cập nhật
+    PS -> RR: Trả về review đã cập nhật
+
+    RR -> PS: DELETE reviewMedia WHERE reviewId
+    PS -> DB: DELETE reviewMedia
+    DB -> PS: Media cũ đã xóa
+    PS -> RR: Trả về success
+
+    RR -> PS: createManyAndReturn reviewMedia
+    PS -> DB: INSERT reviewMedia mới
+    DB -> PS: Media mới đã tạo
+    PS -> RR: Trả về reviewMedia mới
+
+    RR -> PS: findUnique review với include
+    PS -> DB: Query review với user và media
+    DB -> PS: Review đã cập nhật với user và media
+    PS -> RR: Review hoàn chỉnh với user và media
+    RR -> RS: Dữ liệu cập nhật hoàn chỉnh
+    RS -> IS: i18n.t('review.review.success.UPDATE_SUCCESS')
+    IS -> RS: Trả về message đã localize
+    RS -> RC: Phản hồi thành công
+    RC -> User: 200 OK + JSON response
+
+else Xác thực thất bại
+    RR -> RS: BadRequestException/NotFoundException
+    RS -> RC: Phản hồi lỗi
+    RC -> User: 400/404 Error
+end
+
+== Xử Lý Lỗi & Xác Thực ==
+alt Lỗi đơn hàng không tồn tại
+    RR -> RS: BadRequestException
+    RS -> RC: Phản hồi lỗi
+    RC -> User: 400 Bad Request
+    note right
+    Lỗi Đơn Hàng:
+    • "Đơn hàng không tồn tại hoặc không thuộc về bạn"
+    • "Đơn hàng chưa được giao"
+    end note
+
+else Lỗi đánh giá không tồn tại
+    RR -> RS: NotFoundException
+    RS -> RC: Phản hồi lỗi
+    RC -> User: 404 Not Found
+    note right
+    Lỗi Đánh Giá:
+    • "Đánh giá không tồn tại hoặc không thuộc về bạn"
+    • "Bạn chỉ được phép sửa đánh giá 1 lần"
+    end note
+
+else Lỗi đánh giá trùng lặp
+    RR -> RS: ConflictException
+    RS -> RC: Phản hồi lỗi
+    RC -> User: 409 Conflict
+    note right
+    Lỗi Trùng Lặp:
+    • "Bạn đã đánh giá sản phẩm này rồi"
+    • Unique constraint: userId + productId
+    end note
+
+else Lỗi xác thực dữ liệu
+    RS -> RC: ValidationException
+    RC -> User: 422 Unprocessable Entity
+
+else Lỗi database
+    RR -> RS: DatabaseException
+    RS -> RC: Phản hồi lỗi
+    RC -> User: 500 Internal Server Error
+end
+
+== Logic Nghiệp Vụ ==
+alt Xác thực rating
+    RS -> RS: Xác thực rating 0-5
+    note right
+    Xác Thực Rating:
+    • rating: number.int().min(0).max(5)
+    • Xác thực trong Zod schema
+    • Đảm bảo rating hợp lệ
+    end note
+end
+
+alt Xác thực media
+    RS -> RS: Xác thực loại media
+    note right
+    Xác Thực Media:
+    • url: string.max(1000)
+    • type: MediaType enum
+    • Hỗ trợ nhiều media cho mỗi đánh giá
+    end note
+end
+
+== Trả Kết Quả ==
+RS -> IS: i18n.t('review.review.success.XXX')
+IS -> RS: Trả về message đã localize
+RS -> RC: Phản hồi + Thông báo đã localize
+RC -> User: JSON Response với metadata đầy đủ
+
+note bottom
+**Đặc điểm chính của module Đánh Giá:**
+• API công khai cho danh sách đánh giá (không cần xác thực)
+• API được bảo vệ cho tạo/cập nhật (cần xác thực)
+• Xác thực đơn hàng nghiêm ngặt (chỉ DELIVERED mới đánh giá được)
+• Giới hạn cập nhật: chỉ được sửa 1 lần
+• Quản lý media với hoạt động nguyên tử
+• Unique constraint: user + product (1 đánh giá mỗi người dùng mỗi sản phẩm)
+• Phân trang với metadata đầy đủ
+• Hỗ trợ đa ngôn ngữ
+• Xử lý lỗi toàn diện
+end note
+
+@enduml

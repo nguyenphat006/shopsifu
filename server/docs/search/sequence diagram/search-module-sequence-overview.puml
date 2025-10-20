@@ -1,0 +1,309 @@
+@startuml Search Module - Sequence Overview
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+
+title Mô-đun Tìm Kiếm - Tổng Quan Luồng Xử Lý
+note top : Hệ thống tìm kiếm sản phẩm với Elasticsearch và xử lý ngôn ngữ tự nhiên
+
+actor "Người Dùng" as Client
+participant "SearchController" as SC
+participant "SearchService" as SS
+participant "SearchRepo" as SR
+participant "ElasticsearchService" as ES
+participant "SearchSyncService" as SSS
+participant "SearchSyncConsumer" as SSC
+participant "I18nService" as IS
+database "Elasticsearch" as ESDB
+queue "Hàng Đợi Đồng Bộ Tìm Kiếm" as SSQ
+
+== GET /search/products - Tìm Kiếm Sản Phẩm ==
+Client -> SC: GET /search/products?q=query&page=1&limit=20&filters=...
+note right
+Tham Số Tìm Kiếm:
+• q: Chuỗi tìm kiếm (tùy chọn)
+• page: Số trang (mặc định: 1)
+• limit: Kết quả mỗi trang (mặc định: 20)
+• orderBy: Thứ tự sắp xếp (asc/desc, mặc định: desc)
+• sortBy: Trường sắp xếp (price, sale, createdAt, mặc định: createdAt)
+• filters: Thương hiệu, danh mục, khoảng giá, thuộc tính
+end note
+
+SC -> SS: searchProducts(query)
+note right
+Cấu Hình Controller:
+• @SkipThrottle() - Bỏ qua giới hạn tốc độ
+• @IsPublic() - Không cần xác thực
+• @ZodSerializerDto(SearchProductsResDTO) - Chuẩn hóa phản hồi
+end note
+
+SS -> SS: Xác thực tham số truy vấn
+note right
+Xác Thực Truy Vấn:
+• Kiểm tra q không rỗng sau khi cắt khoảng trắng
+• Xác thực độ dài tối thiểu (>= 1)
+• Xử lý truy vấn tìm kiếm rỗng
+• Xác thực tham số bộ lọc với Zod schema
+end note
+
+alt Xác thực truy vấn thành công
+    alt Có chuỗi truy vấn
+        SS -> SS: parseQuery(rawQuery)
+        note right
+        Xử Lý Ngôn Ngữ Tự Nhiên:
+        • Tách chuỗi thành các từ khóa
+        • So khớp từ khóa với từ điển
+        • Trích xuất bộ lọc thuộc tính
+        • Xây dựng truy vấn có cấu trúc
+        end note
+
+        SS -> SS: getDictionary()
+        note right
+        Quản Lý Từ Điển:
+        • Cache từ điển trong 30 phút
+        • Tải từ Elasticsearch aggregations
+        • Ánh xạ tên và giá trị thuộc tính
+        • Hỗ trợ từ đồng nghĩa
+        end note
+
+        alt Cache từ điển còn hiệu lực
+            SS -> SS: Sử dụng cache từ điển
+        else Cache từ điển hết hạn
+            SS -> ES: Tải từ điển từ ES
+            ES -> ESDB: Tìm kiếm với aggregations
+            note right
+            Tổng Hợp Từ Điển:
+            • Nested aggregation trên attrs
+            • Terms aggregation cho attrName
+            • Terms aggregation cho attrValue
+            • Kích thước 100 cho mỗi cấp
+            end note
+            ESDB -> ES: Dữ liệu tổng hợp
+            ES -> SS: Dữ liệu từ điển
+            SS -> SS: Cache từ điển trong 30 phút
+        end
+
+        SS -> SS: Phân tích truy vấn ngôn ngữ tự nhiên
+        note right
+        Logic Phân Tích Truy Vấn:
+        • Tách chuỗi thành từ khóa
+        • So khớp từ khóa với từ điển
+        • Trích xuất bộ lọc thuộc tính
+        • Xây dựng truy vấn có cấu trúc
+        • Xử lý từ đồng nghĩa
+        end note
+
+        alt Tìm thấy thuộc tính đã phân tích
+            SS -> SS: Thêm thuộc tính đã phân tích vào bộ lọc
+            note right
+            Trích Xuất Thuộc Tính:
+            • Ánh xạ ngôn ngữ tự nhiên thành bộ lọc có cấu trúc
+            • Thêm attrName và attrValue
+            • Kết hợp với bộ lọc hiện có
+            end note
+        end
+    end
+
+    SS -> SR: searchProducts(processedQuery)
+    SR -> SR: Xây dựng truy vấn Elasticsearch
+    note right
+    Xây Dựng Truy Vấn ES:
+    • Multi-match query cho tìm kiếm văn bản
+    • Bool query với must/should/filter
+    • Fuzzy matching với fuzziness AUTO
+    • Boost fields (productName^3, productName^2)
+    • Minimum should match 75%
+    • Phrase matching cho từng từ riêng lẻ
+    end note
+
+    SR -> ES: search(index, query, options)
+    ES -> ESDB: Thực thi truy vấn tìm kiếm
+    note right
+    Tìm Kiếm Elasticsearch:
+    • Multi-match với best_fields
+    • Fuzzy matching với AUTO
+    • Filter clauses cho thương hiệu/danh mục/giá
+    • Nested queries cho thuộc tính
+    • Sort options với score
+    • Collapse by productId
+    • Timeout: 30 giây
+    end note
+
+    alt Tìm kiếm thành công
+        ESDB -> ES: Kết quả tìm kiếm
+        ES -> SR: Hits và metadata
+        SR -> SR: Xử lý kết quả tìm kiếm
+        note right
+        Xử Lý Kết Quả:
+        • Trích xuất _source từ hits
+        • Tính tổng số mục
+        • Xây dựng metadata phân trang
+        • Định dạng dữ liệu phản hồi
+        end note
+        SR -> SS: Kết quả đã xử lý
+        SS -> IS: i18n.t('search.search.success.SEARCH_SUCCESS')
+        IS -> SS: Trả về message đã localize
+        SS -> SC: Phản hồi thành công với thông báo
+        SC -> Client: JSON với dữ liệu + metadata
+
+    else Tìm kiếm thất bại
+        ESDB -> ES: Lỗi
+        ES -> SR: Chi tiết lỗi
+        SR -> SR: Phân loại loại lỗi
+        note right
+        Phân Loại Lỗi:
+        • ConnectionError → ElasticsearchConnectionException
+        • TimeoutError → SearchTimeoutException
+        • Lỗi khác → ElasticsearchQueryException
+        end note
+        SR -> SS: Exception cụ thể
+        SS -> SC: Phản hồi lỗi
+        SC -> Client: Lỗi 500/503
+    end
+
+else Xác thực truy vấn thất bại
+    SS -> SC: ValidationException
+    SC -> Client: 400 Bad Request
+end
+
+== Hoạt Động Đồng Bộ Nền ==
+note over SSS, SSC: Xử lý job nền
+
+alt Đồng bộ sản phẩm vào Elasticsearch
+    SSS -> SSC: process(syncProductJob)
+    SSC -> SSS: syncProductToES(productId, action)
+    SSS -> SSS: getProductWithRelations(productId)
+    SSS -> SSS: transformProductToEsDocuments(product)
+    SSS -> ES: indexProduct(document)
+    ES -> ESDB: INDEX tài liệu sản phẩm
+    ESDB -> ES: trả về kết quả index
+    ES -> SSS: trả về kết quả đồng bộ
+end
+
+alt Đồng bộ hàng loạt sản phẩm
+    SSS -> SSC: process(syncProductsBatchJob)
+    SSC -> SSS: syncProductsBatchToES(batchData)
+    SSS -> SSS: getProductsWithRelations(productIds)
+    loop Cho mỗi sản phẩm
+        SSS -> SSS: transformProductToEsDocuments(product)
+        SSS -> ES: indexProduct(document)
+        ES -> ESDB: INDEX tài liệu sản phẩm
+    end
+    ES -> SSS: trả về kết quả đồng bộ hàng loạt
+end
+
+alt Xóa sản phẩm khỏi Elasticsearch
+    SSS -> SSC: process(deleteProductJob)
+    SSC -> SSS: syncProductToES(productId, action: delete)
+    SSS -> SSS: deleteProductFromES(productId)
+    SSS -> ES: deleteProduct(productId)
+    ES -> ESDB: DELETE tài liệu sản phẩm
+    ESDB -> ES: trả về kết quả xóa
+    ES -> SSS: trả về kết quả xóa
+end
+
+== Xử Lý Lỗi & Xác Thực ==
+alt Lỗi truy vấn rỗng
+    SS -> SC: EmptySearchQueryException
+    SC -> Client: 400 Bad Request
+    note right
+    Lỗi Truy Vấn Rỗng:
+    • Chuỗi truy vấn rỗng sau khi cắt khoảng trắng
+    • Thông báo lỗi rõ ràng
+    end note
+
+else Lỗi truy vấn quá ngắn
+    SS -> SC: SearchQueryTooShortException
+    SC -> Client: 400 Bad Request
+    note right
+    Lỗi Truy Vấn Quá Ngắn:
+    • Độ dài truy vấn < yêu cầu tối thiểu (1)
+    • Xác thực độ dài truy vấn
+    end note
+
+else Lỗi tải từ điển
+    SS -> SC: DictionaryLoadException
+    SC -> Client: 500 Internal Server Error
+    note right
+    Lỗi Từ Điển:
+    • Không thể tải từ Elasticsearch
+    • Cache miss và tải thất bại
+    end note
+
+else Lỗi phân tích từ điển
+    SS -> SC: DictionaryParseException
+    SC -> Client: 400 Bad Request
+    note right
+    Lỗi Phân Tích:
+    • Không thể phân tích ngôn ngữ tự nhiên
+    • Phân tích từ điển thất bại
+    end note
+
+else Lỗi kết nối Elasticsearch
+    SR -> SS: ElasticsearchConnectionException
+    SS -> SC: Phản hồi lỗi
+    SC -> Client: 503 Service Unavailable
+    note right
+    Lỗi Kết Nối:
+    • Elasticsearch không khả dụng
+    • Kết nối mạng thất bại
+    end note
+
+else Lỗi timeout tìm kiếm
+    SR -> SS: SearchTimeoutException
+    SS -> SC: Phản hồi lỗi
+    SC -> Client: 503 Service Unavailable
+    note right
+    Lỗi Timeout:
+    • Timeout truy vấn tìm kiếm
+    • Truy vấn chạy quá lâu
+    end note
+
+else Lỗi truy vấn tìm kiếm
+    SR -> SS: ElasticsearchQueryException
+    SS -> SC: Phản hồi lỗi
+    SC -> Client: 500 Internal Server Error
+    note right
+    Lỗi Truy Vấn:
+    • Cú pháp truy vấn không hợp lệ
+    • Index không tìm thấy
+    • Lỗi ES khác
+    end note
+end
+
+== Quản Lý Cache ==
+alt Hoạt động cache từ điển
+    SS -> SS: Kiểm tra thời gian hết hạn cache
+    note right
+    Quản Lý Cache:
+    • Thời gian cache: 30 phút
+    • Kiểm tra thời gian hết hạn cache
+    • Tải dữ liệu mới nếu hết hạn
+    • Cache bộ nhớ với Map
+    end note
+end
+
+== Trả Kết Quả ==
+SS -> IS: i18n.t('search.search.success.SEARCH_SUCCESS')
+IS -> SS: Trả về message đã localize
+SS -> SC: Phản hồi + Thông báo đã localize
+SC -> Client: JSON Response với metadata đầy đủ
+
+note bottom
+**Đặc điểm chính của module Tìm Kiếm:**
+• Tích hợp Elasticsearch với truy vấn nâng cao
+• Xử lý ngôn ngữ tự nhiên với cache từ điển (30 phút)
+• Tìm kiếm đa trường với fuzzy matching và phrase matching
+• Bộ lọc nâng cao (thương hiệu, danh mục, giá, thuộc tính lồng nhau)
+• Phân trang với metadata đầy đủ
+• Xử lý lỗi toàn diện với exception cụ thể
+• API công khai (không cần xác thực)
+• Bỏ qua giới hạn tốc độ cho hiệu suất tìm kiếm
+• Hỗ trợ đa ngôn ngữ với I18nService
+• Hoạt động đồng bộ nền với BullMQ
+• Trích xuất thuộc tính dựa trên từ điển
+end note
+
+@enduml

@@ -1,0 +1,306 @@
+@startuml Role Module - Sequence Overview
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+
+title Mô-đun Vai Trò - Tổng Quan Luồng Xử Lý
+note top : Hệ thống quản lý vai trò với base role protection và permission management
+
+actor "Admin" as Admin
+participant "RoleController" as RC
+participant "RoleService" as RS
+participant "RoleRepo" as RR
+participant "ActiveUser" as AU
+participant "I18nService" as IS
+participant "CacheManager" as CM
+participant "PrismaService" as PS
+database "PostgreSQL" as DB
+database "Redis" as RD
+
+== GET /roles - Lấy Danh Sách Vai Trò ==
+Admin -> RC: GET /roles?page=1&limit=10&name=search
+RC -> RS: list(pagination)
+
+RS -> RR: list({page, limit, name})
+RR -> RR: Tính toán pagination metadata
+note right
+Logic Phân Trang:
+• skip = (page - 1) * limit
+• take = limit
+• Parallel queries: count + findMany
+• Filter theo name (case insensitive)
+• WHERE deletedAt IS NULL
+end note
+
+RR -> PS: count() với WHERE deletedAt IS NULL
+RR -> PS: findMany() với pagination và name filter
+note right
+Tính Năng Truy Vấn Database:
+• WHERE deletedAt IS NULL
+• Filter name với contains + insensitive
+• Pagination với skip/take
+• ORDER BY default
+end note
+PS -> DB: Thực thi parallel queries
+DB -> PS: Total count + roles data
+PS -> RR: Roles với metadata
+RR -> RS: Roles với metadata
+RS -> IS: i18n.t('role.role.success.GET_SUCCESS')
+IS -> RS: Trả về message đã localize
+RS -> RC: Phản hồi + Message đã localize
+RC -> Admin: JSON với data + metadata
+
+== GET /roles/:id - Chi Tiết Vai Trò ==
+Admin -> RC: GET /roles/:roleId
+RC -> RS: findById(roleId)
+
+RS -> RR: findById(id)
+RR -> PS: findUnique với include permissions
+note right
+Tính Năng Truy Vấn Chi Tiết:
+• WHERE id = :roleId AND deletedAt IS NULL
+• Include permissions với WHERE deletedAt IS NULL
+• Return role với permissions array
+end note
+PS -> DB: Thực thi findUnique query
+DB -> PS: Role với permissions
+PS -> RR: Role với permissions
+RR -> RS: Role info
+
+alt Role tồn tại
+    RS -> IS: i18n.t('role.role.success.GET_DETAIL_SUCCESS')
+    IS -> RS: Trả về message đã localize
+    RS -> RC: Success response
+    RC -> Admin: JSON role detail với permissions
+else Role không tồn tại
+    RS -> RC: NotFoundRecordException
+    RC -> Admin: 404 Not Found
+end
+
+== POST /roles - Tạo Vai Trò Mới ==
+Admin -> AU: @ActiveUser()
+AU -> Admin: Trả về user context
+Admin -> RC: POST /roles + {name, description, isActive}
+RC -> RS: create({data, user})
+
+RS -> RS: Validate data với Zod schema
+note right
+Xác Thực Dữ Liệu:
+• name: required string (unique)
+• description: optional string
+• isActive: boolean
+• Unique constraint: name
+end note
+
+RS -> RR: create({createdById, data})
+RR -> PS: INSERT role với audit fields
+note right
+Logic Tạo Mới:
+• INSERT role với createdById
+• Audit trail: createdAt, createdById
+• Validate unique constraint cho name
+end note
+PS -> DB: INSERT role với audit fields
+DB -> PS: Role created
+PS -> RR: New role
+RR -> RS: New role
+RS -> IS: i18n.t('role.role.success.CREATE_SUCCESS')
+IS -> RS: Trả về message đã localize
+RS -> RC: Success response
+RC -> Admin: 201 Created + JSON response
+
+== PUT /roles/:id - Cập Nhật Vai Trò ==
+Admin -> AU: @ActiveUser()
+AU -> Admin: Trả về user context
+Admin -> RC: PUT /roles/:roleId + {data, permissionIds}
+RC -> RS: update({id, data, user})
+
+RS -> RS: verifyRole(id)
+note right
+Bảo Vệ Base Role:
+• Kiểm tra role có phải base role không
+• Base roles: Admin, Client, Seller
+• Không cho phép update/delete base roles
+• Throw ProhibitedActionOnBaseRoleException
+end note
+
+RS -> RR: findById(id)
+RR -> PS: findUnique role
+PS -> DB: Query role
+DB -> PS: Role data
+PS -> RR: Role info
+RR -> RS: Role info
+
+alt Role không phải base role
+    RS -> RR: update({id, updatedById, data})
+
+    RR -> RR: Validate permissionIds
+    note right
+    Xác Thực Permissions:
+    • Kiểm tra tất cả permissionIds tồn tại
+    • Filter permissions đã bị soft delete
+    • Throw error nếu có permission đã bị xóa
+    end note
+
+    RR -> PS: findMany permissions theo IDs
+    PS -> DB: Query permissions
+    DB -> PS: Permissions data
+    PS -> RR: Permissions data
+    RR -> RR: Filter deleted permissions
+
+    alt All permissions valid
+        RR -> PS: UPDATE role với permissions
+        note right
+        Logic Cập Nhật:
+        • UPDATE role với updatedById
+        • SET permissions với permissionIds
+        • Include permissions trong response
+        • Audit trail: updatedAt, updatedById
+        end note
+        PS -> DB: UPDATE role với permissions
+        DB -> PS: Updated role với permissions
+        PS -> RR: Updated data
+        RR -> RS: Updated data
+
+        RS -> RS: deleteCachedRole(roleId)
+        RS -> CM: del(cacheKey)
+        note right
+        Quản Lý Cache:
+        • Delete cached role data
+        • Cache key: `role:${roleId}`
+        • Ensure cache consistency
+        end note
+        CM -> RD: Delete cache entries
+        RD -> CM: Cache cleared
+        CM -> RS: Cache operation result
+        RS -> IS: i18n.t('role.role.success.UPDATE_SUCCESS')
+        IS -> RS: Trả về message đã localize
+        RS -> RC: Success response
+        RC -> Admin: 200 OK + JSON response
+
+    else Invalid permissions
+        RR -> RS: Error với deleted permission IDs
+        RS -> RC: Error response
+        RC -> Admin: 400 Bad Request
+    end
+
+else Role là base role
+    RS -> RC: ProhibitedActionOnBaseRoleException
+    RC -> Admin: 403 Forbidden
+end
+
+== DELETE /roles/:id - Xóa Vai Trò ==
+Admin -> AU: @ActiveUser()
+AU -> Admin: Trả về user context
+Admin -> RC: DELETE /roles/:roleId
+RC -> RS: delete({id, user})
+
+RS -> RS: verifyRole(id)
+RS -> RR: findById(id)
+RR -> PS: findUnique role
+PS -> DB: Query role
+DB -> PS: Role data
+PS -> RR: Role data
+RR -> RS: Role info
+
+alt Role không phải base role
+    RS -> RR: delete({id, deletedById})
+    RR -> PS: UPDATE deletedAt (soft delete)
+    note right
+    Logic Xóa:
+    • Soft delete: UPDATE deletedAt field
+    • Audit trail: deletedAt, deletedById
+    • Support hard delete với isHard flag
+    end note
+    PS -> DB: UPDATE deletedAt field
+    DB -> PS: Role marked deleted
+    PS -> RR: Deleted data
+    RR -> RS: Deleted data
+
+    RS -> RS: deleteCachedRole(roleId)
+    RS -> CM: del(cacheKey)
+    CM -> RD: Delete cache entries
+    RD -> CM: Cache cleared
+    CM -> RS: Cache operation result
+    RS -> IS: i18n.t('role.role.success.DELETE_SUCCESS')
+    IS -> RS: Trả về message đã localize
+    RS -> RC: Success response
+    RC -> Admin: 200 OK + message
+
+else Role là base role
+    RS -> RC: ProhibitedActionOnBaseRoleException
+    RC -> Admin: 403 Forbidden
+end
+
+== Xử Lý Lỗi & Validation ==
+alt Lỗi unique constraint
+    RS -> RC: RoleAlreadyExistsException
+    RC -> Admin: 422 Unprocessable Entity
+    note right
+    Lỗi Unique Constraint:
+    • Role name đã tồn tại
+    • Duplicate role name không được phép
+    • Clear error message cho user
+    end note
+
+else Lỗi base role protection
+    RS -> RC: ProhibitedActionOnBaseRoleException
+    RC -> Admin: 403 Forbidden
+    note right
+    Bảo Vệ Base Role:
+    • Không cho phép update/delete Admin, Client, Seller
+    • Bảo vệ system roles
+    • Clear error message
+    end note
+
+else Lỗi không tìm thấy
+    RS -> RC: NotFoundRecordException
+    RC -> Admin: 404 Not Found
+
+else Lỗi validation dữ liệu
+    RS -> RC: ValidationException
+    RC -> Admin: 422 Unprocessable Entity
+
+else Lỗi database
+    RS -> RC: DatabaseException
+    RC -> Admin: 500 Internal Server Error
+end
+
+== Cache Management ==
+alt Cache operations
+    RS -> CM: del(cacheKey)
+    note right
+    Thao Tác Cache:
+    • Delete role cache khi role thay đổi
+    • Cache key format: `role:${roleId}`
+    • Ensure data consistency
+    • Support cache invalidation
+    end note
+    CM -> RD: Delete cache entries
+    RD -> CM: Cache operation result
+    CM -> RS: Cache operation result
+end
+
+== Trả Kết Quả ==
+RS -> IS: i18n.t('role.role.success.XXX')
+IS -> RS: Trả về message đã localize
+RS -> RC: Phản hồi + Message đã localize
+RC -> Admin: JSON Response với metadata đầy đủ
+
+note bottom
+**Đặc điểm chính của module Role:**
+• CRUD operations đầy đủ với audit trail
+• Base role protection (Admin, Client, Seller)
+• Permission management với validation
+• Cache management cho role data
+• Soft delete pattern với hard delete option
+• Unique constraint validation cho name
+• Pagination với metadata đầy đủ
+• Multi-language support
+• Comprehensive error handling
+• Permission relationship management
+end note
+
+@enduml
