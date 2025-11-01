@@ -3,6 +3,8 @@
 
 <div align="center">
 
+<img src=".github/images/Img_Logo.png" alt="Shopsifu Logo" width="200" />
+
 ![Next.js](https://img.shields.io/badge/Next.js-15.x-black?style=for-the-badge&logo=next.js)
 ![NestJS](https://img.shields.io/badge/NestJS-10.x-E0234E?style=for-the-badge&logo=nestjs)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)
@@ -137,8 +139,21 @@ GitHub Actions    - CI/CD pipelines
 
 ## 📱 Screenshots & Demo | Ảnh chụp màn hình & Demo
 
-*Beautiful, responsive interface showcasing modern e-commerce design*
-*Giao diện đẹp mắt, responsive thể hiện thiết kế thương mại điện tử hiện đại*
+### 🏠 Main Interface | Giao diện chính
+<div align="center">
+<img src=".github/images/Img_Main.png" alt="Shopsifu Main Interface" width="100%" />
+</div>
+
+*Beautiful, responsive e-commerce homepage with modern design elements*
+*Trang chủ thương mại điện tử đẹp mắt, responsive với các yếu tố thiết kế hiện đại*
+
+### 👨‍💼 Admin Dashboard | Bảng điều khiển quản trị
+<div align="center">
+<img src=".github/images/Img_Admin.png" alt="Shopsifu Admin Dashboard" width="100%" />
+</div>
+
+*Comprehensive admin panel for managing products, orders, and system analytics*
+*Bảng quản trị toàn diện để quản lý sản phẩm, đơn hàng và phân tích hệ thống*
 
 ## 🚀 Getting Started | Bắt đầu
 
